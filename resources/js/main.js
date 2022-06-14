@@ -76,13 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
             $('body').removeClass('overflow');
         });
     });
-    $(document).ready(function () {
-        $("#footer-nav").on("click", "a", function (event) {
-            event.preventDefault();
-            var id = $(this).attr('href'),
-                top = $(id).offset().top;
-            $('body,html').animate({ scrollTop: top }, 1500);
-        });
+    //плавный скролл
+    $("body").on("click", "a[href^=\"#\"]", function (event) {
+        event.preventDefault();
+        var id = $(this).attr('href'),
+            top = $(id).offset().top;
+        $('body,html').animate({scrollTop: top}, 1500);
     });
 
     $('#login').on('shown.bs.modal', function () {

@@ -1,1 +1,73 @@
-({2664:function(){var e=this;this.buildSelectParent=function(e){for(var t='<option value="none">Do not have parent</option>',n=0;n<e.length;n++)t+='<option value="'+e[n].id+'">'+e[n].name+"</option>";return t},this.updateSelectParent=function(){axios.get("/menu/element/get-parents?menu="+document.getElementById("menu").value).then((function(t){document.getElementById("parent").innerHTML=e.buildSelectParent(t.data)})).catch((function(e){console.log(e)}))},this.toggleDivs=function(){var e=document.getElementById("type").value;"title"===e?(document.getElementById("div-href").classList.add("d-none"),document.getElementById("div-dropdown-parent").classList.add("d-none"),document.getElementById("div-icon").classList.add("d-none")):"link"===e?(document.getElementById("div-href").classList.remove("d-none"),document.getElementById("div-dropdown-parent").classList.remove("d-none"),document.getElementById("div-icon").classList.remove("d-none")):(document.getElementById("div-href").classList.add("d-none"),document.getElementById("div-dropdown-parent").classList.remove("d-none"),document.getElementById("div-icon").classList.remove("d-none"))},this.updateSelectParent(),this.toggleDivs(),document.getElementById("menu").onchange=function(){e.updateSelectParent()},document.getElementById("type").onchange=function(){e.toggleDivs()}}})[2664]();
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./resources/js/coreui/menu-create.js":
+/*!********************************************!*\
+  !*** ./resources/js/coreui/menu-create.js ***!
+  \********************************************/
+/***/ (function() {
+
+/* 11.12.2019 */
+var self = this;
+
+this.buildSelectParent = function (data) {
+  var result = '<option value="none">Do not have parent</option>';
+
+  for (var i = 0; i < data.length; i++) {
+    result += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+  }
+
+  return result;
+};
+
+this.updateSelectParent = function () {
+  axios.get('/menu/element/get-parents?menu=' + document.getElementById("menu").value).then(function (response) {
+    document.getElementById("parent").innerHTML = self.buildSelectParent(response.data);
+  })["catch"](function (error) {
+    // handle error
+    console.log(error);
+  });
+};
+
+this.toggleDivs = function () {
+  var value = document.getElementById("type").value;
+
+  if (value === 'title') {
+    document.getElementById('div-href').classList.add('d-none');
+    document.getElementById('div-dropdown-parent').classList.add('d-none');
+    document.getElementById('div-icon').classList.add('d-none');
+  } else if (value === 'link') {
+    document.getElementById('div-href').classList.remove('d-none');
+    document.getElementById('div-dropdown-parent').classList.remove('d-none');
+    document.getElementById('div-icon').classList.remove('d-none');
+  } else {
+    document.getElementById('div-href').classList.add('d-none');
+    document.getElementById('div-dropdown-parent').classList.remove('d-none');
+    document.getElementById('div-icon').classList.remove('d-none');
+  }
+};
+
+this.updateSelectParent();
+this.toggleDivs();
+
+document.getElementById("menu").onchange = function () {
+  self.updateSelectParent();
+};
+
+document.getElementById("type").onchange = function () {
+  self.toggleDivs();
+};
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["./resources/js/coreui/menu-create.js"]();
+/******/ 	
+/******/ })()
+;

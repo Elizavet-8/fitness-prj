@@ -6890,7 +6890,7 @@ svg.radial-progress {
   max-width: 440px;
   margin-bottom: 25px;
   margin-left: auto;
-  margin-right: 25px;
+  margin-right: auto;
 }
 
 .workout-video__list {

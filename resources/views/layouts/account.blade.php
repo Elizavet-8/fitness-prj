@@ -19,6 +19,8 @@
             href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
         />
         <link rel="stylesheet" href="{{mix('/css/app.css')}}">
+        <link rel="stylesheet" href="/css/videotube.min.css'">
+        <link rel="icon" href="images/logo.svg" type="image/x-icon">
     </head>
 @show
 
@@ -36,6 +38,7 @@
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/videotube.min.js') }}"></script>
     <script>
         $(function () {
             $('svg.radial-progress').each(function (index, value) {

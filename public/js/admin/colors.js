@@ -1,1 +1,27 @@
-document.querySelectorAll(".theme-color").forEach((t=>{const e=getComputedStyle(t,null).getPropertyValue("background-color"),l=document.createElement("table");l.classList.add("w-100"),l.innerHTML=`\n      <table class="w-100">\n        <tr>\n          <td class="text-muted">HEX:</td>\n          <td class="font-weight-bold">${coreui.Utils.rgbToHex(e)}</td>\n        </tr>\n        <tr>\n          <td class="text-muted">RGB:</td>\n          <td class="font-weight-bold">${e}</td>\n        </tr>\n      </table>\n    `,t.parentNode.appendChild(l)}));
+/* global coreui.Utils.rgbToHex */
+
+/**
+ * --------------------------------------------------------------------------
+ * CoreUI Boostrap Admin Template (v3.0.0): colors.js
+ * Licensed under MIT (https://coreui.io/license)
+ * --------------------------------------------------------------------------
+ */
+
+document.querySelectorAll('.theme-color').forEach((element) => {
+  const color = getComputedStyle(element, null).getPropertyValue('background-color')
+  const table = document.createElement('table')
+  table.classList.add('w-100')
+  table.innerHTML = `
+      <table class="w-100">
+        <tr>
+          <td class="text-muted">HEX:</td>
+          <td class="font-weight-bold">${coreui.Utils.rgbToHex(color)}</td>
+        </tr>
+        <tr>
+          <td class="text-muted">RGB:</td>
+          <td class="font-weight-bold">${color}</td>
+        </tr>
+      </table>
+    `
+  element.parentNode.appendChild(table)
+})
