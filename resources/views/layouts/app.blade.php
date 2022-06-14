@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" href="images/logo.svg" type="image/x-icon">
 </head>
 <body>
     <div id="app">

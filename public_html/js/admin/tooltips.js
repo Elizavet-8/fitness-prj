@@ -1,1 +1,10 @@
-document.querySelectorAll('[data-toggle="tooltip"]').forEach((o=>{new coreui.Tooltip(o)}));
+/**
+ * --------------------------------------------------------------------------
+ * CoreUI Free Boostrap Admin Template (v3.0.0): tooltips.js
+ * Licensed under MIT (https://coreui.io/license)
+ * --------------------------------------------------------------------------
+ */
+
+document.querySelectorAll('[data-toggle="tooltip"]').forEach((element) => {
+  new coreui.Tooltip(element)
+})

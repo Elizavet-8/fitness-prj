@@ -17,8 +17,8 @@
             </h6>
             <p class="plugin-modal__txt">
             Каждый план идеально сбалансирован и прекрасно подходит для активной жизни
-            </p> 
-            <div class="workout-checkboxes">
+            </p>
+            <div class="diet-checkboxes workout-checkboxes">
                <label class="workout-checkbox__label" v-for="(caloric, index) in calorics" :key="index">
                   <input class="check__input" type="radio" :id="caloric.title" :value="caloric.title" v-model="selected_calory">
                   <div class="workout-checkbox">

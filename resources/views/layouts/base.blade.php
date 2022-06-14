@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css"/>
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
         <link rel="stylesheet" href="{{mix('/css/app.css')}}">
+        <link rel="icon" href="images/logo.svg" type="image/x-icon">
     </head>
 @show
 <body>

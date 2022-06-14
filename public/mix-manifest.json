@@ -7,6 +7,8 @@
     "/js/admin/media-cropp.js": "/js/admin/media-cropp.js",
     "/css/admin/style.css": "/css/admin/style.css",
     "/css/app.css": "/css/app.css",
+    "/css/videotube.min.css": "/css/videotube.min.css",
+    "/js/videotube.min.js": "/js/videotube.min.js",
     "/css/admin/coreui-chartjs.css": "/css/admin/coreui-chartjs.css",
     "/css/admin/cropper.css": "/css/admin/cropper.css",
     "/js/admin/coreui-utils.js": "/js/admin/coreui-utils.js",
@@ -260,7 +262,9 @@
     "/public_html/js/admin/tooltips.js": "/public_html/js/admin/tooltips.js",
     "/public_html/js/admin/widgets.js": "/public_html/js/admin/widgets.js",
     "/public_html/css/app.css": "/public_html/css/app.css",
+    "/public_html/css/videotube.min.css": "/public_html/css/videotube.min.css",
     "/public_html/js/app.js": "/public_html/js/app.js",
     "/public_html/js/app.js.LICENSE.txt": "/public_html/js/app.js.LICENSE.txt",
-    "/public_html/js/main.js": "/public_html/js/main.js"
+    "/public_html/js/main.js": "/public_html/js/main.js",
+    "/public_html/js/videotube.min.js": "/public_html/js/videotube.min.js"
 }

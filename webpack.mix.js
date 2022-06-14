@@ -14,10 +14,12 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/main.js', 'public/js/app.js')
     .vue()
-    .sass('resources/sass/app.sass', 'public/css')
+    .sass('resources/sass/base.scss', 'public/css/app.css')
     .options({
         processCssUrls:false
     });
+
+mix.copy('resources/js/videotube.min.js', 'public/js/');
 //**************** CSS ********************
 //css
 //    // .js('resources/js/admin-app.js', 'public/js/admin')
