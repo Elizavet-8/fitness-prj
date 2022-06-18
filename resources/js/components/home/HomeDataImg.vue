@@ -6,8 +6,7 @@
         @change="previewImage"
         accept="image/*"
       />
-      <img v-if="!changeImg" class="preview" :src="img" />
-      <img v-else class="preview" :src="imageData" />
+      <img v-if="changeImg" class="preview" :src="imageData"  alt="#"/>
    </div>
 </template>
 <script>
@@ -32,7 +31,7 @@ export default {
       }
     },
     saveImg(){
-      
+
     }
   },
 };

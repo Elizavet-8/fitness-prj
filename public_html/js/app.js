@@ -3725,7 +3725,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["img"],
   data: function data() {
@@ -49807,9 +49806,12 @@ var render = function () {
         on: { change: _vm.previewImage },
       }),
       _vm._v(" "),
-      !_vm.changeImg
-        ? _c("img", { staticClass: "preview", attrs: { src: _vm.img } })
-        : _c("img", { staticClass: "preview", attrs: { src: _vm.imageData } }),
+      _vm.changeImg
+        ? _c("img", {
+            staticClass: "preview",
+            attrs: { src: _vm.imageData, alt: "#" },
+          })
+        : _vm._e(),
     ]
   )
 }
@@ -51016,13 +51018,13 @@ var render = function () {
               _vm._v(" "),
               _c("h6", { staticClass: "plugin-modal-form__subtitle" }, [
                 _vm._v(
-                  "\n            Выберите новый план питания\n            "
+                  "\r\n            Выберите новый план питания\r\n            "
                 ),
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "plugin-modal__txt" }, [
                 _vm._v(
-                  "\n            Каждый план идеально сбалансирован и прекрасно подходит для активной жизни\n            "
+                  "\r\n            Каждый план идеально сбалансирован и прекрасно подходит для активной жизни\r\n            "
                 ),
               ]),
               _vm._v(" "),
@@ -51058,9 +51060,9 @@ var render = function () {
                       _vm._v(" "),
                       _c("div", { staticClass: "workout-checkbox" }, [
                         _vm._v(
-                          "\n                     " +
+                          "\r\n                     " +
                             _vm._s(caloric.title) +
-                            "\n                  "
+                            "\r\n                  "
                         ),
                       ]),
                     ]
@@ -51112,7 +51114,7 @@ var render = function () {
                                   _c("sub", [_vm._v("№")]),
                                   _vm._v(
                                     _vm._s(index + 1) +
-                                      "\n                        "
+                                      "\r\n                        "
                                   ),
                                 ]
                               ),
@@ -51125,15 +51127,15 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                           " +
+                                    "\r\n                           " +
                                       _vm._s(diet.menu) +
-                                      "\n                           "
+                                      "\r\n                           "
                                   ),
                                   _c("b", [
                                     _vm._v(
-                                      "\n                              " +
+                                      "\r\n                              " +
                                         _vm._s(diet.price) +
-                                        "\n                           "
+                                        "\r\n                           "
                                     ),
                                   ]),
                                 ]
@@ -51171,7 +51173,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("p", { staticClass: "plugin-modal__txt-small center" }, [
                       _vm._v(
-                        "\n                  Нажимая “Оплатить”, я принимаю условия Политики обработки персональных данный и условия\n                  Оферты\n               "
+                        "\r\n                  Нажимая “Оплатить”, я принимаю условия Политики обработки персональных данный и условия\r\n                  Оферты\r\n               "
                       ),
                     ]),
                   ])
@@ -51180,7 +51182,7 @@ var render = function () {
               _vm.activeStep === 2
                 ? _c("div", { staticClass: "plugin-modal-action__block" }, [
                     _vm._v(
-                      "\n               Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...\n            "
+                      "\r\n               Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...\r\n            "
                     ),
                   ])
                 : _vm._e(),
