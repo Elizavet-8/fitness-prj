@@ -192,7 +192,7 @@ export default {
       let tmp = this.$store.getters.GetTrainingUsers;
       if(!tmp||tmp.length<1)
         return this.slider;
-      
+
       if(this.$store.getters.GetActivityCalendars!=null)
       {
         console.log("this.UserActiveCallendar:",this.UserActiveCallendar);
@@ -203,12 +203,12 @@ export default {
         console.log("Default this.selectedTrainingId")
         this.selectedTrainingId = null;
       }
-      
+
       if(this.selectedTrainingId)
         this.selectedTab = this.selectedTrainingId.day.toString();
       else
         this.selectedTab = "1";
-      
+
       this.slider = [];
       if(this.selectedTrainingId)
         for (let index = 0; index < tmp.length; index++){
@@ -276,7 +276,7 @@ export default {
       let trainings = undefined;
       if(this.selectedTrainingId)
         trainings = this.$store.getters.GetTrainingUsers.filter(element => parseInt(element.training_id) === parseInt(this.selectedTrainingId.training_user.training_id));
-      
+
       if(trainings!=undefined){
         trainings.forEach(element=>{
           if(tmp_locs!=undefined)
@@ -312,7 +312,7 @@ export default {
       this.$store.dispatch('fetchTrainingLocations');
       this.$store.dispatch('fetchAccessHistory');
     }
-    
+
   },
   methods: {
     findPercent()
@@ -324,7 +324,7 @@ export default {
       var Difference_In_Time = date2.getTime() - date1.getTime();
       var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       var percent = (Difference_In_Days*100)/30;
-      return parseInt(percent);
+      return Math.min(percent, 100);
     },
     changeTabSelection(tabTitle){
       this.$loading(true);
@@ -349,7 +349,7 @@ export default {
     changeLocation(location){
       this.$loading(true);
       this.current_location = location;
-      
+
       this.$store.dispatch('setActivityCalendar',{
         id: this.UserActiveCallendar.id,
         training_user_id: this.UserActiveCallendar.training_user_id,
@@ -399,7 +399,7 @@ export default {
           day: this.UserActiveCallendar.day,
           is_active: false
         });
-        
+
         let new_active = this.$store.getters.GetActivityCalendars.find(element => element.training_user_id === this.slider[this.start_index+1].training_user_id);
 
         this.$store.dispatch('setActivityCalendar',{
@@ -417,14 +417,14 @@ export default {
       if(this.start_index>0)
       {
         this.$loading(true);
-      
+
         this.$store.dispatch('setActivityCalendar',{
           id: this.UserActiveCallendar.id,
           training_user_id: this.UserActiveCallendar.training_user_id,
           day: this.UserActiveCallendar.day,
           is_active: false
         });
-        
+
         let new_active = this.$store.getters.GetActivityCalendars.find(element => element.training_user_id === this.slider[this.start_index-1].training_user_id);
 
         this.$store.dispatch('setActivityCalendar',{

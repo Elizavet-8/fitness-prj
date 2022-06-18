@@ -361,7 +361,7 @@ export default {
             var Difference_In_Time = date2.getTime() - date1.getTime();
             var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
             var percent = (Difference_In_Days * 100) / 30;
-            return parseInt(percent);
+            return Math.min(percent, 100);
         },
         show_types() {
             this.show_select_types = !this.show_select_types;
