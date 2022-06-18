@@ -140,17 +140,17 @@
                         </div>
                      </div>
                      <ul class="progress-block__steps">
-                        <li v-on:click="change_show_tab(1)" 
+                        <li v-on:click="change_show_tab(1)"
                         :class="['progress-block__step', show(1)]"
                         >
                            1 Этап
                         </li>
-                        <li v-on:click="change_show_tab(2)" 
+                        <li v-on:click="change_show_tab(2)"
                         :class="['progress-block__step', show(2)]"
                         >
                            2 Этап
                         </li>
-                        <li v-on:click="change_show_tab(3)" 
+                        <li v-on:click="change_show_tab(3)"
                         :class="['progress-block__step', show(3)]"
                         >
                            3 Этап
@@ -364,7 +364,7 @@ export default {
       },
       checkActivity(){
          if(this.AccessHistory==null)
-            false;
+            return false;
          var date1 = new Date(this.AccessHistory.deactivation_date);
          var date2 = new Date();
          if(date1>date2)

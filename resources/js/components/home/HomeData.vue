@@ -6,7 +6,7 @@
                <p class="progres__elem-prg">
                   Вес
                </p>
-               <input v-model="Physics.current_weight" type="text" class="progres-data__input">
+               <input v-model.number="Physics.current_weight" type="number" min="0" class="progres-data__input" required>
             </div>
          </div>
          <div class="progres__elem">
@@ -14,7 +14,7 @@
                <p class="progres__elem-prg">
                   Бёдра
                </p>
-               <input v-model="Physics.hips_cm" type="text" class="progres-data__input">
+               <input v-model.number="Physics.hips_cm" type="number" min="0" class="progres-data__input" required>
             </div>
          </div>
          <div class="progres__elem">
@@ -22,7 +22,7 @@
                <p class="progres__elem-prg">
                   Талия
                </p>
-               <input v-model="Physics.waist_cm" type="text" class="progres-data__input">
+               <input v-model.number="Physics.waist_cm" type="number" min="0" class="progres-data__input" required>
             </div>
          </div>
          <div class="progres__elem">
@@ -30,7 +30,7 @@
                <p class="progres__elem-prg">
                   Грудь
                </p>
-               <input v-model="Physics.chest_cm" type="text" class="progres-data__input">
+               <input v-model.number="Physics.chest_cm" type="number" min="0" class="progres-data__input" required>
             </div>
          </div>
          <button v-if="Physics.updated_at==null" v-on:click="savePhysics()" type="submit" class="progres__btn-data">Сохранить</button>
@@ -62,7 +62,7 @@ export default {
          {
             "img":3
          }
-      ]
+      ],
    }),
    computed:{
       Physics(){
@@ -90,4 +90,16 @@ export default {
       }
    }
 };
-</script> 
+</script>
+
+<style scoped>
+    input.progres-data__input[type="number"] {
+        -moz-appearance: textfield;
+        -webkit-appearance: textfield;
+        appearance: textfield;
+    }
+    input.progres-data__input[type="number"]::-webkit-outer-spin-button,
+    input.progres-data__input[type="number"]::-webkit-inner-spin-button {
+        display: none;
+    }
+</style>
