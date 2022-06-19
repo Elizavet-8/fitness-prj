@@ -20,7 +20,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Описание:</label>
                                     <div class="col-md-9">
-                                        <textarea value="{{ $notification->description }}" name="description" class="form-control" rows="3"></textarea>
+                                        <textarea name="description" class="form-control" rows="3">{{ ($notification->description) }}</textarea>
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-edit">
