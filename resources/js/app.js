@@ -12,6 +12,7 @@ Vue.use(VueLoading)
 Vue.component('Formstep', require('./components/modal/Formstep.vue').default);
 Vue.component('Buy', require('./components/modal/Buy.vue').default);
 Vue.component('Login', require('./components/modal/Login.vue').default);
+Vue.component('Register', require('./components/modal/Register.vue').default);
 
 Vue.component('Workout', require('./components/workout/Workout.vue').default);
 Vue.component('Home', require('./components/home/Home.vue').default);

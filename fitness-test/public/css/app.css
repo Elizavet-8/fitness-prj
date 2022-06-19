@@ -702,24 +702,7 @@ nav .head__btn .button {
   height: 1118px;
 }
 
-.program__row {
-  padding: 108px 0 140px;
-  justify-content: center;
-  display: flex;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-}
 
-#program .container {
-  padding: 0;
-}
-
-.program__row-scroll {
-  overflow-x: scroll;
-  margin-left: -20px;
-  margin-right: -20px;
-}
 
 .program__block-contain {
   padding: 0 40px;
@@ -1244,11 +1227,6 @@ footer {
   display: none;
 }
 
-@media only screen and (max-width: 1435px) {
-  .program__row-scroll {
-    margin: 0;
-  }
-}
 @media only screen and (max-width: 1350px) {
   .first__img {
     position: absolute;
@@ -1320,17 +1298,6 @@ footer {
     padding-top: 40px;
   }
 
-  #program .container {
-    padding: 0;
-  }
-
-  .program__row {
-    padding: 100px 30px;
-  }
-
-  .program__row-scroll {
-    overflow-x: scroll;
-  }
 
   .first__back {
     display: none;
@@ -1627,10 +1594,6 @@ footer {
     height: 556.22px;
   }
 
-  .program__row {
-    padding: 66px 0 100px;
-    grid-template-columns: repeat(2, 648px);
-  }
 
   #questions {
     padding-bottom: 100px;
@@ -2237,11 +2200,6 @@ footer {
 
   #feedback {
     padding-bottom: 42px;
-  }
-
-  .program__row {
-    padding: 47px 0px 50px;
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .program__block {

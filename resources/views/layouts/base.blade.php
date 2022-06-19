@@ -107,6 +107,7 @@
     <formstep></formstep>
     <buy></buy>
     <login></login>
+    <Register></Register>
 </div>
 {{--<!-- Modal-end -->--}}
 

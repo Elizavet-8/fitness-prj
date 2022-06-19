@@ -105,15 +105,15 @@
                                     <div id="indicator"></div>
                                 </ul>
                                 <div class="head__btn">
-                                @if (!auth()->guest())
-                                    <button type="button" class="button" onclick="location.href='/home';">
-                                        Домой
-                                    </button>
-                                @else
-                                    <button type="button" class="button" data-toggle="modal" data-target="#login">
-                                        Вход
-                                    </button>
-                                @endif
+                                    @if (!auth()->guest())
+                                        <button type="button" class="button" onclick="location.href='/home';">
+                                            Домой
+                                        </button>
+                                    @else
+                                        <button type="button" class="button" data-toggle="modal" data-target="#login">
+                                            Вход
+                                        </button>
+                                    @endif
                                 </div>
                                 <div class="head__social">
                                     <a href="https://vk.com/goodiets">
@@ -193,16 +193,16 @@
                     <img src="{{ ('images/first.png') }}" alt="">
                 </div>
                 <div class="first__col">
-                @if (!auth()->guest())
-                    <button type="button" class="button first__btn white-btn" onclick="location.href='/home';">
-                        Домой
-                    </button>
-                @else
-                    <button type="button" class="button first__btn white-btn" data-toggle="modal"
-                            data-target="#login">
-                        Вход
-                    </button>
-                @endif
+                    @if (!auth()->guest())
+                        <button type="button" class="button first__btn white-btn" onclick="location.href='/home';">
+                            Домой
+                        </button>
+                    @else
+                        <button type="button" class="button first__btn white-btn" data-toggle="modal"
+                                data-target="#login">
+                            Вход
+                        </button>
+                    @endif
                     <div class="first__social">
                         <a href="https://vk.com/goodiets">
                             <svg width="31" height="28" viewBox="0 0 31 28" fill="none"
@@ -296,7 +296,7 @@
                         <div class="swiper-slide">
                             <div class="office__img">
                                 <div class="office__img-elem">
-                                    <img src="{{ ('images/scrin/scrin1.png') }}"  alt="">
+                                    <img src="{{ ('images/scrin/scrin1.png') }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -310,14 +310,14 @@
                         <div class="swiper-slide">
                             <div class="office__img">
                                 <div class="office__img-elem">
-                                    <img  src="{{ ('images/scrin/scrin3.png') }}" alt="">
+                                    <img src="{{ ('images/scrin/scrin3.png') }}" alt="">
                                 </div>
                             </div>
                         </div>
                         <div class="swiper-slide">
                             <div class="office__img">
                                 <div class="office__img-elem">
-                                    <img  src="{{ ('images/scrin/scrin4.png') }}" alt="">
+                                    <img src="{{ ('images/scrin/scrin4.png') }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -424,8 +424,8 @@
             <h2 class="title-second">
                 Программы <br>и марафоны
             </h2>
-            <div class="program__row-scroll">
-                <div class="program__row">
+            <div class="program__slider">
+                <div class="swiper-wrapper">
                     <script>
                         function processMarathon(marathon) {
                             var countDownDate = new Date(marathon.finish_date * 1000).getTime();
@@ -455,14 +455,15 @@
                         }
                     </script>
                     @foreach($marathons as $marathon)
-                        <div id="{{'marathon' . $marathon->id}}">
-                            <div class="program__block-contain">
+                        <div class="swiper-slide">
+                            <div id="{{'marathon' . $marathon->id}}">
                                 <div class="program__block">
                                     <div class="program__head">
                                         <div class="program__svg">
                                             <svg width="145" height="152" viewBox="0 0 145 152" fill="none"
                                                  xmlns="http://www.w3.org/2000/svg">
-                                                <ellipse opacity="0.13" cx="21.6477" cy="28.6478" rx="123.003" ry="123.003"
+                                                <ellipse opacity="0.13" cx="21.6477" cy="28.6478" rx="123.003"
+                                                         ry="123.003"
                                                          transform="rotate(-165 21.6477 28.6478)" fill="white"/>
                                             </svg>
                                             <svg width="98" height="105" viewBox="0 0 98 105" fill="none"
@@ -480,7 +481,8 @@
                                         <div class="program__promo">
                                             Окончание акции
                                         </div>
-                                        <div id="{{$marathon->id . 'promo_time'}}" class="program__promo-time"></div>
+                                        <div id="{{$marathon->id . 'promo_time'}}"
+                                             class="program__promo-time"></div>
                                         <script>
                                             processMarathon({!! json_encode($marathon) !!});
                                         </script>
@@ -501,7 +503,10 @@
                                                             d="M2.66569 10.3188C2.66644 9.90622 2.65376 0.000791155 2.65376 0.000791155L2.43665 -6.10352e-05C2.43665 -6.10352e-05 0.666748 1.03995 0.666748 8.75778C2.02629 9.14634 1.45426 10.6941 1.35129 10.8913C1.35129 11.284 1.38061 15.3201 1.38061 15.3201L1.38532 15.3176C1.38375 15.3234 1.38218 15.3267 1.38218 15.3316C1.38061 15.7021 1.6698 16.0033 2.0239 15.9999C2.378 16.0015 2.66719 15.7004 2.66562 15.3316C2.66712 15.3267 2.66712 15.3234 2.66562 15.3201L2.66637 15.3167C2.66644 15.3168 2.66644 10.7718 2.66569 10.3188Z"
                                                             fill="white"/>
                                                     </svg>
-                                                </div><p>Вкусное меню с видеорецептами и щепоточкой любви + в подарок меню ещё на<br>30 дней с простыми рецептами. Упрощенное меню отлично подойдёт если у<br>тебя нет времени на приготовление блюд.</p>
+                                                </div>
+                                                <p>Вкусное меню с видеорецептами и щепоточкой любви + в подарок меню
+                                                    ещё на<br>30 дней с простыми рецептами. Упрощенное меню отлично
+                                                    подойдёт если у<br>тебя нет времени на приготовление блюд.</p>
                                             </li>
                                             <li class="program__item">
                                                 <div class="program__icon">
@@ -587,7 +592,8 @@
                                                     Коллектив девочек и личный дневник с нашими проверками в группе
                                                     проекта.
                                                     Также в поддержку входит спец услуга
-                                                    “Волшебный пендаль”. Актуально для тех, кто боится сорваться и не может
+                                                    “Волшебный пендаль”. Актуально для тех, кто боится сорваться и
+                                                    не может
                                                     найти
                                                     мотивацию.
                                                 </p>
@@ -614,6 +620,7 @@
                     @endforeach
                 </div>
             </div>
+            <div class="swiper-pagination program-pagination"></div>
         </div>
     </section>
     <section id="questions">

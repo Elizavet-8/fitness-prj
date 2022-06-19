@@ -1,5 +1,5 @@
 <template>
-    <div class="modal modal-custom fade" id="login" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-custom fade" id="register" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-custom__content modal-entrance__content">
                 <button type="button" class="modal__close" data-dismiss="modal" aria-label="Close">
@@ -11,7 +11,7 @@
                     </svg>
                 </button>
                 <h5 class="modal__title">
-                     ВХОД
+                    РЕГИСТРАЦИЯ
                 </h5>
                 <form class="modal__form" @submit.prevent="submitHendler">
                     <div class="error__mrg"
@@ -20,7 +20,7 @@
                     </div>
                     <div class="error__mrg"
                          v-if="login_failure">
-                        Такой Email или пароль не существует
+                        Такой Email или пароль уже существует
                     </div>
                     <div class="modal-input__group">
                         <svg class="modal-input__svg" width="30" height="30" viewBox="0 0 30 30" fill="none"
@@ -57,21 +57,14 @@
                                v-model="password"
                                :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength)}">
                     </div>
-                    <button type="button" class="modal__btn-lose" data-toggle="modal" data-target="#lose">
-                        Забыли пароль?
-                    </button>
                     <button type="submit" class="button modal__btn">
-                        ВХОД
-                    </button>
-                    <button type="button" style="margin: 20px auto 0;" class="modal__btn-lose" data-toggle="modal" data-target="#register">
-                        Регистрация
+                        РЕГИСТРАЦИЯ
                     </button>
                 </form>
             </div>
         </div>
     </div>
 </template>
-
 <script>
 import { email, required, minLength } from 'vuelidate/lib/validators'
 

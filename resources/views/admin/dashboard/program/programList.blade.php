@@ -5,7 +5,7 @@
         <div class="animated fadeIn">
             <div class="row">
                 @foreach($programs as $program)
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-6 col-md-6">
                         <div class="card">
                             <div class="card-header program__card-header"><h3><b>{{$program->name}}</b></h3>
                                 <div class="card-header-actions">
@@ -51,8 +51,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="collapse show">
-                                <div class="card-body program__body">
+                            <div class="collapse show program__body">
+                                <div style="padding: 0;" class="card-body">
                                     <div class="program__group">
                                         <b>Окончание акции:</b>
                                         {{ \Carbon\Carbon::parse($program->finish_date)->format('d.m.Y')}}

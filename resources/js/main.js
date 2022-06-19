@@ -52,13 +52,20 @@ document.addEventListener("DOMContentLoaded", function () {
     swiperScrinTxt.controller.control = swiperScrinImg;
     swiperScrinImg.controller.control = swiperScrinTxt;
 
-    // const sliderDiet = new Swiper('.progres-diet__slider', {
-    // 	loop: true,
-    // 	spaceBetween: 20,
-    // 	pagination: {
-    // 		el: ".swiper-pagination",
-    // 	},
-    // });
+    var program__slider = new Swiper(".program__slider", {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: {
+            el: ".program-pagination",
+            clickable: true,
+        },
+        breakpoints: {
+            999: {
+                slidesPerView: 2,
+                spaceBetween: 40,
+            },
+        }
+    });
 
     $('.close-nav, .burger, .overlay').click(function () {
         $('.overlay').toggleClass('show');
@@ -70,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             var id = $(this).attr('href'),
                 top = $(id).offset().top;
-            $('body,html').animate({ scrollTop: top }, 1500);
+            $('body,html').animate({scrollTop: top}, 1500);
             $('.overlay').removeClass('show');
             $('nav').removeClass('show');
             $('body').removeClass('overflow');
@@ -97,6 +104,14 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#lose").modal('hide');
     });
 
+
+    $('#register').on('shown.bs.modal', function () {
+        $("#login").modal('hide');
+    });
+    $('#login').on('shown.bs.modal', function () {
+        $("#register").modal('hide');
+    });
+
     $('#diet').on('shown.bs.modal', function () {
         $("#diet-simple").modal('hide');
     });
@@ -107,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $(document).on('hidden.bs.modal', '.modal', function () {
         $('.modal:visible').length
             ? $(document.body).addClass('modal-open')
-            : $(document.body).css({ paddingRight: 0 });
+            : $(document.body).css({paddingRight: 0});
     });
     $('#subscription').on('shown.bs.modal', function () {
         $('#subscription').trigger('focus')
