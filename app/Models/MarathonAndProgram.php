@@ -20,6 +20,13 @@ class MarathonAndProgram extends Model
         'price',
         'discount_price',
         'finish_date',
+        'menu_id',
+        'training_id',
+        'about_trainings',
+        'about_ration',
+        'about_procedures',
+        'about_support',
+        'about_motivation'
     ];
 
     /**
@@ -31,4 +38,14 @@ class MarathonAndProgram extends Model
         'id' => 'integer',
         'finish_date' => 'timestamp',
     ];
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
+
+    public function training()
+    {
+        return $this->belongsTo(Training::class);
+    }
 }

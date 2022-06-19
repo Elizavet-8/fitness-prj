@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProgramsController;
 use Illuminate\Support\Facades\Route;
 
 #region controllers usage
@@ -76,8 +77,8 @@ Route::prefix('/admin')->group(function () {
         Route::post('/deleteArticle/{id}', [ArticleController::class,'adminDeleteArticle'])->name('deleteArticle');
     });
     Route::prefix('/program')->group(function () {  // word: "icons" - not working as part of adress
-        Route::get('/', function(){         return view('admin.dashboard.program.programList'); });
-        Route::get('/edit', function(){         return view('admin.dashboard.program.programEditForm'); });
+        Route::get('/', [ProgramsController::class, "openProgramsPage"])->name('openProgramsPage');
+        Route::get('/edit/{id}', [ProgramsController::class, "openProgramEditingPage"])->name('openProgramEditingPage');
     });
     Route::prefix('/main')->group(function () {  // word: "icons" - not working as part of adress
         Route::get('/', [MainPageController::class,'adminMagePage'])->name('adminMagePage');

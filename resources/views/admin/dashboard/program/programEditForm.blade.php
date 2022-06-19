@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header"><strong>Марафон №1</strong></div>
+                        <div class="card-header"><strong>{{$program->name}}</strong></div>
                         <div class="card-body">
                             <form class="form-horizontal" action="" method="post">
                                 <div class="form-group row">
@@ -19,69 +19,71 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Цена без скидки:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" type="number" value="{{$program->price}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Цена со скидкой:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Количество дней:</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" type="number" value="{{$program->discount_price}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="form-group col-md-6">
                                         <label for="inputState">Меню:</label>
                                         <select id="inputState" class="form-control">
-                                            <option selected>Выбрать...</option>
-                                            <option>Меню 1</option>
-                                            <option>Меню 2</option>
-                                            <option>Меню 3</option>
+                                            @foreach($menus as $menu)
+                                                <option value="{{$menu->id}}"
+                                                        @if($program->menu_id === $menu->id)
+                                                        selected
+                                                    @endif>
+                                                    {{$menu->menu_content}}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="inputState">Тренировка:</label>
                                         <select id="inputState" class="form-control">
-                                            <option selected>Выбрать...</option>
-                                            <option>Тренировка на ноги</option>
-                                            <option>Тренировка на руки</option>
-                                            <option>Тренировка на спину</option>
+                                            @foreach($trainings as $training)
+                                                <option value="{{$training->id}}"
+                                                    @if($program->training_id === $training->id)
+                                                        selected
+                                                        @endif>
+                                                    {{$training->name}}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о тренировках:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" type="text" value="{{$program->about_trainings}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о рационе:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" type="text" value="{{$program->about_ration}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о процедурах:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" type="text" value="{{$program->about_procedures}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о поддержке:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" type="text" value="{{$program->about_support}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о мотивации:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" type="text" value="{{$program->about_motivation}}">
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-edit">

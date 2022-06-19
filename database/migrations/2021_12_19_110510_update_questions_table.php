@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
+class UpdateQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,12 +15,13 @@ class CreateQuestionsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('questions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('topic_id')->constrained();
-            $table->string('name', 50);
-            $table->string('answer', 5000);
-            $table->timestamps();
+        Schema::table('questions', function (Blueprint $table) {
+            $table->dropForeign(['topic_id']);
+            $table->unsignedBigInteger('topic_id')->change();
+            $table->foreign('topic_id')
+                ->references('id')
+                ->on('topics')
+                ->cascadeOnUpdate();
         });
 
         Schema::enableForeignKeyConstraints();
