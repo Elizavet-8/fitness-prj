@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="card-footer card-footer-edit">
                                     <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>
-                                    <button class="btn btn-sm btn-danger" type="reset"> Назад</button>
+                                    <a class="btn btn-sm btn-danger" href="/admin/program"> Назад</a>
                                 </div>
                             </form>
                         </div>
