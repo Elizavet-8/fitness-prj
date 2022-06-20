@@ -79,6 +79,10 @@ Route::prefix('/admin')->group(function () {
     Route::prefix('/program')->group(function () {  // word: "icons" - not working as part of adress
         Route::get('/', [ProgramsController::class, "openProgramsPage"])->name('openProgramsPage');
         Route::get('/edit/{id}', [ProgramsController::class, "openProgramEditingPage"])->name('openProgramEditingPage');
+        Route::post('/edit/{id}', [ProgramsController::class, "editProgram"])->name('editProgram');
+        Route::get('/add', [ProgramsController::class, "openAddingForm"])->name('openAddingForm');
+        Route::post('/add', [ProgramsController::class, "addProgram"])->name('addProgram');
+        Route::delete('/remove/{id}', [ProgramsController::class, "deleteProgram"])->name('deleteProgram');
     });
     Route::prefix('/main')->group(function () {  // word: "icons" - not working as part of adress
         Route::get('/', [MainPageController::class,'adminMagePage'])->name('adminMagePage');

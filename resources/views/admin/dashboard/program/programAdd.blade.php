@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header"><strong>{{$program->name}}</strong></div>
+                        <div class="card-header"><strong>Добавить программу / марафон</strong></div>
                         <div class="card-body">
                             @isset($errors)
                                 @if ($errors->any())
@@ -20,24 +20,36 @@
                                     </div>
                                 @endif
                             @endisset
-                            <form class="form-horizontal" action="/admin/program/edit/{{$program->id}}" method="post">
+                            <form class="form-horizontal" action="/admin/program/add" method="post">
                                 @csrf
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Название:</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" name="name" type="text" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Описание:</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" name="description" type="text" required>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Окончание акции:</label>
                                     <div class="col-md-9">
-                                        <input required class="form-control" name="finish_date" type="datetime-local" value="{{ date('Y-m-d\TH:i', $program->finish_date) }}">
+                                        <input required class="form-control" name="finish_date" type="datetime-local">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Цена без скидки:</label>
                                     <div class="col-md-9">
-                                        <input required class="form-control" name="price" type="number" value="{{$program->price}}">
+                                        <input required class="form-control" name="price" type="number">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Цена со скидкой:</label>
                                     <div class="col-md-9">
-                                        <input required class="form-control" name="discount_price" type="number" value="{{$program->discount_price}}">
+                                        <input required class="form-control" name="discount_price" type="number">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -45,10 +57,7 @@
                                         <label for="inputState">Меню:</label>
                                         <select id="inputState" class="form-control" name="menu_id">
                                             @foreach($menus as $menu)
-                                                <option value="{{$menu->id}}"
-                                                        @if($program->menu_id === $menu->id)
-                                                        selected
-                                                    @endif>
+                                                <option value="{{$menu->id}}">
                                                     {{$menu->menu_content}}
                                                 </option>
                                             @endforeach
@@ -58,10 +67,7 @@
                                         <label for="inputState">Тренировка:</label>
                                         <select id="inputState" class="form-control" name="training_id">
                                             @foreach($trainings as $training)
-                                                <option value="{{$training->id}}"
-                                                    @if($program->training_id === $training->id)
-                                                        selected
-                                                        @endif>
+                                                <option value="{{$training->id}}">
                                                     {{$training->name}}
                                                 </option>
                                             @endforeach
@@ -71,31 +77,31 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о тренировках:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" name="about_trainings" type="text" value="{{$program->about_trainings}}">
+                                        <input class="form-control" name="about_trainings" type="text">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о рационе:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" name="about_ration" type="text" value="{{$program->about_ration}}">
+                                        <input class="form-control" name="about_ration" type="text">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о процедурах:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" name="about_procedures" type="text" value="{{$program->about_procedures}}">
+                                        <input class="form-control" name="about_procedures" type="text">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о поддержке:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" name="about_support" type="text" value="{{$program->about_support}}">
+                                        <input class="form-control" name="about_support" type="text">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о мотивации:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" name="about_motivation" type="text" value="{{$program->about_motivation}}">
+                                        <input class="form-control" name="about_motivation" type="text">
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-edit">
