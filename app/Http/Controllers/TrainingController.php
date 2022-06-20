@@ -84,14 +84,15 @@ class TrainingController extends Controller
     function adminAddView(Request $request)
     {
         $locations = TrainingLocation::all();
-        return view('admin.dashboard.workout.workoutAddForm')->with(compact('locations'));
+        $problem_zones = ProblemZone::all();
+        return view('admin.dashboard.workout.workoutAddForm')->with(compact('locations', 'problem_zones'));
     }
 
     function adminAddTraining(Request $request)
     {
         $name = $request->name;
         $training_price = $request->training_price;;
-        $problemZone = $request->problemZone;
+        $problemZone = $request->problem_zone_id;
 
         if ($name != null && $training_price != null && $problemZone != null) {
             Training::create([

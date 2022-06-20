@@ -16,7 +16,7 @@
                                 <thead>
                                 <tr>
                                     <th>Название</th>
-                                    {{--<th>Количесво дней</th>--}}
+                                    <th>Цена</th>
                                     <th>Калории</th>
                                     <th>Белки</th>
                                     <th>Жиры</th>
@@ -29,6 +29,7 @@
                                     @foreach($menus as $menu)
                                         <tr>
                                             <td>{{ $menu->menu_content}}</td>
+                                            <td>{{$menu->menu_price}}</td>
                                             {{--<td>
                                                 @dd($menu->menuDays)
 
@@ -75,13 +76,12 @@
                                                                 d="M71.6,29.6l26.9,26.9L116.8,38L90,11.2L71.6,29.6z M98.4,45.1L82.9,29.6l7.1-7.1L105.5,38L98.4,45.1z"/>
                                                         </g></svg>
                                                 </a>
-                                                <form action="" method="POST">
-                                                    <button class="users-btn btn btn-block btn-danger">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                             viewBox="0 0 791.908 791.908"
-                                                             style="enable-background:new 0 0 791.908 791.908;"
-                                                             xml:space="preserve">
+                                                <button class="users-btn btn btn-block btn-danger" onclick="deleteMenu({{$menu->id}})">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                         viewBox="0 0 791.908 791.908"
+                                                         style="enable-background:new 0 0 791.908 791.908;"
+                                                         xml:space="preserve">
                                                 <g>
                                                     <path d="M648.587,99.881H509.156C500.276,43.486,452.761,0,394.444,0S287.696,43.486,279.731,99.881H142.315
                                                         c-26.733,0-48.43,21.789-48.43,48.43v49.437c0,24.719,17.761,44.493,41.564,47.423V727.64c0,35.613,28.655,64.268,64.268,64.268
@@ -98,8 +98,7 @@
                                                         C513.093,680.309,504.212,671.337,504.212,661.45z"/>
                                                 </g>
                                                 </svg>
-                                                    </button>
-                                                </form>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -112,7 +111,17 @@
             </div>
         </div>
     </div>
-
+    <script>
+        function deleteMenu(id) {
+            axios.delete('/admin/menu/remove/' + id)
+                .then(() => {
+                    window.location.href = '/admin/menu';
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+    </script>
 @endsection
 
 

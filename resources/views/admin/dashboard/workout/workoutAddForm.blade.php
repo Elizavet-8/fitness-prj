@@ -26,7 +26,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label">Тренировка для</label>
                                 <div class="col-md-9">
-                                    <select name="trainingLocation" class="form-control">
+                                    <select name="problem_zone_id" class="form-control">
                                         @foreach($problem_zones as $problem_zone)
                                             <option value="{{$problem_zone->id}}">{{$problem_zone->name}}</option>
                                         @endforeach

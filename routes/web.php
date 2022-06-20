@@ -42,6 +42,7 @@ Route::prefix('/admin')->group(function () {
         Route::post('/editMenu/{id}', [MenuController::class,'adminEditMenu'])->name('editMenu');
         Route::get('/add', [MenuController::class,'adminAddView']);
         Route::post('/addMenu', [MenuController::class,'adminAddMenu'])->name('addMenu');
+        Route::delete('/remove/{id}', [MenuController::class, "deleteMenu"])->name('deleteMenu');
         Route::prefix('/days')->group(function () {
             Route::get('/{id}', [MenuController::class,'adminMenuDay'])->name('menuDay');
             Route::get('/edit/{id}', [MenuController::class,'adminShowMenuDay']);

@@ -64,24 +64,24 @@ class MenuController extends Controller
         return view('admin.dashboard.menu.menuEditForm')->with(compact('menu', 'calories'));
     }
 
-    function adminEditMenu(Request $request, $id)
+    public function adminEditMenu(Request $request, $id)
     {
-        $menu_content = $request->menu_content;
-        $menuCalories = $request->menuCalories;
-        $proteins = $request->proteins;
-        $fat = $request->fat;
-        $carbs = $request->carbs;
-
-        if ($menu_content != null && $menuCalories != null && $proteins != null && $fat != null && $carbs != null) {
-            Menu::whereId($id)->update([
-                'menu_content' => $menu_content,
-                'menuCalories' => $menuCalories,
-                'proteins' => $proteins,
-                'fat' => $fat,
-                'carbs' => $carbs,
-            ]);
-        }
+        $menu = Menu::find($id);
+        $input = $request->validate([
+            'menu_calories_id' => 'required|integer',
+            'menu_content' => 'required|string',
+            'menu_price' => 'required',
+            'proteins' => 'required',
+            'fat' => 'required',
+            'carbs' => 'required'
+        ]);
+        $menu->update($input);
         return redirect()->route('menu');
+    }
+
+    public function deleteMenu($id)
+    {
+        Menu::destroy($id);
     }
 
     function adminAddView(Request $request)
@@ -90,23 +90,17 @@ class MenuController extends Controller
         return view('admin.dashboard.menu.menuAddForm')->with(compact('calories'));
     }
 
-    function adminAddMenu(Request $request)
+    public function adminAddMenu(Request $request)
     {
-        $menu_content = $request->menu_content;
-        $menuCalories = $request->menuCalories;
-        $proteins = $request->proteins;
-        $fat = $request->fat;
-        $carbs = $request->carbs;
-
-        if ($menu_content != null && $menuCalories != null && $proteins != null && $fat != null && $carbs != null) {
-            Menu::create([
-                'menu_content' => $menu_content,
-                'menuCalories' => $menuCalories,
-                'proteins' => $proteins,
-                'fat' => $fat,
-                'carbs' => $carbs,
-            ]);
-        }
+        $input = $request->validate([
+            'menu_calories_id' => 'required|integer',
+            'menu_content' => 'required|string',
+            'menu_price' => 'required',
+            'proteins' => 'required',
+            'fat' => 'required',
+            'carbs' => 'required'
+        ]);
+        Menu::create($input);
         return redirect()->route('menu');
     }
 

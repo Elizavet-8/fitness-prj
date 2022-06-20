@@ -9,18 +9,35 @@
                     <div class="card">
                         <div class="card-header"><strong>Создать меню</strong></div>
                         <div class="card-body">
+                            @isset($errors)
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            @endisset
                             <form class="form-horizontal" action="{{route('addMenu')}}" method="post">
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Название</label>
                                     <div class="col-md-9">
-                                        <input name="menu_content" class="form-control" type="text" placeholder="Название ">
+                                        <input required name="menu_content" class="form-control" type="text" placeholder="Название ">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Цена</label>
+                                    <div class="col-md-9">
+                                        <input required name="menu_price" class="form-control" type="number" placeholder="Цена ">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Калории</label>
                                     <div class="col-md-9">
-                                        <select name="trainingLocation" class="form-control">
+                                        <select name="menu_calories_id" class="form-control">
                                             @foreach($calories as $calorie)
                                                 <option value="{{$calorie->id}}">{{$calorie->name}}</option>
                                             @endforeach
@@ -30,19 +47,19 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Белки </label>
                                     <div class="col-md-9">
-                                        <input name="proteins" class="form-control" type="text" placeholder="Белки ">
+                                        <input required name="proteins" class="form-control" type="number" placeholder="Белки ">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Жиры </label>
                                     <div class="col-md-9">
-                                        <input name="fat" class="form-control" type="text" placeholder="Жиры ">
+                                        <input required name="fat" class="form-control" type="number" placeholder="Жиры ">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Углеводы </label>
                                     <div class="col-md-9">
-                                        <input name="carbs" class="form-control" placeholder="Углеводы " type="text">
+                                        <input required name="carbs" class="form-control" placeholder="Углеводы " type="number">
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-edit">
