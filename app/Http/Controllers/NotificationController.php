@@ -75,17 +75,15 @@ class NotificationController extends Controller
         return view('admin.dashboard.notification.notificationEditForm')->with(compact('notification'));
     }
 
-    function adminEditNotification(Request $request, $id)
+    public function editNotification(Request $request, $id)
     {
-        $name = $request->name;
-        $description = $request->description;
-
-        if ($name != null && $description != null) {
-            Notification::whereId($id)->update([
-                'name' => $name,
-                'description' => $description
-            ]);
-        }
+        $notification = Notification::find($id);
+        $input = $request->validate([
+            'name' => 'required|string',
+            'day' => 'required|integer',
+            'description' => 'string'
+        ]);
+        $notification->update($input);
         return redirect()->route('notification');
     }
 
@@ -95,19 +93,19 @@ class NotificationController extends Controller
         return view('admin.dashboard.notification.notificationAdd')->with(compact('notifications'));
     }
 
-    function adminAddNotification(Request $request)
+    public function addNotification(Request $request)
     {
-        $name = $request->name;
-        $description = $request->description;
+        $input = $request->validate([
+            'name' => 'required|string',
+            'day' => 'required|integer',
+            'description' => 'string'
+        ]);
+        Notification::create($input);
+        return redirect()->route('notification');
+    }
 
-        if ($name != null && $description != null) {
-            {
-                Notification::create([
-                    'name' => $name,
-                    'description' => $description
-                ]);
-            }
-            return redirect()->route('notification');
-        }
+    public function deleteNotification($id)
+    {
+        Notification::destroy($id);
     }
 }

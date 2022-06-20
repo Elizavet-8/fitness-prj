@@ -25,7 +25,13 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Название:</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" value="{{ old('name') }}" name="name" type="text">
+                                        <input required class="form-control" value="{{ old('name') }}" name="name" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">День:</label>
+                                    <div class="col-md-9">
+                                        <input required class="form-control" name="day" type="number">
                                     </div>
                                 </div>
                                 <div class="form-group row">
