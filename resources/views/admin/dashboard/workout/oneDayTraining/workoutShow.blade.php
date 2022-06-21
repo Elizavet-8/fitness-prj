@@ -5,12 +5,12 @@
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-sm-12 col-md-12">
-                    <a href="/admin/workout/days/add" class="btn btn-primary btn-lg mb-3">Добавить</a>
+                    <a href="/admin/workout/days/add/{{$id}}" class="btn btn-primary btn-lg mb-3">Добавить</a>
                 </div>
                 <div class="col-lg-12">
                     @foreach($trainings->days as $trainings_day)
                         <div class="card">
-                            <div class="card-header"><i class="fa fa-align-justify"></i>День 1</div>
+                            <div class="card-header"><i class="fa fa-align-justify"></i>День {{$trainings_day->day_number}}</div>
                             <div class="card-body">
                                 <table class="table table-responsive-sm table-bordered table-striped table-sm">
                                     <thead>
@@ -50,7 +50,11 @@
                                         <td>
                                             @if(!is_null($trainings_day->videos))
                                                 @foreach($trainings_day->videos as $video)
-                                                    <a href="{{$video["link"]}}">{{$video["title"]}}</a>
+                                                    @if(is_string($video))
+                                                        <a href="{{json_decode($video)->link}}">{{json_decode($video)->title}}</a>
+                                                    @else
+                                                        <a href="{{$video["link"]}}">{{$video["title"]}}</a>
+                                                    @endif
                                                 @endforeach
                                             @else
                                                 {{ $trainings_day->description }}
@@ -86,17 +90,12 @@
                                                             d="M71.6,29.6l26.9,26.9L116.8,38L90,11.2L71.6,29.6z M98.4,45.1L82.9,29.6l7.1-7.1L105.5,38L98.4,45.1z"/>
                                                     </g></svg>
                                             </a>
-                                            <form
-                                                action="{{ route('deleteTrainingDay', $trainings_day) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"  class="users-btn btn btn-block btn-danger">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                         viewBox="0 0 791.908 791.908"
-                                                         style="enable-background:new 0 0 791.908 791.908;"
-                                                         xml:space="preserve">
+                                            <button type="submit"  class="users-btn btn btn-block btn-danger" onclick="deleteDay({{$trainings_day->id}})">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     viewBox="0 0 791.908 791.908"
+                                                     style="enable-background:new 0 0 791.908 791.908;"
+                                                     xml:space="preserve">
                                                     <g>
                                                         <path d="M648.587,99.881H509.156C500.276,43.486,452.761,0,394.444,0S287.696,43.486,279.731,99.881H142.315
                                                             c-26.733,0-48.43,21.789-48.43,48.43v49.437c0,24.719,17.761,44.493,41.564,47.423V727.64c0,35.613,28.655,64.268,64.268,64.268
@@ -113,8 +112,7 @@
                                                             C513.093,680.309,504.212,671.337,504.212,661.45z"/>
                                                     </g>
                                                     </svg>
-                                                </button>
-                                            </form>
+                                            </button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -126,7 +124,17 @@
             </div>
         </div>
     </div>
-
+    <script>
+        function deleteDay(id) {
+            axios.delete('/admin/workout/days/remove/' + id)
+                .then(() => {
+                    location.reload();
+                })
+                .catch(() => {
+                    location.reload();
+                })
+        }
+    </script>
 @endsection
 
 

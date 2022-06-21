@@ -60,12 +60,12 @@ Route::prefix('/admin')->group(function () {
         Route::post('/addTraining', [TrainingController::class,'adminAddTraining'])->name('addTraining');
         Route::post('/deleteTraining/{id}', [TrainingController::class,'adminDeleteTraining'])->name('deleteTraining');
         Route::prefix('/days')->group(function () {
-            Route::get('/{id}', [TrainingController::class,'adminTrainingsDay'])->name('trainingDay');
+            Route::get('/add/{id}', [TrainingController::class,'openTrainingDayAdding'])->name('openTrainingDayAdding');
             Route::get('/edit/{id}', [TrainingController::class,'adminShowTrainingDay']);
             Route::post('/editTrainingDay/{id}', [TrainingController::class,'adminEditTrainingDay'])->name('editTrainingDay');
-            Route::get('/add', [TrainingController::class,'adminAddViewDay']);
             Route::post('/addTrainingDay', [TrainingController::class,'adminAddTrainingDay'])->name('addTrainingDay');
-            Route::post('/deleteTrainingDay/{id}', [TrainingController::class,'adminDeleteTrainingDay'])->name('deleteTrainingDay');
+            Route::delete('/remove/{id}', [TrainingController::class,'deleteDay'])->name('deleteTrainingDay');
+            Route::get('/{id}', [TrainingController::class,'adminTrainingsDay'])->name('trainingDay');
         });
     });
     Route::prefix('/question')->group(function () {  // word: "icons" - not working as part of adress

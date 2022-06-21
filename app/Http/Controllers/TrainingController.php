@@ -128,62 +128,51 @@ class TrainingController extends Controller
         $locations = TrainingLocation::all();
 
         //dd($trainings->toArray());
-        return view('admin.dashboard.workout.oneDayTraining.workoutShow', compact('trainings', 'locations'));
+        return view('admin.dashboard.workout.oneDayTraining.workoutShow', compact('trainings', 'locations', 'id'));
     }
 
     function adminShowTrainingDay(Request $request, $id)
     {
         $training_day = (Days::find($id));
         $locations = TrainingLocation::all();
-        return view('admin.dashboard.workout.oneDayTraining.workoutDayEditForm')->with(compact('training_day', 'locations'));
+        return view('admin.dashboard.workout.oneDayTraining.workoutDayEditForm')->with(compact('training_day', 'locations', 'id'));
     }
 
-    function adminEditTrainingDay(Request $request, $id)
+    public function adminEditTrainingDay(Request $request, $id)
     {
-
-        $name = $request->name;
-        $trainingLocation = $request->trainingLocation;
-        $info_text = $request->info_text;
-        $videos = $request->videos;
-        $description = $request->description;
-
-        Log::info(print_r($request->toArray(), true));
-        if ($name != null && $trainingLocation != null && $info_text != null && $videos != null && $description != null) {
-            Days::whereId($id)->update([
-                'name' => $name,
-                'trainingLocation' => $trainingLocation,
-                'info' => json_encode($info_text),
-                'videos' => json_encode($videos),
-                'description' => $description,
-            ]);
-        }
-        return redirect()->route('trainingDay');
+        $input = $request->validate([
+            'name' => 'required|string',
+            'training_location_id' => 'required|integer',
+            'day_number' => 'required|integer',
+            'description' => 'nullable',
+            'videos' => 'nullable',
+            'info' => 'nullable',
+            'training_id' => 'required|integer'
+        ]);
+        $day = Days::find($id);
+        $day->update($input);
+        return redirect()->route('training');
     }
 
-    function adminAddViewDay(Request $request, $id)
+    public function openTrainingDayAdding($id)
     {
         $training_days = Days::all();
         $locations = TrainingLocation::all();
-        return view('admin.dashboard.workout.oneDayTraining.workoutDayAddForm')->with(compact('training_days', 'locations'));
+        return view('admin.dashboard.workout.oneDayTraining.workoutDayAddForm')->with(compact('training_days', 'locations', 'id'));
     }
 
-    function adminAddTrainingDay(Request $request)
+    public function adminAddTrainingDay(Request $request)
     {
-        $name = $request->name;
-        $trainingLocation = $request->trainingLocation;
-        $info_text = $request->info_text;
-        $videos = $request->videos;
-        $description = $request->description;
-
-        if ($name != null && $trainingLocation != null && $info_text != null && $videos != null && $description != null) {
-            Days::create([
-                'name' => $name,
-                'trainingLocation' => $trainingLocation,
-                'info' => json_encode($info_text),
-                'videos' => json_encode($videos),
-                'description' => $description,
-            ]);
-        }
+        $input = $request->validate([
+            'name' => 'required|string',
+            'training_location_id' => 'required|integer',
+            'day_number' => 'required|integer',
+            'description' => 'nullable',
+            'videos' => 'nullable',
+            'info' => 'nullable',
+            'training_id' => 'required|integer'
+        ]);
+        Days::create($input);
         return redirect()->route('training');
     }
 
@@ -193,5 +182,10 @@ class TrainingController extends Controller
         $training_day->delete();
 
         return redirect()->route('training');
+    }
+
+    public function deleteDay($id)
+    {
+        Days::destroy($id);
     }
 }

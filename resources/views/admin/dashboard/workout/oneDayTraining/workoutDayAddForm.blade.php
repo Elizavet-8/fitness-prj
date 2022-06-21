@@ -1,7 +1,7 @@
 @extends('admin.dashboard.base')
 
 @section('content')
-
+<div id="app">
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="row">
@@ -18,18 +18,42 @@
                                             Создание
                                         </strong></div>
                                     <div class="card-body">
+                                        @isset($errors)
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                        @endisset
                                         <form class="form-horizontal form" action="{{route('addTrainingDay')}}" method="post">
                                             @csrf
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Название</label>
                                                 <div class="col-md-9">
-                                                    <input name="name" class="form-control" type="text" placeholder="Название ">
+                                                    <input required name="name" class="form-control" type="text" placeholder="Название ">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Описание</label>
+                                                <div class="col-md-9">
+                                                    <input required name="description" class="form-control" type="text" placeholder="Описание ">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Номер дня</label>
+                                                <div class="col-md-9">
+                                                    <input required name="day_number" class="form-control" type="number" placeholder="Номер дня ">
+                                                </div>
+                                            </div>
+                                            <input required name="training_id" class="form-control" type="hidden" value="{{$id}}">
+                                            <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Место:</label>
                                                 <div class="col-md-9">
-                                                    <select name="trainingLocation" class="form-control">
+                                                    <select name="training_location_id" class="form-control">
                                                         <option
                                                         @foreach($locations as $location)
                                                             <option
@@ -39,10 +63,10 @@
                                                 </div>
                                             </div>
                                             <Todolistvideo
-                                                :videos="{{json_encode($training_day->videos)}}"
+                                                :videos="[]"
                                             ></Todolistvideo>
                                             <Workouttodolist
-                                                :infos="{{json_encode($training_day->info)}}"
+                                                :infos="[]"
                                             ></Workouttodolist>
                                             <div class="card-footer card-footer-edit">
                                                 <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>
@@ -59,7 +83,7 @@
                                         <form class="form-horizontal form" action="{{route('addTrainingDay')}}" method="post">
                                             @csrf
                                             <Workouttodolist
-                                                :infos="{{json_encode($training_day->info)}}"
+                                                :infos="[]"
                                             ></Workouttodolist>
                                             <div class="card-footer card-footer-edit">
                                                 <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>
@@ -75,6 +99,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
 @endsection
 

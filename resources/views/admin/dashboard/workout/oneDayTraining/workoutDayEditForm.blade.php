@@ -18,6 +18,17 @@
                                             Редактирование
                                         </strong></div>
                                     <div class="card-body">
+                                        @isset($errors)
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                        @endisset
                                         <form class="form-horizontal form" action="{{route('editTrainingDay',['id'=>$training_day->id])}}" method="post">
                                             @csrf
                                             <div class="form-group row">
@@ -26,25 +37,39 @@
                                                     <input value="{{ $training_day->name }}" name="name" class="form-control" type="text" placeholder="Название ">
                                                 </div>
                                             </div>
-{{--                                            @dd($training_day->videos)--}}
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Описание</label>
+                                                <div class="col-md-9">
+                                                    <input required name="description" class="form-control" type="text" placeholder="Описание " value="{{$training_day->description}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Номер дня</label>
+                                                <div class="col-md-9">
+                                                    <input required name="day_number" class="form-control" type="number" placeholder="Номер дня " value="{{$training_day->day_number}}">
+                                                </div>
+                                            </div>
+                                            <input required name="training_id" class="form-control" type="hidden" value="{{$training_day->training_id}}">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Место:</label>
                                                 <div class="col-md-9">
-                                                    <select name="trainingLocation" class="form-control">
-                                                        <option
-                                                            value="{{$training_day->trainingLocation}}">{{$training_day->trainingLocation->name}}</option>
+                                                    <select name="training_location_id" class="form-control">
                                                         @foreach($locations as $location)
-                                                            <option
-                                                                value="{{$location->id}}">{{$location->name}}</option>
+                                                            <option value="{{$location->id}}"
+                                                                @if($training_day->training_location_id === $location->id)
+                                                                    selected
+                                                                @endif>
+                                                                {{$location->name}}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <Todolistvideo
-                                                :videos="{{json_encode($training_day->videos)}}"
+                                                :videos="{{json_encode($training_day->videos) === null ? [] : json_encode($training_day->videos)}}"
                                             ></Todolistvideo>
                                             <Todolistinfo
-                                                :infos="{{json_encode($training_day->info)}}"
+                                                :infos="{{json_encode($training_day->info) === null ? [] : json_encode($training_day->info)}}"
                                             ></Todolistinfo>
                                             <div class="card-footer card-footer-edit">
                                                 <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>

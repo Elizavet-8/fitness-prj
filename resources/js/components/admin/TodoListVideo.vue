@@ -22,7 +22,7 @@
             <div class="badge badge-pill badge-secondary"
                  @task_done="delete_task(index)" :key="index" v-for="(video,index) in videos"
             >
-                {{video.title }} / {{ video.link }}
+                {{typeof video === 'string' ? JSON.parse(video).title : video.title }} / {{typeof video === 'string' ? JSON.parse(video).link : video.link }}
                 <input type="hidden" name="videos[]" :value="toString(video)">
                 <span class="badge badge-light" @click="delete_task(index)">x</span>
             </div>
@@ -41,7 +41,7 @@ export default {
     }),
     methods: {
         toString(video){
-          return JSON.stringify(video);
+          return typeof video === 'string' ? video : JSON.stringify(video);
         },
         task_done() {
             this.$emit('task_done')
