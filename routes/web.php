@@ -44,12 +44,12 @@ Route::prefix('/admin')->group(function () {
         Route::post('/addMenu', [MenuController::class,'adminAddMenu'])->name('addMenu');
         Route::delete('/remove/{id}', [MenuController::class, "deleteMenu"])->name('deleteMenu');
         Route::prefix('/days')->group(function () {
-            Route::get('/{id}', [MenuController::class,'adminMenuDay'])->name('menuDay');
             Route::get('/edit/{id}', [MenuController::class,'adminShowMenuDay']);
             Route::post('/editMenuDay/{id}', [MenuController::class,'adminEditMenuDay'])->name('editMenuDay');
             Route::get('/add/{id}', [MenuController::class,'adminAddViewDay']);
             Route::post('/addMenuDay', [MenuController::class,'adminAddMenuDay'])->name('addMenuDay');
             Route::post('/deleteMenuDay/{id}', [MenuController::class,'adminDeleteMenuDay'])->name('deleteMenuDay');
+            Route::get('/{id}', [MenuController::class,'adminMenuDay'])->name('menuDay');
         });
     });
     Route::prefix('/workout')->group(function () {  // word: "icons" - not working as part of adress

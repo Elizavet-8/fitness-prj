@@ -22,42 +22,42 @@
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label">Название дня</label>
                                             <div class="col-md-9">
-                                                <input name="name" class="form-control" type="text" placeholder="Название дня">
+                                                <input required name="name" class="form-control" type="text" placeholder="Название дня">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label">№ дня</label>
                                             <div class="col-md-9">
-                                                <input name="day_number" class="form-control" type="text" placeholder="№ дня">
+                                                <input required name="day_number" class="form-control" type="number" placeholder="№ дня">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label">Описание дня</label>
                                             <div class="col-md-9">
-                                                <input name="description" class="form-control" type="text" placeholder="Название ">
+                                                <input required name="description" class="form-control" type="text" placeholder="Название ">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-md-4">
                                                 <label class="col-form-label">Белки</label>
                                                 <div>
-                                                    <input class="form-control" type="text" name="proteins">
+                                                    <input required class="form-control" type="number" name="proteins">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label class="col-form-label">Жиры</label>
                                                 <div>
-                                                    <input class="form-control" type="text" name="fat">
+                                                    <input required class="form-control" type="number" name="fat">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label class="col-form-label">Углеводы</label>
                                                 <div>
-                                                    <input class="form-control" type="text" name="carbs">
+                                                    <input required class="form-control" type="number" name="carbs">
                                                 </div>
                                             </div>
                                         </div>
-                                        <Addtodolistmenu></Addtodolistmenu>
+                                        <Addtodolistmenu :contents="[]"></Addtodolistmenu>
                                         <Addtodolistinfo></Addtodolistinfo>
                                     </div>
                                 </div>

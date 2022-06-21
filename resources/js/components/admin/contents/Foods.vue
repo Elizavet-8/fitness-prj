@@ -2,7 +2,7 @@
     <div>
         <div class="form-group row">
             <div class="form-group col-md-5">
-                <label class="col-form-label">{{content.name}}}</label>
+                <label class="col-form-label">{{content.name}}</label>
                 <div>
                     <input class="form-control" type="text" v-model="new_food.name">
                 </div>
@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="form-group col-md-2">
-                <small class="form-text text-muted">{{ "Продуктов: " + foods.length }}</small>
+                <small class="form-text text-muted">{{ "Продуктов: " + content.foods.length }}</small>
                 <div class="btn btn-outline-primary" @click="add_food">Добавить</div>
             </div>
         </div>
@@ -31,31 +31,31 @@
 
 <script>
 export default {
-    props: ["infos"],
+    props: ["infos", "content"],
     data: () => ({
-        // new_food: {
-        //     name: '',
-        //     amount: '',
-        // },
-        // foods: [],
+        new_food: {
+            name: '',
+            amount: '',
+        },
+        foods: [],
     }),
     methods: {
-        // food_done() {
-        //     this.$emit('food_done')
-        // },
-        // add_food() {
-        //     if (this.new_food.name != '', this.new_food.amount != '') {
-        //         this.foods.push({
-        //             name: this.new_food.name,
-        //             amount: this.new_food.amount,
-        //         });
-        //         this.new_food.name = '';
-        //         this.new_food.amount = '';
-        //     }
-        // },
-        // delete_food(index) {
-        //     this.foods.splice(index, 1);
-        // },
+        food_done() {
+            this.$emit('food_done')
+        },
+        add_food() {
+            if (this.new_food.name != '', this.new_food.amount != '') {
+                this.content.foods.push({
+                    name: this.new_food.name,
+                    amount: this.new_food.amount,
+                });
+                this.new_food.name = '';
+                this.new_food.amount = '';
+            }
+        },
+        delete_food(index) {
+            this.content.foods.splice(index, 1);
+        },
     }
 }
 </script>

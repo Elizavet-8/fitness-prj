@@ -2479,11 +2479,14 @@ __webpack_require__.r(__webpack_exports__);
         name: 'Ужин',
         foods: [],
         videos: []
-      }]
+      }],
+      content: {
+        videos: []
+      }
     };
   },
   mounted: function mounted() {
-    console.log(this.contents);
+    console.log(this.contents.length);
   },
   task_done: function task_done() {
     this.$emit('task_done');
@@ -2633,31 +2636,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["infos"],
+  props: ["infos", "content"],
   data: function data() {
-    return {// new_food: {
-      //     name: '',
-      //     amount: '',
-      // },
-      // foods: [],
+    return {
+      new_food: {
+        name: '',
+        amount: ''
+      },
+      foods: []
     };
   },
-  methods: {// food_done() {
-    //     this.$emit('food_done')
-    // },
-    // add_food() {
-    //     if (this.new_food.name != '', this.new_food.amount != '') {
-    //         this.foods.push({
-    //             name: this.new_food.name,
-    //             amount: this.new_food.amount,
-    //         });
-    //         this.new_food.name = '';
-    //         this.new_food.amount = '';
-    //     }
-    // },
-    // delete_food(index) {
-    //     this.foods.splice(index, 1);
-    // },
+  methods: {
+    food_done: function food_done() {
+      this.$emit('food_done');
+    },
+    add_food: function add_food() {
+      if (this.new_food.name != '', this.new_food.amount != '') {
+        this.content.foods.push({
+          name: this.new_food.name,
+          amount: this.new_food.amount
+        });
+        this.new_food.name = '';
+        this.new_food.amount = '';
+      }
+    },
+    delete_food: function delete_food(index) {
+      this.content.foods.splice(index, 1);
+    }
   }
 });
 
@@ -2705,30 +2710,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["content"],
   data: function data() {
-    return {// new_task: {
-      //     title: '',
-      //     link: '',
-      // },
-      // videos: []
+    return {
+      new_task: {
+        title: '',
+        link: ''
+      },
+      videos: []
     };
   },
-  methods: {// task_done() {
-    //     this.$emit('task_done')
-    // },
-    // add_task(index) {
-    //     if (this.new_task.title != '', this.new_task.link != '') {
-    //         this.videos.push({
-    //             title: this.new_task.title,
-    //             link: this.new_task.link,
-    //         });
-    //         this.new_task.title = '';
-    //         this.new_task.link = '';
-    //     }
-    // },
-    // delete_task(index) {
-    //     this.videos.splice(index, 1);
-    // }
+  methods: {
+    task_done: function task_done() {
+      this.$emit('task_done');
+    },
+    add_task: function add_task(index) {
+      if (this.new_task.title != '', this.new_task.link != '') {
+        this.content.videos.push({
+          title: this.new_task.title,
+          link: this.new_task.link
+        });
+        this.new_task.title = '';
+        this.new_task.link = '';
+      }
+    },
+    delete_task: function delete_task(index) {
+      this.content.videos.splice(index, 1);
+    }
   }
 });
 
@@ -42567,23 +42575,19 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.contents, function (content, index) {
-      return _c(
-        "div",
-        { key: index },
-        [
-          _vm._l(content.foods, function (food, index) {
-            return _c("foods", { key: index })
-          }),
-          _vm._v(" "),
-          _vm._l(content.videos, function (video, index) {
-            return _c("Videos", { key: index })
-          }),
-        ],
-        2
-      )
-    }),
-    0
+    [
+      _vm._l(_vm.contents, function (content, index) {
+        return _c(
+          "div",
+          { key: index },
+          [_c("foods", { attrs: { content: content } })],
+          1
+        )
+      }),
+      _vm._v(" "),
+      _c("Videos", { attrs: { content: _vm.content } }),
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -42626,7 +42630,7 @@ var render = function () {
             },
           ],
           staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Ссылка на видео" },
+          attrs: { type: "text", placeholder: "Дополнительная информация" },
           domProps: { value: _vm.new_task.text },
           on: {
             input: function ($event) {
@@ -42648,6 +42652,7 @@ var render = function () {
           "button",
           {
             staticClass: "btn btn-outline-primary",
+            attrs: { type: "button" },
             on: { click: _vm.add_task },
           },
           [_vm._v("Добавить")]
@@ -42725,7 +42730,7 @@ var render = function () {
     _c("div", { staticClass: "form-group row" }, [
       _c("div", { staticClass: "form-group col-md-5" }, [
         _c("label", { staticClass: "col-form-label" }, [
-          _vm._v(_vm._s(_vm.content.name) + "}"),
+          _vm._v(_vm._s(_vm.content.name)),
         ]),
         _vm._v(" "),
         _c("div", [
@@ -42783,7 +42788,7 @@ var render = function () {
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-2" }, [
         _c("small", { staticClass: "form-text text-muted" }, [
-          _vm._v(_vm._s("Продуктов: " + _vm.foods.length)),
+          _vm._v(_vm._s("Продуктов: " + _vm.content.foods.length)),
         ]),
         _vm._v(" "),
         _c(
@@ -42922,7 +42927,7 @@ var render = function () {
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-2" }, [
         _c("small", { staticClass: "form-text text-muted" }, [
-          _vm._v(_vm._s("Видео: " + _vm.videos.length)),
+          _vm._v(_vm._s("Видео: " + _vm.content.videos.length)),
         ]),
         _vm._v(" "),
         _c(

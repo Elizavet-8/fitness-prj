@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="form-group col-md-2">
-                <small class="form-text text-muted">{{ "Видео: " + videos.length }}</small>
+                <small class="form-text text-muted">{{ "Видео: " + content.videos.length }}</small>
                 <button type="button" class="btn btn-outline-primary" @click="add_task">Добавить</button>
             </div>
         </div>
@@ -30,30 +30,31 @@
 </template>
 <script>
 export default {
+    props: ["content"],
     data: () => ({
-        // new_task: {
-        //     title: '',
-        //     link: '',
-        // },
-        // videos: []
+        new_task: {
+            title: '',
+            link: '',
+        },
+        videos: []
     }),
     methods: {
-        // task_done() {
-        //     this.$emit('task_done')
-        // },
-        // add_task(index) {
-        //     if (this.new_task.title != '', this.new_task.link != '') {
-        //         this.videos.push({
-        //             title: this.new_task.title,
-        //             link: this.new_task.link,
-        //         });
-        //         this.new_task.title = '';
-        //         this.new_task.link = '';
-        //     }
-        // },
-        // delete_task(index) {
-        //     this.videos.splice(index, 1);
-        // }
+        task_done() {
+            this.$emit('task_done')
+        },
+        add_task(index) {
+            if (this.new_task.title != '', this.new_task.link != '') {
+                this.content.videos.push({
+                    title: this.new_task.title,
+                    link: this.new_task.link,
+                });
+                this.new_task.title = '';
+                this.new_task.link = '';
+            }
+        },
+        delete_task(index) {
+            this.content.videos.splice(index, 1);
+        }
     },
 }
 </script>

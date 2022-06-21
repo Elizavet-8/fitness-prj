@@ -1,9 +1,9 @@
 <template>
     <div>
         <div :key="index" v-for="(content,index) in contents">
-            <foods :key="index" v-for="(food,index) in content.foods"></foods>
-            <Videos :key="index" v-for="(video,index) in content.videos"></Videos>
+            <foods :content="content"></foods>
         </div>
+        <Videos :content="content"></Videos>
     </div>
 </template>
 
@@ -52,9 +52,12 @@ export default {
                 videos: []
             }
         ],
+        content: {
+            videos: []
+        },
     }),
     mounted() {
-        console.log(this.contents);
+        console.log(this.contents.length);
     },
     task_done() {
         this.$emit('task_done')

@@ -3,11 +3,11 @@
         <div class="form-group row">
             <label class="col-md-3 col-form-label">Дополнительно</label>
             <div class="col-md-7">
-                <input class="form-control" type="text" placeholder="Ссылка на видео" v-model="new_task.text">
+                <input class="form-control" type="text" placeholder="Дополнительная информация" v-model="new_task.text">
             </div>
             <div class="2">
                 <small class="form-text text-muted">{{ "Дополнительно: " + infos.length }}</small>
-                <button class="btn btn-outline-primary" @click="add_task">Добавить</button>
+                <button type="button" class="btn btn-outline-primary" @click="add_task">Добавить</button>
             </div>
             <div class="col-md-12 edit-chips">
                 <div class="badge badge-pill badge-secondary"
