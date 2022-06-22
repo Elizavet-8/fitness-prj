@@ -4,10 +4,24 @@
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <a  href="/admin/question/add" class="btn btn-primary btn-lg mb-3">Добавить</a>
+                </div>
                 <div class="col-lg-12">
                     @foreach($topics as $topic)
                     <div class="card">
                         <div class="card-header"><i class="fa fa-align-justify"></i>{{$topic->name}}</div>
+                        @isset($errors)
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endisset
                         <div class="card-body">
                             <table class="table table-responsive-sm table-bordered table-striped table-sm">
                                 <thead>

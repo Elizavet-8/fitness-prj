@@ -8,6 +8,17 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header"><strong>Добавить тренировку</strong></div>
+                        @isset($errors)
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endisset
                         <div class="card-body">
                             <form class="form-horizontal" action="{{route('addTraining')}}" method="post">
                             @csrf

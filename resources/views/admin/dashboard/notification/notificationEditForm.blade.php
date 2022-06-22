@@ -9,6 +9,17 @@
                     <div class="card">
                         <div class="card-header"><strong>Редактировать уведомление</strong></div>
                         <div class="card-body">
+                            @isset($errors)
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            @endisset
                             <form class="form-horizontal" action="{{route('editNotification',['id'=>$notification->id])}}" method="post">
                                 @csrf
                                 <div class="form-group row">

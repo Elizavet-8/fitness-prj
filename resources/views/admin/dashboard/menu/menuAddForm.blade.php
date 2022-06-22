@@ -6,20 +6,20 @@
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-md-6">
+                    @isset($errors)
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    @endisset
                     <div class="card">
                         <div class="card-header"><strong>Создать меню</strong></div>
                         <div class="card-body">
-                            @isset($errors)
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                            @endisset
                             <form class="form-horizontal" action="{{route('addMenu')}}" method="post">
                                 @csrf
                                 <div class="form-group row">

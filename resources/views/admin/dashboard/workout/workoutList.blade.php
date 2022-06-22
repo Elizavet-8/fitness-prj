@@ -11,6 +11,17 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header"><i class="fa fa-align-justify"></i>Все тренировки</div>
+                        @isset($errors)
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endisset
                         <div class="card-body">
                             <table class="table table-responsive-sm table-bordered table-striped table-sm">
                                 <thead>

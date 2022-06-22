@@ -25,6 +25,8 @@
     <!-- Icons-->
     <link href="{{ asset('css/admin/free.min.css') }}" rel="stylesheet"> <!-- icons -->
     <link href="{{ asset('css/admin/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons -->
+    @stack('styles')
+
     <!-- Main styles for this application-->
     <link href="{{ asset('css/admin/style.css') }}" rel="stylesheet">
 @yield('css')
@@ -73,7 +75,7 @@
 <script src="{{ asset('js/admin/coreui-utils.js') }}"></script>
 <script src="{{ asset('js/admin/admin-app.js') }}"></script>
 @yield('javascript')
-
+@stack('scripts')
 
 </body>
 </html>
