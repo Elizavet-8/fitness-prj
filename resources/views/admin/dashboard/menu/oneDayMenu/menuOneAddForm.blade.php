@@ -5,6 +5,17 @@
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="col-md-12">
+                @isset($errors)
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                @endisset
                 <form class="form-horizontal form" action="{{route('addMenuDay')}}" method="post">
                     @csrf
                     <div class="nav-tabs-boxed" id="app">
@@ -37,6 +48,16 @@
                                                 <input required name="description" class="form-control" type="text" placeholder="Название ">
                                             </div>
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Тип меню:</label>
+                                            <select id="inputState" class="form-control" name="menu_type_id">
+                                                @foreach($menuTypes as $type)
+                                                    <option value="{{$type->id}}">
+                                                        {{$type->name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <div class="row">
                                             <div class="form-group col-md-4">
                                                 <label class="col-form-label">Белки</label>
@@ -57,6 +78,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <input type="hidden" value="{{$id}}" name="menu_id">
                                         <Addtodolistmenu :contents="[]"></Addtodolistmenu>
                                         <Addtodolistinfo></Addtodolistinfo>
                                     </div>

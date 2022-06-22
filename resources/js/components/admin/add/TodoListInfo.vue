@@ -15,7 +15,7 @@
                 >
                     * {{ text }}.
 
-                    <input type="hidden" name="info_text[]" :value="text">
+                    <input type="hidden" name="info[]" :value="text">
 
                     <span class="badge badge-light" @click="delete_task(index)">x</span>
                 </div>

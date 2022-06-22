@@ -8,6 +8,7 @@ use App\Http\Resources\MenuCollection;
 use App\Http\Resources\MenuResource;
 use App\Models\Days;
 use App\Models\Menu;
+use App\Models\MenuType;
 use App\Models\ProblemZone;
 use App\Models\Training;
 use App\Models\TrainingLocation;
@@ -108,74 +109,73 @@ class MenuController extends Controller
     {
         $menus = (Menu::with('menuDays', 'menuCalories')->find($id));
         $calories = MenuCalory::all();
-        //dd($trainings->toArray());
         return view('admin.dashboard.menu.oneDayMenu.menuShow', compact('menus', 'calories'));
     }
 
-    function adminShowMenuDay(Request $request, $id)
+    public function adminShowMenuDay(Request $request, $id)
     {
         $menu_day = (MenuDays::find($id));
-        return view('admin.dashboard.menu.oneDayMenu.menuOneEditForm')->with(compact('menu_day'));
+        $menuTypes = MenuType::all();
+        return view('admin.dashboard.menu.oneDayMenu.menuOneEditForm')->with(compact('menu_day', 'id', 'menuTypes'));
     }
 
-    function adminEditMenuDay(Request $request, $id)
+    public function adminEditMenuDay(Request $request, $id)
     {
-        $info_text = $request->info_text;
-        $videos = $request->videos;
-        $foods = $request->foods;
-        $proteins = $request->proteins;
-        $fat = $request->fat;
-        $carbs = $request->carbs;
-        $day_number = $request->day_number;
-        $name = $request->name;
-
-        Log::info(print_r($request->toArray(), true));
-        if ($info_text != null && $videos != null && $foods != null && $proteins != null && $fat != null && $carbs != null && $day_number != null && $name != null) {
-            MenuDays::whereId($id)->update([
-                'info' => json_encode($info_text),
-                'videos' => json_encode($videos),
-                'foods' => json_encode($foods),
-                'proteins' => $proteins,
-                'fat' => $fat,
-                'carbs' => $carbs,
-                'day_number' => $day_number,
-                'name' => $name,
-            ]);
-        }
+        $input = $request->validate([
+            'menu_id' => 'required|integer',
+            'content' => 'nullable',
+            'info' => 'nullable',
+            'videos' => 'nullable',
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'day_number' => 'required|integer',
+            'proteins' => 'required',
+            'fat' => 'required',
+            'carbs' => 'required',
+            'menu_type_id' => 'required|integer'
+        ]);
+        if (isset($input['content']))
+            $input['content'] = $input['content'][0];
+        if (isset($input['info']))
+            $input['info'] = json_encode($input['info']);
+        $menuDay = MenuDays::find($id);
+        $menuDay->update($input);
         return redirect()->route('menu');
     }
 
 
-    function adminAddViewDay(Request $request, $id)
+    public function adminAddViewDay(Request $request, $id)
     {
-        //$menu_days = MenuDays::where("menu_id", $id)->get();
-        return view('admin.dashboard.menu.oneDayMenu.menuOneAddForm');//->with(compact('menu_days', 'id'));
+        $menuTypes = MenuType::all();
+        return view('admin.dashboard.menu.oneDayMenu.menuOneAddForm', compact('id', 'menuTypes'));//->with(compact('menu_days', 'id'));
     }
 
-    function adminAddMenuDay(Request $request)
+    public function adminAddMenuDay(Request $request)
     {
-        $info_text = $request->info_text;
-        $videos = $request->videos;
-        $foods = $request->foods;
-        $proteins = $request->proteins;
-        $fat = $request->fat;
-        $carbs = $request->carbs;
-        $day_number = $request->day_number;
-        $name = $request->name;
-
-        if ($info_text != null && $videos != null && $foods != null && $proteins != null && $fat != null && $carbs != null && $day_number != null && $name != null) {
-            MenuDays::create([
-                'info' => json_encode($info_text),
-                'videos' => json_encode($videos),
-                'foods' => json_encode($foods),
-                'proteins' => $proteins,
-                'fat' => $fat,
-                'carbs' => $carbs,
-                'day_number' => $day_number,
-                'name' => $name,
-            ]);
-        }
+        $input = $request->validate([
+            'menu_id' => 'required|integer',
+            'content' => 'nullable',
+            'info' => 'nullable',
+            'videos' => 'nullable',
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'day_number' => 'required|integer',
+            'proteins' => 'required',
+            'fat' => 'required',
+            'carbs' => 'required',
+            'menu_type_id' => 'required|integer'
+        ]);
+        if (isset($input['content']))
+            $input['content'] = $input['content'][0];
+        if (isset($input['info']))
+            $input['info'] = json_encode($input['info']);
+        MenuDays::create($input);
         return redirect()->route('menu');
+    }
+
+    public function deleteMenuDay($id)
+    {
+        MenuDays::destroy($id);
     }
 
     public function adminDeleteMenuDay(Request $request, $id)

@@ -21,8 +21,6 @@
         <div class="edit-chips form-group">
             <div class="badge badge-pill badge-secondary"  @task_done="delete_task(index)" :key="index" v-for="(video,index) in content.videos">
                 {{video.title }} / {{ video.link }}
-                <input type="hidden" name="link" :value="video.link">
-                <input type="hidden" name="title" :value="video.title">
                 <span class="badge badge-light" @click="delete_task(index)">x</span>
             </div>
         </div>
@@ -39,6 +37,9 @@ export default {
         videos: []
     }),
     methods: {
+        toString(video){
+            return typeof video === 'string' ? video : JSON.stringify(video);
+        },
         task_done() {
             this.$emit('task_done')
         },

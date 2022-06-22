@@ -1,7 +1,9 @@
 <template>
     <div>
         <div :key="index" v-for="(content,index) in contents">
-            <div class="form-group row">
+            <foods :content="content"></foods>
+            <Videos :content="content"></Videos>
+<!--            <div class="form-group row">
                 <div class="form-group col-md-5">
                     <label class="col-form-label">{{ content.name }}</label>
                     <div>
@@ -15,8 +17,8 @@
                     </div>
                 </div>
                 <div class="form-group col-md-2">
-                    <small class="form-text text-muted">{{ "Продуктов: " + foods.length }}</small>
-                    <button class="btn btn-outline-primary" @click="add_food">Добавить</button>
+                    <small class="form-text text-muted">{{ "Продуктов: " + content.foods.length }}</small>
+                    <button type="button" class="btn btn-outline-primary" @click="add_food">Добавить</button>
                 </div>
             </div>
             <div class="col-md-12 edit-chips">
@@ -55,14 +57,22 @@
                     <input type="hidden" name="videos[]" :value="toString(video)">
                     <span class="badge badge-light" @click="delete_task(index)">x</span>
                 </div>
-            </div>
+            </div>-->
         </div>
+        <input type="hidden" name="content[]" :value="prepareContents(contents)">
     </div>
 </template>
 
 <script>
+import Foods from "./contents/Foods.vue";
+import Videos from "./contents/Videos.vue";
+
 export default {
-    props: ["contents"],
+    components: {
+        Foods,
+        Videos
+    },
+    props: ["data"],
     data: () => ({
         new_food: {
             name: '',
@@ -74,10 +84,36 @@ export default {
         },
         foods: [],
         videos: [],
-        contents: []
+        contents: [
+            {
+                name:'Завтрак',
+                foods: [],
+                videos: []
+            },
+            {
+                name:'Перекус№1',
+                foods: [],
+                videos: []
+            },
+            {
+                name:'Обед',
+                foods: [],
+                videos: []
+            },
+            {
+                name:'Перекус№2',
+                foods: [],
+                videos: []
+            },
+            {
+                name:'Ужин',
+                foods: [],
+                videos: []
+            }
+        ],
     }),
     mounted() {
-        console.log(this.contents);
+        this.contents = this.data;
     },
     methods: {
         toStringFood(food){
@@ -88,7 +124,7 @@ export default {
         },
         add_food() {
             if (this.new_food.name != '', this.new_food.amount != '') {
-                this.foods.push({
+                this.content.foods.push({
                     name: this.new_food.name,
                     amount: this.new_food.amount,
                 });
@@ -97,7 +133,7 @@ export default {
             }
         },
         delete_food(index) {
-            this.foods.splice(index, 1);
+            this.content.foods.splice(index, 1);
         },
 
         toString(video){
@@ -118,6 +154,9 @@ export default {
         },
         delete_task(index) {
             this.videos.splice(index, 1);
+        },
+        prepareContents() {
+            return typeof this.contents === 'string' ? this.contents : JSON.stringify(this.contents);
         }
     },
 }

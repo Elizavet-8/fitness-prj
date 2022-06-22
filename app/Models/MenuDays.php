@@ -22,6 +22,10 @@ class MenuDays extends Model
         'content',
         'info',
         'menu_type_id',
+        'videos',
+        'proteins',
+        'fat',
+        'carbs'
     ];
 
     /**
@@ -35,10 +39,11 @@ class MenuDays extends Model
         'content' => 'array',
         'info' => 'array',
         'menu_type_id' => 'integer',
+        'videos' => 'array'
     ];
 
 
-    
+
     public function menuType()
     {
         return $this->belongsTo(\App\Models\MenuType::class);

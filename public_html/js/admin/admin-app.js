@@ -2076,6 +2076,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _contents_Foods_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./contents/Foods.vue */ "./resources/js/components/admin/contents/Foods.vue");
+/* harmony import */ var _contents_Videos_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./contents/Videos.vue */ "./resources/js/components/admin/contents/Videos.vue");
 //
 //
 //
@@ -2138,8 +2140,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["contents"],
+  components: {
+    Foods: _contents_Foods_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Videos: _contents_Videos_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: ["data"],
   data: function data() {
     return {
       new_food: {
@@ -2152,11 +2163,31 @@ __webpack_require__.r(__webpack_exports__);
       },
       foods: [],
       videos: [],
-      contents: []
+      contents: [{
+        name: 'Завтрак',
+        foods: [],
+        videos: []
+      }, {
+        name: 'Перекус№1',
+        foods: [],
+        videos: []
+      }, {
+        name: 'Обед',
+        foods: [],
+        videos: []
+      }, {
+        name: 'Перекус№2',
+        foods: [],
+        videos: []
+      }, {
+        name: 'Ужин',
+        foods: [],
+        videos: []
+      }]
     };
   },
   mounted: function mounted() {
-    console.log(this.contents);
+    this.contents = this.data;
   },
   methods: {
     toStringFood: function toStringFood(food) {
@@ -2167,7 +2198,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     add_food: function add_food() {
       if (this.new_food.name != '', this.new_food.amount != '') {
-        this.foods.push({
+        this.content.foods.push({
           name: this.new_food.name,
           amount: this.new_food.amount
         });
@@ -2176,7 +2207,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     delete_food: function delete_food(index) {
-      this.foods.splice(index, 1);
+      this.content.foods.splice(index, 1);
     },
     toString: function toString(video) {
       return JSON.stringify(video);
@@ -2196,6 +2227,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     delete_task: function delete_task(index) {
       this.videos.splice(index, 1);
+    },
+    prepareContents: function prepareContents() {
+      return typeof this.contents === 'string' ? this.contents : JSON.stringify(this.contents);
     }
   }
 });
@@ -2240,7 +2274,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["infos"],
+  props: ["data"],
   data: function data() {
     return {
       new_task: {
@@ -2252,7 +2286,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log(this.infos);
+    this.infos = this.data;
   },
   methods: {
     task_done: function task_done() {
@@ -2442,6 +2476,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2486,39 +2521,44 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log(this.contents.length);
+    console.log(this.contents);
   },
-  task_done: function task_done() {
-    this.$emit('task_done');
-  },
-  add_task: function add_task(index) {
-    if (this.new_task.title != '', this.new_task.link != '') {
-      this.content.videos.push({
-        title: this.new_task.title,
-        link: this.new_task.link
-      });
-      this.new_task.title = '';
-      this.new_task.link = '';
+  methods: {
+    task_done: function task_done() {
+      this.$emit('task_done');
+    },
+    add_task: function add_task(index) {
+      if (this.new_task.title != '', this.new_task.link != '') {
+        this.content.videos.push({
+          title: this.new_task.title,
+          link: this.new_task.link
+        });
+        this.new_task.title = '';
+        this.new_task.link = '';
+      }
+    },
+    delete_task: function delete_task(index) {
+      this.content.videos.splice(index, 1);
+    },
+    food_done: function food_done() {
+      this.$emit('food_done');
+    },
+    add_food: function add_food() {
+      if (this.new_food.name != '', this.new_food.amount != '') {
+        this.content.foods.push({
+          name: this.new_food.name,
+          amount: this.new_food.amount
+        });
+        this.new_food.name = '';
+        this.new_food.amount = '';
+      }
+    },
+    delete_food: function delete_food(index) {
+      this.content.foods.splice(index, 1);
+    },
+    prepareContents: function prepareContents() {
+      return typeof this.contents === 'string' ? this.contents : JSON.stringify(this.contents);
     }
-  },
-  delete_task: function delete_task(index) {
-    this.content.videos.splice(index, 1);
-  },
-  food_done: function food_done() {
-    this.$emit('food_done');
-  },
-  add_food: function add_food() {
-    if (this.new_food.name != '', this.new_food.amount != '') {
-      this.content.foods.push({
-        name: this.new_food.name,
-        amount: this.new_food.amount
-      });
-      this.new_food.name = '';
-      this.new_food.amount = '';
-    }
-  },
-  delete_food: function delete_food(index) {
-    this.content.foods.splice(index, 1);
   }
 });
 
@@ -2659,9 +2699,12 @@ __webpack_require__.r(__webpack_exports__);
         this.new_food.name = '';
         this.new_food.amount = '';
       }
+
+      console.log(this.content.foods);
     },
     delete_food: function delete_food(index) {
       this.content.foods.splice(index, 1);
+      console.log(this.content.foods);
     }
   }
 });
@@ -2707,8 +2750,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["content"],
   data: function data() {
@@ -2721,6 +2762,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    toString: function toString(video) {
+      return typeof video === 'string' ? video : JSON.stringify(video);
+    },
     task_done: function task_done() {
       this.$emit('task_done');
     },
@@ -41915,255 +41959,26 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.contents, function (content, index) {
-      return _c("div", { key: index }, [
-        _c("div", { staticClass: "form-group row" }, [
-          _c("div", { staticClass: "form-group col-md-5" }, [
-            _c("label", { staticClass: "col-form-label" }, [
-              _vm._v(_vm._s(content.name)),
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.new_food.name,
-                    expression: "new_food.name",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.new_food.name },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.new_food, "name", $event.target.value)
-                  },
-                },
-              }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-3" }, [
-            _c("label", { staticClass: "col-form-label" }, [
-              _vm._v("Граммовки"),
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.new_food.amount,
-                    expression: "new_food.amount",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.new_food.amount },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.new_food, "amount", $event.target.value)
-                  },
-                },
-              }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-2" }, [
-            _c("small", { staticClass: "form-text text-muted" }, [
-              _vm._v(_vm._s("Продуктов: " + _vm.foods.length)),
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-primary",
-                on: { click: _vm.add_food },
-              },
-              [_vm._v("Добавить")]
-            ),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c(
+    [
+      _vm._l(_vm.contents, function (content, index) {
+        return _c(
           "div",
-          { staticClass: "col-md-12 edit-chips" },
-          _vm._l(content.foods, function (food, index) {
-            return _c(
-              "div",
-              {
-                key: index,
-                staticClass: "badge badge-pill badge-secondary",
-                on: {
-                  food_done: function ($event) {
-                    return _vm.delete_food(index)
-                  },
-                },
-              },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(food.name) +
-                    " / " +
-                    _vm._s(food.amount) +
-                    "\n                "
-                ),
-                _c("input", {
-                  attrs: { type: "hidden", name: "foods[]" },
-                  domProps: { value: _vm.toStringFood(food) },
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "badge badge-light",
-                    on: {
-                      click: function ($event) {
-                        return _vm.delete_food(index)
-                      },
-                    },
-                  },
-                  [_vm._v("x")]
-                ),
-              ]
-            )
-          }),
-          0
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group row" }, [
-          _c("div", { staticClass: "form-group col-md-5" }, [
-            _c("label", { staticClass: "col-form-label" }, [
-              _vm._v("Название"),
-            ]),
+          { key: index },
+          [
+            _c("foods", { attrs: { content: content } }),
             _vm._v(" "),
-            _c("div", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.new_task.title,
-                    expression: "new_task.title",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.new_task.title },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.new_task, "title", $event.target.value)
-                  },
-                },
-              }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-5" }, [
-            _c("label", { staticClass: "col-form-label" }, [_vm._v("Ссылка")]),
-            _vm._v(" "),
-            _c("div", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.new_task.link,
-                    expression: "new_task.link",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.new_task.link },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.new_task, "link", $event.target.value)
-                  },
-                },
-              }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-2" }, [
-            _c("small", { staticClass: "form-text text-muted" }, [
-              _vm._v(_vm._s("Видео: " + _vm.videos.length)),
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-primary",
-                attrs: { type: "button" },
-                on: { click: _vm.add_task },
-              },
-              [_vm._v("Добавить")]
-            ),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "edit-chips form-group" },
-          _vm._l(content.videos, function (video, index) {
-            return _c(
-              "div",
-              {
-                key: index,
-                staticClass: "badge badge-pill badge-secondary",
-                on: {
-                  task_done: function ($event) {
-                    return _vm.delete_task(index)
-                  },
-                },
-              },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(video.title) +
-                    " / " +
-                    _vm._s(video.link) +
-                    "\n                "
-                ),
-                _c("input", {
-                  attrs: { type: "hidden", name: "videos[]" },
-                  domProps: { value: _vm.toString(video) },
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "badge badge-light",
-                    on: {
-                      click: function ($event) {
-                        return _vm.delete_task(index)
-                      },
-                    },
-                  },
-                  [_vm._v("x")]
-                ),
-              ]
-            )
-          }),
-          0
-        ),
-      ])
-    }),
-    0
+            _c("Videos", { attrs: { content: content } }),
+          ],
+          1
+        )
+      }),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "hidden", name: "content[]" },
+        domProps: { value: _vm.prepareContents(_vm.contents) },
+      }),
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -42580,12 +42395,19 @@ var render = function () {
         return _c(
           "div",
           { key: index },
-          [_c("foods", { attrs: { content: content } })],
+          [
+            _c("foods", { attrs: { content: content } }),
+            _vm._v(" "),
+            _c("Videos", { attrs: { content: content } }),
+          ],
           1
         )
       }),
       _vm._v(" "),
-      _c("Videos", { attrs: { content: _vm.content } }),
+      _c("input", {
+        attrs: { type: "hidden", name: "content[]" },
+        domProps: { value: _vm.prepareContents(_vm.contents) },
+      }),
     ],
     2
   )
@@ -42679,7 +42501,7 @@ var render = function () {
                 "\n                * " + _vm._s(text) + ".\n\n                "
               ),
               _c("input", {
-                attrs: { type: "hidden", name: "info_text[]" },
+                attrs: { type: "hidden", name: "info[]" },
                 domProps: { value: text },
               }),
               _vm._v(" "),
@@ -42965,16 +42787,6 @@ var render = function () {
                 _vm._s(video.link) +
                 "\n            "
             ),
-            _c("input", {
-              attrs: { type: "hidden", name: "link" },
-              domProps: { value: video.link },
-            }),
-            _vm._v(" "),
-            _c("input", {
-              attrs: { type: "hidden", name: "title" },
-              domProps: { value: video.title },
-            }),
-            _vm._v(" "),
             _c(
               "span",
               {

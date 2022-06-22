@@ -52,9 +52,11 @@ export default {
                 this.new_food.name = '';
                 this.new_food.amount = '';
             }
+            console.log(this.content.foods);
         },
         delete_food(index) {
             this.content.foods.splice(index, 1);
+            console.log(this.content.foods);
         },
     }
 }

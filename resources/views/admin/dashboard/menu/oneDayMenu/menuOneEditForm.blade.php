@@ -5,6 +5,17 @@
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="col-md-12">
+                @isset($errors)
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                @endisset
                 <form class="form-horizontal form" action="{{route('editMenuDay',['id'=>$menu_day->id])}}" method="post">
                     @csrf
                     <div class="nav-tabs-boxed" id="app">
@@ -37,6 +48,19 @@
                                                 <input required value="{{ $menu_day->description }}" name="description" class="form-control" type="text" placeholder="Название ">
                                             </div>
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Тип меню:</label>
+                                            <select id="inputState" class="form-control" name="menu_type_id">
+                                                @foreach($menuTypes as $type)
+                                                    <option value="{{$type->id}}"
+                                                        @if($menu_day->menu_type_id === $type->id)
+                                                            selected
+                                                        @endif>
+                                                        {{$type->name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <div class="row">
                                             <div class="form-group col-md-4">
                                                 <label class="col-form-label">Белки</label>
@@ -57,8 +81,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <Todolistmenu :contents="{{json_encode($menu_day->content)}}"></Todolistmenu>
-                                        <Todolistinfo :infos="{{json_encode($menu_day->info)}}"></Todolistinfo>
+                                        <input type="hidden" value="{{$menu_day->menu_id}}" name="menu_id">
+                                        <Todolistmenu :data="{{is_string($menu_day->content) ? $menu_day->content : json_encode($menu_day->content)}}"></Todolistmenu>
+                                        <Todolistinfo :data="{{is_string($menu_day->info) ? $menu_day->info : json_encode($menu_day->info)}}"></Todolistinfo>
                                     </div>
                                 </div>
                             </div>

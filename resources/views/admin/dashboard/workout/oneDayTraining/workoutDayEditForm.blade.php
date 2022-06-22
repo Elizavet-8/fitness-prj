@@ -69,7 +69,7 @@
                                                 :videos="{{json_encode($training_day->videos) === null ? [] : json_encode($training_day->videos)}}"
                                             ></Todolistvideo>
                                             <Todolistinfo
-                                                :infos="{{json_encode($training_day->info) === null ? [] : json_encode($training_day->info)}}"
+                                                :data="{{json_encode($training_day->info) === null ? [] : json_encode($training_day->info)}}"
                                             ></Todolistinfo>
                                             <div class="card-footer card-footer-edit">
                                                 <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>

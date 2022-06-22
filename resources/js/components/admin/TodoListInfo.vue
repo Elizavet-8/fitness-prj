@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    props:["infos"],
+    props:["data"],
     data: () => ({
         new_task: {
             title: '',
@@ -35,8 +35,8 @@ export default {
         },
         infos: []
     }),
-    mounted(){
-        console.log(this.infos);
+    mounted() {
+        this.infos = this.data;
     },
     methods: {
         task_done() {
