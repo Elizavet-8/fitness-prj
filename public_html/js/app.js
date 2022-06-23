@@ -3091,6 +3091,44 @@ __webpack_require__.r(__webpack_exports__);
       open: false
     };
   },
+  methods: {
+    readNotifications: function readNotifications() {
+      if (this.Notifications.length === 0) return;
+
+      if (!this.open) {
+        this.open = true;
+        var currentDate = new Date();
+        var expiration = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0);
+        var expires = '; expires=' + expiration.toUTCString() + '; path=/';
+        document.cookie = 'viewed=true' + expires;
+        return;
+      }
+
+      this.open = false;
+    },
+    wasNotificationsRead: function wasNotificationsRead() {
+      var readState = this.readCookie('viewed');
+      return readState !== null;
+    },
+    readCookie: function readCookie(name) {
+      var cookName = name + "=";
+      var cookList = document.cookie.split(";");
+
+      for (var i = 0; i < cookList.length; i++) {
+        var c = cookList[i];
+
+        while (c.charAt(0) === " ") {
+          c = c.substring(1, c.length);
+        }
+
+        if (c.indexOf(cookName) === 0) {
+          return c.substring(cookName.length, c.length);
+        }
+      }
+
+      return null;
+    }
+  },
   mounted: function mounted() {
     if (userInfo) {
       this.$store.dispatch('fetchAccessHistory');
@@ -3103,6 +3141,7 @@ __webpack_require__.r(__webpack_exports__);
       var notifications = this.$store.getters.GetNotifications;
 
       if (access_history && notifications) {
+        if (this.wasNotificationsRead()) return [];
         var date1 = new Date(access_history.activation_date);
         var date2 = new Date();
         var day_number = Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24)) + 1;
@@ -4466,12 +4505,13 @@ __webpack_require__.r(__webpack_exports__);
         this.$v.$touch();
       } else {
         this.disabledBtn = !this.disabledBtn;
-        var auth = {
+        var userData = {
+          name: this.name,
           email: this.email,
           password: this.password
         };
-        axios.post('/login', auth).then(function (response) {
-          window.location.href = "/home";
+        axios.post('/register', userData).then(function (response) {
+          console.log("good");
         })["catch"](function (error) {
           _this.login_failure = true;
         });
@@ -24046,7 +24086,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.slide-fade-enter-active {\r\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\r\n  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\r\n/* .slide-fade-leave-active до версии 2.1.8 */ {\r\n  transform: translateX(10px);\r\n  opacity: 0;\n}\n.fade-enter-active,\r\n.fade-leave-active {\r\n  transition: opacity 0.5s ease;\n}\n.fade-enter-from,\r\n.fade-leave-to {\r\n  opacity: 0;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.slide-fade-enter-active {\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\n/* .slide-fade-leave-active до версии 2.1.8 */ {\n  transform: translateX(10px);\n  opacity: 0;\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s ease;\n}\n.fade-enter-from,\n.fade-leave-to {\n  opacity: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -49101,11 +49141,7 @@ var render = function () {
         {
           staticClass: "sidebar__notifications",
           class: { active: _vm.open },
-          on: {
-            click: function ($event) {
-              _vm.open = !_vm.open
-            },
-          },
+          on: { click: _vm.readNotifications },
         },
         [
           _c(
@@ -49152,7 +49188,7 @@ var render = function () {
             ]
           ),
           _vm._v(" "),
-          _vm.Notifications != null
+          _vm.Notifications != null && _vm.Notifications.length > 0
             ? _c(
                 "div",
                 {
@@ -51441,7 +51477,7 @@ var render = function () {
                     : _vm.$v.email.$dirty && !_vm.$v.email.required
                     ? _c("div", { staticClass: "error__mrg" }, [
                         _vm._v(
-                          "\n                    Email или пароль не должен быть пустым\n                "
+                          "\n                    Email не должен быть пустым\n                "
                         ),
                       ])
                     : _vm.$v.email.$dirty && !_vm.$v.email.email
@@ -51518,7 +51554,7 @@ var render = function () {
                           (_vm.$v.name.$dirty && !_vm.$v.name.required) ||
                           (_vm.$v.name.$dirty && !_vm.$v.name.minLength),
                       },
-                      attrs: { type: "email", placeholder: "Username" },
+                      attrs: { type: "text", placeholder: "Username" },
                       domProps: { value: _vm.name },
                       on: {
                         input: function ($event) {

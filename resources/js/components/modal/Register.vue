@@ -24,7 +24,7 @@
                     </div>
                     <div class="error__mrg"
                          v-else-if="$v.email.$dirty && !$v.email.required">
-                        Email или пароль не должен быть пустым
+                        Email не должен быть пустым
                     </div>
                     <div class="error__mrg"
                          v-else-if="$v.email.$dirty && !$v.email.email">
@@ -52,7 +52,7 @@
                                 d="M2.8125 17.8125C2.93682 17.8125 3.05605 17.7631 3.14396 17.6752C3.23186 17.5873 3.28125 17.4681 3.28125 17.3438C3.28125 17.2194 3.23186 17.1002 3.14396 17.0123C3.05605 16.9244 2.93682 16.875 2.8125 16.875H1.875C1.75068 16.875 1.63145 16.9244 1.54354 17.0123C1.45564 17.1002 1.40625 17.2194 1.40625 17.3438C1.40625 17.4681 1.45564 17.5873 1.54354 17.6752C1.63145 17.7631 1.75068 17.8125 1.875 17.8125H2.8125Z"
                                 fill="#9180FF" fill-opacity="0.75"/>
                         </svg>
-                        <input type="email" class="modal-input" placeholder="Username"
+                        <input type="text" class="modal-input" placeholder="Username"
                                v-model="name"
                                :class="{invalid: ($v.name.$dirty && !$v.name.required) || ($v.name.$dirty && !$v.name.minLength)}">
                     </div>
@@ -158,9 +158,9 @@ export default {
                 this.$v.$touch()
             } else {
                 this.disabledBtn = !this.disabledBtn;
-                const auth = { email: this.email, password: this.password };
-                axios.post('/login', auth).then(response => {
-                    window.location.href = `/home`;
+                const userData = { name:this.name, email: this.email, password: this.password };
+                axios.post('/register', userData).then(response => {
+                    console.log("good");
                 }).catch(error => {
                     this.login_failure=true
                 });
