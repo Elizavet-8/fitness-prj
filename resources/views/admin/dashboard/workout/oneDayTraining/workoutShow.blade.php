@@ -52,8 +52,16 @@
                                                 @foreach($trainings_day->videos as $video)
                                                     @if(is_string($video))
                                                         <a href="{{json_decode($video)->link}}">{{json_decode($video)->title}}</a>
+                                                        @isset(json_decode($video)->preview_path)
+                                                            /
+                                                            <a href="{{json_decode($video)->preview_path}}">Превью</a>
+                                                        @endisset
                                                     @else
                                                         <a href="{{$video["link"]}}">{{$video["title"]}}</a>
+                                                        @isset($video["preview_path"])
+                                                            /
+                                                            <a href="{{$video["preview_path"]}}">Превью</a>
+                                                        @endisset
                                                     @endif
                                                 @endforeach
                                             @else

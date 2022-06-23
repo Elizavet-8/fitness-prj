@@ -2348,16 +2348,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["videos"],
+  props: ["data"],
   data: function data() {
     return {
       new_task: {
         title: '',
-        link: ''
+        link: '',
+        preview_path: ''
       },
       videos: []
     };
+  },
+  mounted: function mounted() {
+    this.videos = this.data;
   },
   methods: {
     toString: function toString(video) {
@@ -2370,10 +2380,12 @@ __webpack_require__.r(__webpack_exports__);
       if (this.new_task.title != '', this.new_task.link != '') {
         this.videos.push({
           title: this.new_task.title,
-          link: this.new_task.link
+          link: this.new_task.link,
+          preview_path: this.new_task.preview_path
         });
         this.new_task.title = '';
         this.new_task.link = '';
+        this.new_task.preview_path = '';
       }
     },
     delete_task: function delete_task(index) {
@@ -42175,6 +42187,34 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
+      _c("div", { staticClass: "form-group col-md-5" }, [
+        _c("label", { staticClass: "col-form-label" }, [_vm._v("Превью")]),
+        _vm._v(" "),
+        _c("div", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.new_task.preview_path,
+                expression: "new_task.preview_path",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.new_task.preview_path },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.new_task, "preview_path", $event.target.value)
+              },
+            },
+          }),
+        ]),
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-2" }, [
         _c("small", { staticClass: "form-text text-muted" }, [
           _vm._v(_vm._s("Видео: " + _vm.videos.length)),
@@ -42220,6 +42260,12 @@ var render = function () {
                   typeof video === "string"
                     ? JSON.parse(video).link
                     : video.link
+                ) +
+                " / " +
+                _vm._s(
+                  typeof video === "string"
+                    ? JSON.parse(video).preview_path
+                    : video.preview_path
                 ) +
                 "\n            "
             ),

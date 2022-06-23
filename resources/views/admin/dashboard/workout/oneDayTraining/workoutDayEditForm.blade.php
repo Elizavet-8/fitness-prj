@@ -66,7 +66,7 @@
                                                 </div>
                                             </div>
                                             <Todolistvideo
-                                                :videos="{{json_encode($training_day->videos) === null ? [] : json_encode($training_day->videos)}}"
+                                                :data="{{json_encode($training_day->videos) === null ? [] : json_encode($training_day->videos)}}"
                                             ></Todolistvideo>
                                             <Todolistinfo
                                                 :data="{{json_encode($training_day->info) === null ? [] : json_encode($training_day->info)}}"

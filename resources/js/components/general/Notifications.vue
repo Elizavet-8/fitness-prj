@@ -32,9 +32,9 @@ export default {
    }),
     methods: {
         readNotifications() {
-            if (this.Notifications.length === 0)
-                return;
             if (!this.open) {
+                if (this.Notifications.length === 0)
+                    return;
                 this.open = true;
                 let currentDate = new Date();
                 let expiration = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0);

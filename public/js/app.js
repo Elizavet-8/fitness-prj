@@ -3093,9 +3093,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     readNotifications: function readNotifications() {
-      if (this.Notifications.length === 0) return;
-
       if (!this.open) {
+        if (this.Notifications.length === 0) return;
         this.open = true;
         var currentDate = new Date();
         var expiration = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0);
