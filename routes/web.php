@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProgramsController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,9 @@ Route::post("/searchQuestions", [ArticleController::class,'searchQuestions'])->m
 Route::get("/search", [ArticleController::class,'search'])->middleware('auth');
 
 Route::prefix('/admin')->group(function () {
-    Route::get('/', function(){ return view('admin.dashboard.homepage'); });
+    Route::get('/', [AdminController::class, "openAdminDashboard"])->name('adminMain');
+    Route::get('/login', [AdminController::class, "openAdminLoginPage"])->name('adminLogin');
+    Route::post('/login', [AdminController::class, "loginAsAdministrator"])->name('loginAsAdmin');
     Route::prefix('/users')->group(function () {  // word: "icons" - not working as part of adress
         //Route::get('/', function(){         return view('admin.dashboard.admin.usersList'); });
         Route::get('/', [PersonalAccountController::class,'adminUsers'])->name('user');
