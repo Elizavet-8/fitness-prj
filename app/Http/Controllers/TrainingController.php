@@ -12,6 +12,7 @@ use App\Models\TrainingLocation;
 use App\Models\ProblemZone;
 use App\Models\TrainingUser;
 use App\Models\Days;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class TrainingController extends Controller
@@ -52,7 +53,8 @@ class TrainingController extends Controller
     function adminTrainings(Request $request)
     {
 //        $trainings = Training::with('trainingDays', 'problemZone')->get();
-
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $trainings = Training::with('days', 'problemZone')->get();
 
         return view('admin.dashboard.workout.workoutList')->with(compact('trainings'));
@@ -60,6 +62,8 @@ class TrainingController extends Controller
 
     function adminShowTraining(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $training = Training::find($id);
         $problem_zones = ProblemZone::all();
         return view('admin.dashboard.workout.workoutEditForm')->with(compact('training', 'problem_zones'));
@@ -67,6 +71,8 @@ class TrainingController extends Controller
 
     function adminEditTraining(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $name = $request->name;
         $training_price = $request->training_price;
         $problemZone = $request->problemZone;
@@ -83,6 +89,8 @@ class TrainingController extends Controller
 
     function adminAddView(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $locations = TrainingLocation::all();
         $problem_zones = ProblemZone::all();
         return view('admin.dashboard.workout.workoutAddForm')->with(compact('locations', 'problem_zones'));
@@ -90,6 +98,8 @@ class TrainingController extends Controller
 
     function adminAddTraining(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $name = $request->name;
         $training_price = $request->training_price;;
         $problemZone = $request->problem_zone_id;
@@ -124,6 +134,8 @@ class TrainingController extends Controller
 //
     function adminTrainingsDay(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $trainings = (Training::with('trainingLocation', 'days')->find($id));
         $locations = TrainingLocation::all();
 
@@ -133,6 +145,8 @@ class TrainingController extends Controller
 
     function adminShowTrainingDay(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $training_day = (Days::find($id));
         $locations = TrainingLocation::all();
         return view('admin.dashboard.workout.oneDayTraining.workoutDayEditForm')->with(compact('training_day', 'locations', 'id'));
@@ -140,6 +154,8 @@ class TrainingController extends Controller
 
     public function adminEditTrainingDay(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $input = $request->validate([
             'name' => 'required|string',
             'training_location_id' => 'required|integer',
@@ -156,6 +172,8 @@ class TrainingController extends Controller
 
     public function openTrainingDayAdding($id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $training_days = Days::all();
         $locations = TrainingLocation::all();
         return view('admin.dashboard.workout.oneDayTraining.workoutDayAddForm')->with(compact('training_days', 'locations', 'id'));
@@ -163,6 +181,8 @@ class TrainingController extends Controller
 
     public function adminAddTrainingDay(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $input = $request->validate([
             'name' => 'required|string',
             'training_location_id' => 'required|integer',
@@ -186,6 +206,8 @@ class TrainingController extends Controller
 
     public function deleteDay($id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         Days::destroy($id);
     }
 }

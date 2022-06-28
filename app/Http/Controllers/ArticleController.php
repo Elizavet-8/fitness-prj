@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Topic;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -36,15 +37,19 @@ class ArticleController extends Controller
         $questions = $request->questions;
         return view('search')->with(compact('questions'));
     }
-    
+
     function adminArticle(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $article = Question::find($id);
         return view('admin.dashboard.question.questionShow')->with('article', $article);
     }
 
     function adminShowArticle(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $article = Question::find($id);
         $topic = Topic::find($article->topic_id);
         $topics = Topic::where('id','!=',$article->topic_id)->get();
@@ -53,6 +58,8 @@ class ArticleController extends Controller
 
     function adminEditArticle(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $topic_id = $request->topic_id;
         $name = $request->name;
         $answer = $request->answer;
@@ -76,12 +83,16 @@ class ArticleController extends Controller
     }
 
     function adminAddView(Request $request){
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $topics = Topic::all();
         return view('admin.dashboard.question.questionAddForm')->with(compact('topics'));
     }
 
     function adminAddArticle(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $topic_id = $request->topic_id;
         $name = $request->name;
         $answer = $request->answer;
@@ -98,6 +109,8 @@ class ArticleController extends Controller
     }
 
     function adminArticles(Request $request){
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $articles = Question::with('topic')->get();
         $topics = Topic::all();
         return view('admin.dashboard.question.questionList')->with(compact('articles','topics'));
@@ -105,6 +118,8 @@ class ArticleController extends Controller
 
     function adminDeleteArticle(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         Question::where('id','=',$id)->delete();
         return redirect()->route('adminQuestion');
     }

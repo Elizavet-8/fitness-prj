@@ -14,6 +14,7 @@ use App\Models\Training;
 use App\Models\TrainingLocation;
 use Illuminate\Http\Request;
 use App\Models\MenuCalory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\MenuDays;
 
@@ -54,12 +55,16 @@ class MenuController extends Controller
 
     function adminMenus(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $menus = Menu::with('menuDays', 'menuCalories')->get();
 
         return view('admin.dashboard.menu.menuList')->with(compact('menus'));
     }
     function adminShowMenu(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $menu = Menu::find($id);
         $calories = MenuCalory::all();
         return view('admin.dashboard.menu.menuEditForm')->with(compact('menu', 'calories'));
@@ -67,6 +72,8 @@ class MenuController extends Controller
 
     public function adminEditMenu(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $menu = Menu::find($id);
         $input = $request->validate([
             'menu_calories_id' => 'required|integer',
@@ -82,17 +89,23 @@ class MenuController extends Controller
 
     public function deleteMenu($id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         Menu::destroy($id);
     }
 
     function adminAddView(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $calories = MenuCalory::all();
         return view('admin.dashboard.menu.menuAddForm')->with(compact('calories'));
     }
 
     public function adminAddMenu(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $input = $request->validate([
             'menu_calories_id' => 'required|integer',
             'menu_content' => 'required|string',
@@ -107,6 +120,8 @@ class MenuController extends Controller
 
     function adminMenuDay(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $menus = (Menu::with('menuDays', 'menuCalories')->find($id));
         $calories = MenuCalory::all();
         return view('admin.dashboard.menu.oneDayMenu.menuShow', compact('menus', 'calories'));
@@ -114,6 +129,8 @@ class MenuController extends Controller
 
     public function adminShowMenuDay(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $menu_day = (MenuDays::find($id));
         $menuTypes = MenuType::all();
         return view('admin.dashboard.menu.oneDayMenu.menuOneEditForm')->with(compact('menu_day', 'id', 'menuTypes'));
@@ -121,6 +138,8 @@ class MenuController extends Controller
 
     public function adminEditMenuDay(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $input = $request->validate([
             'menu_id' => 'required|integer',
             'content' => 'nullable',
@@ -146,12 +165,16 @@ class MenuController extends Controller
 
     public function adminAddViewDay(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $menuTypes = MenuType::all();
         return view('admin.dashboard.menu.oneDayMenu.menuOneAddForm', compact('id', 'menuTypes'));//->with(compact('menu_days', 'id'));
     }
 
     public function adminAddMenuDay(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $input = $request->validate([
             'menu_id' => 'required|integer',
             'content' => 'nullable',
@@ -175,6 +198,8 @@ class MenuController extends Controller
 
     public function deleteMenuDay($id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         MenuDays::destroy($id);
     }
 

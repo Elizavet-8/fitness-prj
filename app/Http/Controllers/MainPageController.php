@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MainPage;
 use App\Models\MarathonAndProgram;
+use Illuminate\Support\Facades\Auth;
 
 class MainPageController extends Controller
 {
@@ -20,6 +21,8 @@ class MainPageController extends Controller
 
     function adminEditContent(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $name = $request->name;
         $content = $request->content;
 
@@ -34,6 +37,8 @@ class MainPageController extends Controller
 
     function adminMagePage(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $data = MainPage::all();
         return view('admin.dashboard.main.mainList')->with(compact('data'));
     }

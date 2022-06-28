@@ -6,17 +6,22 @@ use App\Models\MarathonAndProgram;
 use App\Models\Menu;
 use App\Models\Training;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProgramsController extends Controller
 {
     public function openProgramsPage()
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $programs = MarathonAndProgram::all();
         return view('admin.dashboard.program.programList', compact('programs'));
     }
 
     public function openProgramEditingPage($id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $program = MarathonAndProgram::find($id);
         $trainings = Training::all();
         $menus = Menu::all();
@@ -25,6 +30,8 @@ class ProgramsController extends Controller
 
     public function editProgram(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $program = MarathonAndProgram::find($id);
         $program->update($request->validate([
             'finish_date' => 'required',
@@ -43,6 +50,8 @@ class ProgramsController extends Controller
 
     public function openAddingForm()
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $trainings = Training::all();
         $menus = Menu::all();
         return view('admin.dashboard.program.programAdd', compact( 'trainings', 'menus'));
@@ -50,6 +59,8 @@ class ProgramsController extends Controller
 
     public function addProgram(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $input = $request->validate([
             'name' => 'required|string',
             'description' => 'required|string',
@@ -70,6 +81,8 @@ class ProgramsController extends Controller
 
     public function deleteProgram($id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         MarathonAndProgram::destroy($id);
     }
 }

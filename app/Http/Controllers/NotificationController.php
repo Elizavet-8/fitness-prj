@@ -21,6 +21,8 @@ class NotificationController extends Controller
 
     public function list()
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $notifications = Notification::all();
 
         return view('admin.dashboard.notification.notificationList')->with(compact('notifications'));
@@ -70,6 +72,8 @@ class NotificationController extends Controller
 
     function adminShowNotification(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $notification = Notification::find($id);
 
         return view('admin.dashboard.notification.notificationEditForm')->with(compact('notification'));
@@ -77,6 +81,8 @@ class NotificationController extends Controller
 
     public function editNotification(Request $request, $id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $notification = Notification::find($id);
         $input = $request->validate([
             'name' => 'required|string',
@@ -89,12 +95,16 @@ class NotificationController extends Controller
 
     function adminAddView(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $notifications = Notification::all();
         return view('admin.dashboard.notification.notificationAdd')->with(compact('notifications'));
     }
 
     public function addNotification(Request $request)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         $input = $request->validate([
             'name' => 'required|string',
             'day' => 'required|integer',
@@ -106,6 +116,8 @@ class NotificationController extends Controller
 
     public function deleteNotification($id)
     {
+        if(is_null(Auth::guard('admin')->user()))
+            abort(401);
         Notification::destroy($id);
     }
 }
