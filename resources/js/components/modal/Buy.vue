@@ -47,15 +47,16 @@
                     суток после оплаты - эти данные используйте для входа в Личный
                     кабинет.
                 </div>
-                <form class="buy-form" v-if="activeStep === 1">
+                <form class="buy-form" v-if="activeStep === 1" @submit.prevent="next">
                     <div class="buy-form__row buy-form__row-three">
                         <div class="buy__group" v-for="(info, index) in users" :key="index">
-                            <label for="weight" class="buy__label">
+                            <label :for="info.id" class="buy__label">
                                 {{ info.name }}
                             </label>
                             <input
-                                id="weight"
-                                type="text"
+                                required
+                                :id="info.id"
+                                :type="info.type"
                                 class="buy__input"
                                 :placeholder="info.placeholder"
                                 v-model="info.value"
@@ -64,24 +65,46 @@
                     </div>
                     <div class="buy-form__row">
                         <Myselect
-                            v-for="(select, index) in selects"
-                            :key="index"
-                            :select="select"
+                            :select="selects[0]"
+                            :list="GetLifeStyles.data"
+                            v-on:result="result"
+                        ></Myselect>
+                        <Myselect
+                            :select="selects[1]"
+                            :list="GetProblemZones.data"
+                            v-on:result="result"
+                        ></Myselect>
+                        <Myselect
+                            :select="selects[2]"
+                            :list="GetTrainingLocations"
+                            v-on:result="result"
+                        ></Myselect>
+                        <Myselect
+                            :select="selects[3]"
+                            :list="GetMenuCalories"
                             v-on:result="result"
                         ></Myselect>
                     </div>
                     <div class="buy__price">Сумма: 5 000р.</div>
-                    <button type="submit" class="button buy-form__btn" @click.prevent="next()">
+                    <button type="submit" class="button buy-form__btn">
                         ОПЛАТИТЬ И ЗАРЕГИСТРИРОВАТЬСЯ
                     </button>
                 </form>
-                <div class="buy-form__loading" v-if="activeStep === 2">
-          <span
-          >Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к
-            оплате...</span
-          >
+                <div class="buy-form__loading d-flex flex-column" v-if="activeStep === 2">
+                    <div class="row d-flex w-100">
+                        <span>Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к
+            оплате...</span>
+                    </div>
+                    <div class="row d-flex w-100">
+                        <div class="col-6">
+                            <button @click="initializeStripePayment">stripe</button>
+                        </div>
+                        <div class="col-6">
+                            <button>tinkoff</button>
+                        </div>
+                    </div>
+                    <button @click="prev">back</button>
                 </div>
-
                 <div class="buy-form__prg">
                     Нажимая “Оплатить и зарегестрироваться”, я принимаю условия
                     <span>Политики обработки персональных данный и условия Оферты </span>
@@ -93,13 +116,18 @@
 
 <script>
 import Myselect from "../general/Select.vue";
-
+import {mapGetters} from "vuex";
 export default {
   components: {
     Myselect,
   },
-
-  data: () => ({
+    mounted() {
+        this.$store.dispatch('fetchLifeStyles');
+        this.$store.dispatch('fetchMenuCalories');
+        this.$store.dispatch('fetchProblemZones');
+        this.$store.dispatch('fetchTrainingLocations');
+    },
+    data: () => ({
     disabled: false,
     errors:[],
     activeStep: 1,
@@ -107,74 +135,89 @@ export default {
     returnpackage: true,
     users: [
       {
-        name: "Имя",
-        placeholder: "Любовь Мишанкова",
-        value: "",
+          id: "name",
+          name: "Имя",
+          placeholder: "Любовь Мишанкова",
+          value: "",
+          type: "text"
       },
       {
-        name: "Ваш возраст",
-        placeholder: "25 лет",
-        value: "",
+          id: "age",
+          name: "Ваш возраст",
+          placeholder: "25 лет",
+          value: "",
+          type: "number"
       },
       {
-        name: "Ваш Email",
-        placeholder: "Email",
-        value: "",
+          id: "email",
+          name: "Ваш Email",
+          placeholder: "Email",
+          value: "",
+          type: "email"
       },
       {
-        name: "Ваш вес",
-        placeholder: "60 кг",
-        value: "",
+          id: "weight",
+          name: "Ваш вес",
+          placeholder: "60 кг",
+          value: "",
+          type: "number"
       },
       {
-        name: "Ваш рост",
-        placeholder: "165 см",
-        value: "",
+          id: "tall",
+          name: "Ваш рост",
+          placeholder: "165 см",
+          value: "",
+          type: "number"
       },
       {
-        name: "Желаемый вес",
-        placeholder: "55 кг",
-        value: "",
+          id: "required_weight",
+          name: "Желаемый вес",
+          placeholder: "55 кг",
+          value: "",
+          type: "number"
       },
     ],
+    additionValues: {
+        'training_location_id' : 1,
+        'life_style_id' : 1,
+        'problem_zone_id' : 1,
+        'menu_calories_id' : 1
+    },
     selects: [
       {
+        id : "life_style_id",
         label: "Выберите Ваш образ жизни: ",
-        value: "Ваш образ жизни",
-        list: ["Малоактивный", "Среднеактивный", "Активный"],
+        value: "Ваш образ жизни"
       },
       {
+        id : "problem_zone_id",
         label: "Выберите проблемные зоны: ",
-        value: "Руки",
-        list: [
-          "Руки",
-          "Cпина",
-          "Живот",
-          "Бока",
-          "Ягодицы",
-          "Бёдра",
-          "Голень",
-          "Всё тело",
-        ],
+        value: "Руки"
       },
       {
+        id : "training_location_id",
         label: "Тренировки для: ",
-        value: "Дома",
-        list: ["Дома", "Зала", "Дом + зал (+ 950 р.)"],
+        value: "Дома"
       },
       {
+        id : "menu_calories_id",
         label: "Желаемая каллорийность меню: ",
-        value: "1300-1400",
-        list: ["1300-1400", "1500-1600", "1800-1900", "2000-2100"],
+        value: "1300-1400"
       },
     ],
   }),
+    computed: {
+        ...mapGetters(['GetLifeStyles']),
+        ...mapGetters(['GetMenuCalories']),
+        ...mapGetters(['GetProblemZones']),
+        ...mapGetters(['GetTrainingLocations'])
+    },
   methods: {
     toggleDelete() {
       this.deletepackage = !this.deletepackage;
     },
-    result(item) {
-      console.log("result=>", item);
+    result(item, id) {
+        this.additionValues[id] = item;
     },
     prev() {
       this.activeStep--;
@@ -182,13 +225,30 @@ export default {
     next() {
       this.activeStep++;
     },
-    // toggle() {
-    //    this.visible = !this.visible;
-    // },
-    // select(item) {
-    // 	this.select.value = item.list;
-    // 	console.log(item)
-    // }
+      initializeStripePayment() {
+        let user = {
+            "name" : this.users[0].value,
+            "age" : this.users[1].value,
+            "email" : this.users[2].value,
+            "weight" : this.users[3].value,
+            "tall" : this.users[4].value,
+            "required_weight" : this.users[5].value,
+            "training_location_id" : this.additionValues.training_location_id,
+            "menu_calories_id" : this.additionValues.menu_calories_id,
+            "problem_zone_id" : this.additionValues.problem_zone_id,
+            "life_style_id" : this.additionValues.life_style_id
+        }
+        let formData = new FormData();
+        formData.append('user_info', JSON.stringify(user));
+        axios.post('/initialize-checkout/stripe', formData)
+          .then(() => {
+              window.location.href = '/open-checkout/stripe';
+          })
+          .catch((error) => {
+              console.log(error.response);
+          })
+        console.log(user);
+      }
   },
 };
 </script>

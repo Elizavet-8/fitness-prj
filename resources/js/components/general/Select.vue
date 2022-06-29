@@ -10,7 +10,7 @@
       <div class="label"  v-else>
         <span> {{ label }}</span>
       </div>
-      
+
       <div class="arrow">
         <svg
           width="26"
@@ -27,8 +27,8 @@
       </div>
       <div>
         <ul :class="{ hidden: !visible, visible }">
-          <li v-for="item in select.list" @click="selectItem(item)" :key="item">
-            {{ item }}
+          <li v-for="(item, i) in list" @click="selectItem(item)" :key="i">
+            {{ item.name }}
           </li>
         </ul>
       </div>
@@ -37,19 +37,20 @@
 </template>
 <script>
 export default {
-  props: ["select"],
+  props: ["select", "list"],
   data: () => ({
     visible: false,
     label: null,
+    value: null
   }),
   methods: {
     toggle() {
       this.visible = !this.visible;
     },
     selectItem(item) {
-      console.log(item);
-      this.label = item;
-      this.$emit("result", item);
+      this.label = item.name;
+      this.value = item.id;
+      this.$emit("result", this.value, this.select.id);
     },
   },
 };

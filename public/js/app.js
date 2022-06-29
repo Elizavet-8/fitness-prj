@@ -3205,11 +3205,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["select"],
+  props: ["select", "list"],
   data: function data() {
     return {
       visible: false,
-      label: null
+      label: null,
+      value: null
     };
   },
   methods: {
@@ -3217,9 +3218,9 @@ __webpack_require__.r(__webpack_exports__);
       this.visible = !this.visible;
     },
     selectItem: function selectItem(item) {
-      console.log(item);
-      this.label = item;
-      this.$emit("result", item);
+      this.label = item.name;
+      this.value = item.id;
+      this.$emit("result", this.value, this.select.id);
     }
   }
 });
@@ -3808,6 +3809,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _general_Select_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../general/Select.vue */ "./resources/js/components/general/Select.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3902,9 +3933,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Myselect: _general_Select_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('fetchLifeStyles');
+    this.$store.dispatch('fetchMenuCalories');
+    this.$store.dispatch('fetchProblemZones');
+    this.$store.dispatch('fetchTrainingLocations');
   },
   data: function data() {
     return {
@@ -3914,69 +3952,103 @@ __webpack_require__.r(__webpack_exports__);
       deletepackage: false,
       returnpackage: true,
       users: [{
+        id: "name",
         name: "Имя",
         placeholder: "Любовь Мишанкова",
-        value: ""
+        value: "",
+        type: "text"
       }, {
+        id: "age",
         name: "Ваш возраст",
         placeholder: "25 лет",
-        value: ""
+        value: "",
+        type: "number"
       }, {
+        id: "email",
         name: "Ваш Email",
         placeholder: "Email",
-        value: ""
+        value: "",
+        type: "email"
       }, {
+        id: "weight",
         name: "Ваш вес",
         placeholder: "60 кг",
-        value: ""
+        value: "",
+        type: "number"
       }, {
+        id: "tall",
         name: "Ваш рост",
         placeholder: "165 см",
-        value: ""
+        value: "",
+        type: "number"
       }, {
+        id: "required_weight",
         name: "Желаемый вес",
         placeholder: "55 кг",
-        value: ""
+        value: "",
+        type: "number"
       }],
+      additionValues: {
+        'training_location_id': 1,
+        'life_style_id': 1,
+        'problem_zone_id': 1,
+        'menu_calories_id': 1
+      },
       selects: [{
+        id: "life_style_id",
         label: "Выберите Ваш образ жизни: ",
-        value: "Ваш образ жизни",
-        list: ["Малоактивный", "Среднеактивный", "Активный"]
+        value: "Ваш образ жизни"
       }, {
+        id: "problem_zone_id",
         label: "Выберите проблемные зоны: ",
-        value: "Руки",
-        list: ["Руки", "Cпина", "Живот", "Бока", "Ягодицы", "Бёдра", "Голень", "Всё тело"]
+        value: "Руки"
       }, {
+        id: "training_location_id",
         label: "Тренировки для: ",
-        value: "Дома",
-        list: ["Дома", "Зала", "Дом + зал (+ 950 р.)"]
+        value: "Дома"
       }, {
+        id: "menu_calories_id",
         label: "Желаемая каллорийность меню: ",
-        value: "1300-1400",
-        list: ["1300-1400", "1500-1600", "1800-1900", "2000-2100"]
+        value: "1300-1400"
       }]
     };
   },
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetLifeStyles'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetMenuCalories'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetProblemZones'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetTrainingLocations'])),
   methods: {
     toggleDelete: function toggleDelete() {
       this.deletepackage = !this.deletepackage;
     },
-    result: function result(item) {
-      console.log("result=>", item);
+    result: function result(item, id) {
+      this.additionValues[id] = item;
     },
     prev: function prev() {
       this.activeStep--;
     },
     next: function next() {
       this.activeStep++;
-    } // toggle() {
-    //    this.visible = !this.visible;
-    // },
-    // select(item) {
-    // 	this.select.value = item.list;
-    // 	console.log(item)
-    // }
-
+    },
+    initializeStripePayment: function initializeStripePayment() {
+      var user = {
+        "name": this.users[0].value,
+        "age": this.users[1].value,
+        "email": this.users[2].value,
+        "weight": this.users[3].value,
+        "tall": this.users[4].value,
+        "required_weight": this.users[5].value,
+        "training_location_id": this.additionValues.training_location_id,
+        "menu_calories_id": this.additionValues.menu_calories_id,
+        "problem_zone_id": this.additionValues.problem_zone_id,
+        "life_style_id": this.additionValues.life_style_id
+      };
+      var formData = new FormData();
+      formData.append('user_info', JSON.stringify(user));
+      axios.post('/initialize-checkout/stripe', formData).then(function () {
+        window.location.href = '/open-checkout/stripe';
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+      console.log(user);
+    }
   }
 });
 
@@ -49305,18 +49377,18 @@ var render = function () {
           _c(
             "ul",
             { class: { hidden: !_vm.visible, visible: _vm.visible } },
-            _vm._l(_vm.select.list, function (item) {
+            _vm._l(_vm.list, function (item, i) {
               return _c(
                 "li",
                 {
-                  key: item,
+                  key: i,
                   on: {
                     click: function ($event) {
                       return _vm.selectItem(item)
                     },
                   },
                 },
-                [_vm._v("\n          " + _vm._s(item) + "\n        ")]
+                [_vm._v("\n          " + _vm._s(item.name) + "\n        ")]
               )
             }),
             0
@@ -50327,110 +50399,240 @@ var render = function () {
             ]),
             _vm._v(" "),
             _vm.activeStep === 1
-              ? _c("form", { staticClass: "buy-form" }, [
-                  _c(
-                    "div",
-                    { staticClass: "buy-form__row buy-form__row-three" },
-                    _vm._l(_vm.users, function (info, index) {
-                      return _c(
-                        "div",
-                        { key: index, staticClass: "buy__group" },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "buy__label",
-                              attrs: { for: "weight" },
-                            },
-                            [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(info.name) +
-                                  "\n                        "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: info.value,
-                                expression: "info.value",
-                              },
-                            ],
-                            staticClass: "buy__input",
-                            attrs: {
-                              id: "weight",
-                              type: "text",
-                              placeholder: info.placeholder,
-                            },
-                            domProps: { value: info.value },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(info, "value", $event.target.value)
-                              },
-                            },
-                          }),
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "buy-form__row" },
-                    _vm._l(_vm.selects, function (select, index) {
-                      return _c("Myselect", {
-                        key: index,
-                        attrs: { select: select },
-                        on: { result: _vm.result },
-                      })
-                    }),
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "buy__price" }, [
-                    _vm._v("Сумма: 5 000р."),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button buy-form__btn",
-                      attrs: { type: "submit" },
-                      on: {
-                        click: function ($event) {
-                          $event.preventDefault()
-                          return _vm.next()
-                        },
+              ? _c(
+                  "form",
+                  {
+                    staticClass: "buy-form",
+                    on: {
+                      submit: function ($event) {
+                        $event.preventDefault()
+                        return _vm.next.apply(null, arguments)
                       },
                     },
-                    [
-                      _vm._v(
-                        "\n                    ОПЛАТИТЬ И ЗАРЕГИСТРИРОВАТЬСЯ\n                "
-                      ),
-                    ]
-                  ),
-                ])
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "buy-form__row buy-form__row-three" },
+                      _vm._l(_vm.users, function (info, index) {
+                        return _c(
+                          "div",
+                          { key: index, staticClass: "buy__group" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "buy__label",
+                                attrs: { for: info.id },
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(info.name) +
+                                    "\n                        "
+                                ),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            info.type === "checkbox"
+                              ? _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: info.value,
+                                      expression: "info.value",
+                                    },
+                                  ],
+                                  staticClass: "buy__input",
+                                  attrs: {
+                                    required: "",
+                                    id: info.id,
+                                    placeholder: info.placeholder,
+                                    type: "checkbox",
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(info.value)
+                                      ? _vm._i(info.value, null) > -1
+                                      : info.value,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = info.value,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = null,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            _vm.$set(
+                                              info,
+                                              "value",
+                                              $$a.concat([$$v])
+                                            )
+                                        } else {
+                                          $$i > -1 &&
+                                            _vm.$set(
+                                              info,
+                                              "value",
+                                              $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1))
+                                            )
+                                        }
+                                      } else {
+                                        _vm.$set(info, "value", $$c)
+                                      }
+                                    },
+                                  },
+                                })
+                              : info.type === "radio"
+                              ? _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: info.value,
+                                      expression: "info.value",
+                                    },
+                                  ],
+                                  staticClass: "buy__input",
+                                  attrs: {
+                                    required: "",
+                                    id: info.id,
+                                    placeholder: info.placeholder,
+                                    type: "radio",
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(info.value, null),
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(info, "value", null)
+                                    },
+                                  },
+                                })
+                              : _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: info.value,
+                                      expression: "info.value",
+                                    },
+                                  ],
+                                  staticClass: "buy__input",
+                                  attrs: {
+                                    required: "",
+                                    id: info.id,
+                                    placeholder: info.placeholder,
+                                    type: info.type,
+                                  },
+                                  domProps: { value: info.value },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        info,
+                                        "value",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "buy-form__row" },
+                      [
+                        _c("Myselect", {
+                          attrs: {
+                            select: _vm.selects[0],
+                            list: _vm.GetLifeStyles.data,
+                          },
+                          on: { result: _vm.result },
+                        }),
+                        _vm._v(" "),
+                        _c("Myselect", {
+                          attrs: {
+                            select: _vm.selects[1],
+                            list: _vm.GetProblemZones.data,
+                          },
+                          on: { result: _vm.result },
+                        }),
+                        _vm._v(" "),
+                        _c("Myselect", {
+                          attrs: {
+                            select: _vm.selects[2],
+                            list: _vm.GetTrainingLocations,
+                          },
+                          on: { result: _vm.result },
+                        }),
+                        _vm._v(" "),
+                        _c("Myselect", {
+                          attrs: {
+                            select: _vm.selects[3],
+                            list: _vm.GetMenuCalories,
+                          },
+                          on: { result: _vm.result },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "buy__price" }, [
+                      _vm._v("Сумма: 5 000р."),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button buy-form__btn",
+                        attrs: { type: "submit" },
+                      },
+                      [
+                        _vm._v(
+                          "\n                    ОПЛАТИТЬ И ЗАРЕГИСТРИРОВАТЬСЯ\n                "
+                        ),
+                      ]
+                    ),
+                  ]
+                )
               : _vm._e(),
             _vm._v(" "),
             _vm.activeStep === 2
-              ? _c("div", { staticClass: "buy-form__loading" }, [
-                  _c("span", [
-                    _vm._v(
-                      "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к\n        оплате..."
-                    ),
-                  ]),
-                ])
+              ? _c(
+                  "div",
+                  { staticClass: "buy-form__loading d-flex flex-column" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row d-flex w-100" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          { on: { click: _vm.initializeStripePayment } },
+                          [_vm._v("stripe")]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(2),
+                    ]),
+                    _vm._v(" "),
+                    _c("button", { on: { click: _vm.prev } }, [_vm._v("back")]),
+                  ]
+                )
               : _vm._e(),
             _vm._v(" "),
-            _vm._m(1),
+            _vm._m(3),
           ]),
         ]
       ),
@@ -50446,6 +50648,26 @@ var staticRenderFns = [
       _c("b", [
         _vm._v("ВАЖНО! Внимательно вводите ваш электронный адрес без ошибок."),
       ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex w-100" }, [
+      _c("span", [
+        _vm._v(
+          "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к\n        оплате..."
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-6" }, [
+      _c("button", [_vm._v("tinkoff")]),
     ])
   },
   function () {

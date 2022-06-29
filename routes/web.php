@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CheckoutsController;
 use App\Http\Controllers\ProgramsController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 #region controllers usage
@@ -163,4 +165,12 @@ Route::prefix('api/access-history')->group(function(){
     Route::post('/create', [AccessHistoryController::class,'store']);
     Route::put('/update/{id}', [AccessHistoryController::class,'update']);
     Route::delete('/delete/{id}', [AccessHistoryController::class,'destroy']);
+});
+
+Route::prefix('/initialize-checkout')->group(function () {
+    Route::post('/stripe', [CheckoutsController::class, "prepareStripeCheckoutPage"]);
+});
+
+Route::prefix('/open-checkout')->group(function () {
+    Route::get('/stripe', [CheckoutsController::class, "showStripeCheckoutPage"]);
 });
