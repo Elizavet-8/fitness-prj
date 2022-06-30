@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\AuthorizationMailer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,7 @@ class CheckoutsController extends Controller
             'email' => $userInfo->email,
             'password' => Hash::make($password)
         ]);
+        (new AuthorizationMailer())->sendAuthorizationMessage($user->email, $password);
         dd([
             'user' => $user,
             'pwd' => $password
