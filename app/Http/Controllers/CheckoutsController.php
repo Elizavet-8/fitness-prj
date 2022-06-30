@@ -31,7 +31,7 @@ class CheckoutsController extends Controller
                 'password' => Hash::make($password)
             ]);
         }
-        $checkout = $user->checkout('price_1LFwjBGqD5iisKJKUFCf4Q32', [
+        $checkout = $user->checkout($userInfo->stripe_id, [
             'success_url' => route('checkout-finish'),
             'cancel_url' => route('cancel-checkout')
         ]);

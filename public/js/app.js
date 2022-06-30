@@ -4040,13 +4040,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "problem_zone_id": this.additionValues.problem_zone_id,
         "life_style_id": this.additionValues.life_style_id,
         "product_name": localStorage.getItem('name'),
-        "price": localStorage.getItem('price')
+        "price": localStorage.getItem('price'),
+        "stripe_id": localStorage.getItem('stripe_id')
       };
       var formData = new FormData();
       formData.append('user_info', JSON.stringify(user));
       axios.post('/initialize-checkout/stripe', formData).then(function () {
         localStorage.removeItem('name');
         localStorage.removeItem('price');
+        localStorage.removeItem('stripe_id');
         window.location.href = '/open-checkout/stripe';
       })["catch"](function (error) {
         console.log(error.response);
