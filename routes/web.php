@@ -172,5 +172,8 @@ Route::prefix('/initialize-checkout')->group(function () {
 });
 
 Route::prefix('/open-checkout')->group(function () {
-    Route::get('/stripe', [CheckoutsController::class, "showStripeCheckoutPage"]);
+    Route::get('/stripe', [CheckoutsController::class, "generateStripeCheckoutPage"]);
 });
+
+Route::get('/finish-checkout', [CheckoutsController::class, "finishCheckout"])->name('checkout-finish');
+Route::get('/cancel-checkout', [CheckoutsController::class, "cancelCheckout"])->name('cancel-checkout');

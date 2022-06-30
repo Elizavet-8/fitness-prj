@@ -610,7 +610,7 @@
                                         <div class="program__start">
                                             <span>СТАРТ</span> в понедельник!
                                         </div>
-                                        <button type="button" class="button" data-toggle="modal" data-target="#buy">
+                                        <button type="button" class="button" data-toggle="modal" data-target="#buy" onclick="sendMarathonInfo('{{$marathon->name}}', {{$marathon->discount_price}})">
                                             хочу
                                         </button>
                                     </div>
@@ -887,4 +887,10 @@
             </form>
         </div>
     </section>
+    <script>
+        function sendMarathonInfo(name, price) {
+            localStorage.setItem('name', name);
+            localStorage.setItem('price', price);
+        }
+    </script>
 @endsection

@@ -10,58 +10,30 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-<!-- Stripe Elements Placeholder -->
+<!--Stripe Elements Placeholder-->
 <div class="container-fluid d-flex flex-column text-center" style="gap: 10px">
     <h1>Подтверждение оплаты</h1>
+    <h2>Информация о покупателе</h2>
     <div class="row d-flex">
-        <div class="col-6">Услуга</div>
-        <div class="col-6">Тест</div>
+        <div class="col-6">Имя:</div>
+        <div class="col-6">{{$userInfo->name}}</div>
+    </div>
+    <div class="row d-flex">
+        <div class="col-6">Email:</div>
+        <div class="col-6">{{$userInfo->email}}</div>
+    </div>
+    <h2>Информация об услуге</h2>
+    <div class="row d-flex">
+        <div class="col-6">Услуга:</div>
+        <div class="col-6">{{$userInfo->product_name}}</div>
     </div>
     <div class="row d-flex">
         <div class="col-6">Цена:</div>
-        <div class="col-6">316</div>
+        <div class="col-6">{{$userInfo->price}} ₽</div>
     </div>
-    <label for="card-element">
-        <h2>Информация о карте</h2>
-    </label>
-    <div id="card-element">
-
-    </div>
-    <button id="card-button" class="btn btn-success">
-        Process Payment
-    </button>
+    {{ $checkout->button('Оплатить') }}
+    <script src="https://js.stripe.com/v3/"></script>
 </div>
-
-<script src="https://js.stripe.com/v3/"></script>
-
-<script>
-    const stripe = Stripe('{{env('STRIPE_KEY')}}');
-
-    const elements = stripe.elements();
-    const cardElement = elements.create('card', {
-        classes: {
-            base: 'bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 p-3 leading-8 transition-colors duration-200 ease-in-out'
-        }
-    });
-
-    cardElement.mount('#card-element');
-    const cardHolderName = document.getElementById('card-holder-name');
-    const cardButton = document.getElementById('card-button');
-
-    cardButton.addEventListener('click', async (e) => {
-        const { paymentMethod, error } = await stripe.createPaymentMethod(
-            'card', cardElement, {
-                billing_details: { name: cardHolderName.value }
-            }
-        );
-
-        if (error) {
-            // Display "error.message" to the user...
-        } else {
-            // The card has been verified successfully...
-        }
-    });
-</script>
 </body>
 </html>
 
@@ -69,4 +41,3 @@
 @section('content')
 
 @endsection
-

@@ -4038,16 +4038,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "training_location_id": this.additionValues.training_location_id,
         "menu_calories_id": this.additionValues.menu_calories_id,
         "problem_zone_id": this.additionValues.problem_zone_id,
-        "life_style_id": this.additionValues.life_style_id
+        "life_style_id": this.additionValues.life_style_id,
+        "product_name": localStorage.getItem('name'),
+        "price": localStorage.getItem('price')
       };
       var formData = new FormData();
       formData.append('user_info', JSON.stringify(user));
       axios.post('/initialize-checkout/stripe', formData).then(function () {
+        localStorage.removeItem('name');
+        localStorage.removeItem('price');
         window.location.href = '/open-checkout/stripe';
       })["catch"](function (error) {
         console.log(error.response);
       });
-      console.log(user);
     }
   }
 });
