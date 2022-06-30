@@ -75,6 +75,10 @@
                                         <b>Тренировка:</b>
                                         {{$program->training->name}}
                                     </div>
+                                    <div class="program__group">
+                                        <b>Id в Stripe:</b>
+                                        {{$program->stripe_id}}
+                                    </div>
                                     <ul class="program__list">
                                         <li class="program__item">
                                             <div class="program__icon">

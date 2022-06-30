@@ -104,6 +104,12 @@
                                         <input class="form-control" name="about_motivation" type="text">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Id услуги в Stripe:</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" name="stripe_id" type="text">
+                                    </div>
+                                </div>
                                 <div class="card-footer card-footer-edit">
                                     <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>
                                     <a class="btn btn-sm btn-danger" href="/admin/program"> Назад</a>

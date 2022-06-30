@@ -43,7 +43,8 @@ class ProgramsController extends Controller
             'about_ration' => 'nullable',
             'about_procedures' => 'nullable',
             'about_support' => 'nullable',
-            'about_motivation' => 'nullable'
+            'about_motivation' => 'nullable',
+            'stripe_id' => 'nullable'
         ]));
         return redirect()->route('openProgramsPage');
     }
@@ -73,7 +74,8 @@ class ProgramsController extends Controller
             'about_ration' => 'nullable',
             'about_procedures' => 'nullable',
             'about_support' => 'nullable',
-            'about_motivation' => 'nullable'
+            'about_motivation' => 'nullable',
+            'stripe_id' => 'nullable'
         ]);
         MarathonAndProgram::create($input);
         return redirect()->route('openProgramsPage');
