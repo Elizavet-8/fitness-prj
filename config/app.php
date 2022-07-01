@@ -27,7 +27,10 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
-
+    'tinkoff_api_url' => env('TINKOFF_API_URL'),
+    'tinkoff_terminal' => env('TINKOFF_TERMINAL'),
+    'tinkoff_secret' => env('TINKOFF_SECRET'),
+    'tinkoff_success_url' => env('TINKOFF_SUCCESS_URL'),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

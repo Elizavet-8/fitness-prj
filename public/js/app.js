@@ -4057,6 +4057,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       })["catch"](function (error) {
         console.log(error.response);
       });
+    },
+    initializeTinkoffPayment: function initializeTinkoffPayment() {
+      var user = {
+        "name": this.users[0].value,
+        "age": this.users[1].value,
+        "email": this.users[2].value,
+        "weight": this.users[3].value,
+        "tall": this.users[4].value,
+        "required_weight": this.users[5].value,
+        "training_location_id": this.additionValues.training_location_id,
+        "menu_calories_id": this.additionValues.menu_calories_id,
+        "problem_zone_id": this.additionValues.problem_zone_id,
+        "life_style_id": this.additionValues.life_style_id,
+        "product_name": localStorage.getItem('name'),
+        "price": localStorage.getItem('price'),
+        "stripe_id": localStorage.getItem('stripe_id'),
+        "menu_id": localStorage.getItem('menu_id'),
+        "training_id": localStorage.getItem('training_id')
+      };
+      var formData = new FormData();
+      formData.append('user_info', JSON.stringify(user));
+      axios.post('/initialize-checkout/tinkoff', formData).then(function (response) {
+        localStorage.removeItem('name');
+        localStorage.removeItem('price');
+        localStorage.removeItem('stripe_id');
+        localStorage.removeItem('menu_id');
+        localStorage.removeItem('training_id');
+        window.location.href = response.data.paymentUrl;
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
     }
   }
 });
@@ -50633,7 +50664,13 @@ var render = function () {
                         ),
                       ]),
                       _vm._v(" "),
-                      _vm._m(2),
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          { on: { click: _vm.initializeTinkoffPayment } },
+                          [_vm._v("tinkoff")]
+                        ),
+                      ]),
                     ]),
                     _vm._v(" "),
                     _c("button", { on: { click: _vm.prev } }, [_vm._v("back")]),
@@ -50641,7 +50678,7 @@ var render = function () {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm._m(3),
+            _vm._m(2),
           ]),
         ]
       ),
@@ -50669,14 +50706,6 @@ var staticRenderFns = [
           "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к\n        оплате..."
         ),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-6" }, [
-      _c("button", [_vm._v("tinkoff")]),
     ])
   },
   function () {

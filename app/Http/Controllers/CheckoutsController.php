@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Kenvel\Tinkoff;
 
 class CheckoutsController extends Controller
 {
@@ -45,18 +46,74 @@ class CheckoutsController extends Controller
         ]);
     }
 
+    public function prepareTinkoffCheckout(Request $request)
+    {
+        $userInfo = json_decode($request->user_info);
+        Session::put('user_info', $userInfo);
+        $tinkoff = new Tinkoff(
+            config('app.tinkoff_api_url'),
+            config('app.tinkoff_terminal'),
+            config('app.tinkoff_secret')
+        );
+        $payment = [
+            'OrderId' => random_int(1, 1000000),
+            'SuccessURL' => config('app.tinkoff_success_url'),
+            'Amount' => $userInfo->price,
+            'Language' => 'ru',
+            'Description' => $userInfo->product_name,
+            'Email' => $userInfo->email,
+            'Phone' => '1234567890',
+            'Name' => $userInfo->name,
+            'Taxation' => 'usn_income'
+        ];
+        $item[] = [
+            'Name' => $userInfo->product_name,
+            'Price' => $userInfo->price,
+            'NDS' => 'vat20',
+            'Quantity' => 1
+        ];
+        $paymentUrl = $tinkoff->paymentURL($payment, $item);
+        if (!$paymentUrl)
+            dd($tinkoff->error);
+        $paymentId = $tinkoff->payment_id;
+        Session::put('tinkoff_id', $paymentId);
+        return response()->json([
+            'paymentUrl' => $paymentUrl
+        ]);
+    }
+
     public function cancelCheckout()
     {
         dd("cancel");
     }
 
-    public function finishCheckout()
+    public function finishStripeCheckout()
     {
         $userInfo = Session::get('user_info');
         if (is_null($userInfo))
             abort(404);
         $user = User::where('email', $userInfo->email)->first();
         $user->delete();
+        $this->createUserAccount($userInfo);
+    }
+
+    public function finishTinkoffCheckout()
+    {
+        $paymentId = Session::get('tinkoff_id');
+        $tinkoff = new Tinkoff(
+            config('app.tinkoff_api_url'),
+            config('app.tinkoff_terminal'),
+            config('app.tinkoff_secret')
+        );
+        $status = $tinkoff->getState($paymentId);
+        if ($status != "CONFIRMED")
+            abort(404);
+        $userInfo = Session::get('user_info');
+        $this->createUserAccount($userInfo);
+    }
+
+    public function createUserAccount($userInfo)
+    {
         $password = Str::random(12);
         $user = User::create([
             'name' => $userInfo->name,

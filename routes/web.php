@@ -169,11 +169,13 @@ Route::prefix('api/access-history')->group(function(){
 
 Route::prefix('/initialize-checkout')->group(function () {
     Route::post('/stripe', [CheckoutsController::class, "prepareStripeCheckoutPage"]);
+    Route::post('/tinkoff', [CheckoutsController::class, "prepareTinkoffCheckout"]);
 });
 
 Route::prefix('/open-checkout')->group(function () {
     Route::get('/stripe', [CheckoutsController::class, "generateStripeCheckoutPage"]);
 });
 
-Route::get('/finish-checkout', [CheckoutsController::class, "finishCheckout"])->name('checkout-finish');
+Route::get('/finish-checkout', [CheckoutsController::class, "finishStripeCheckout"])->name('checkout-finish');
 Route::get('/cancel-checkout', [CheckoutsController::class, "cancelCheckout"])->name('cancel-checkout');
+Route::get('/finish-tinkoff-checkout', [CheckoutsController::class, "finishTinkoffCheckout"]);

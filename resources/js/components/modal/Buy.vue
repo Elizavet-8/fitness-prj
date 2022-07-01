@@ -100,7 +100,7 @@
                             <button @click="initializeStripePayment">stripe</button>
                         </div>
                         <div class="col-6">
-                            <button>tinkoff</button>
+                            <button @click="initializeTinkoffPayment">tinkoff</button>
                         </div>
                     </div>
                     <button @click="prev">back</button>
@@ -257,6 +257,39 @@ export default {
           .catch((error) => {
               console.log(error.response);
           })
+      },
+      initializeTinkoffPayment() {
+          let user = {
+              "name" : this.users[0].value,
+              "age" : this.users[1].value,
+              "email" : this.users[2].value,
+              "weight" : this.users[3].value,
+              "tall" : this.users[4].value,
+              "required_weight" : this.users[5].value,
+              "training_location_id" : this.additionValues.training_location_id,
+              "menu_calories_id" : this.additionValues.menu_calories_id,
+              "problem_zone_id" : this.additionValues.problem_zone_id,
+              "life_style_id" : this.additionValues.life_style_id,
+              "product_name" : localStorage.getItem('name'),
+              "price" : localStorage.getItem('price'),
+              "stripe_id" : localStorage.getItem('stripe_id'),
+              "menu_id" : localStorage.getItem('menu_id'),
+              "training_id" : localStorage.getItem('training_id')
+          }
+          let formData = new FormData();
+          formData.append('user_info', JSON.stringify(user));
+          axios.post('/initialize-checkout/tinkoff', formData)
+              .then((response) => {
+                  localStorage.removeItem('name');
+                  localStorage.removeItem('price');
+                  localStorage.removeItem('stripe_id');
+                  localStorage.removeItem('menu_id');
+                  localStorage.removeItem('training_id');
+                  window.location.href = response.data.paymentUrl;
+              })
+              .catch((error) => {
+                  console.log(error.response);
+              })
       }
   },
 };
