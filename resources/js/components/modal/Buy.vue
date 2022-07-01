@@ -239,7 +239,9 @@ export default {
             "life_style_id" : this.additionValues.life_style_id,
             "product_name" : localStorage.getItem('name'),
             "price" : localStorage.getItem('price'),
-            "stripe_id" : localStorage.getItem('stripe_id')
+            "stripe_id" : localStorage.getItem('stripe_id'),
+            "menu_id" : localStorage.getItem('menu_id'),
+            "training_id" : localStorage.getItem('training_id')
         }
         let formData = new FormData();
         formData.append('user_info', JSON.stringify(user));
@@ -248,6 +250,8 @@ export default {
               localStorage.removeItem('name');
               localStorage.removeItem('price');
               localStorage.removeItem('stripe_id');
+              localStorage.removeItem('menu_id');
+              localStorage.removeItem('training_id');
               window.location.href = '/open-checkout/stripe';
           })
           .catch((error) => {

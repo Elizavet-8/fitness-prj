@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Core\AuthorizationMailer;
+use App\Models\PersonalAccount;
+use App\Models\TrainingUser;
 use App\Models\User;
+use App\Models\UserMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -60,10 +63,31 @@ class CheckoutsController extends Controller
             'email' => $userInfo->email,
             'password' => Hash::make($password)
         ]);
+        $personalAccount = PersonalAccount::create([
+            'user_id' => $user->id,
+            'age' => $userInfo->age,
+            'life_style_id' => $userInfo->life_style_id,
+            'problem_zone_id' => $userInfo->problem_zone_id,
+            'training_location_id' => $userInfo->training_location_id,
+            'menu_calories_id' => $userInfo->menu_calories_id
+        ]);
+        $userMenu = UserMenu::create([
+            'user_id' => $user->id,
+            'menu_id' => $userInfo->menu_id,
+            'menu_type_id' => 1
+        ]);
+        $trainingUser = TrainingUser::create([
+            'user_id' => $user->id,
+            'training_location_id' => $userInfo->training_location_id,
+            'training_id' => $userInfo->training_id
+        ]);
         (new AuthorizationMailer())->sendAuthorizationMessage($user->email, $password);
         dd([
             'user' => $user,
-            'pwd' => $password
+            'pwd' => $password,
+            'pa' => $personalAccount,
+            'um' => $userMenu,
+            'tu' => $trainingUser
         ]);
     }
 }

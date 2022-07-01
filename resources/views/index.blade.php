@@ -610,7 +610,7 @@
                                         <div class="program__start">
                                             <span>СТАРТ</span> в понедельник!
                                         </div>
-                                        <button type="button" class="button" data-toggle="modal" data-target="#buy" onclick="sendMarathonInfo('{{$marathon->name}}', {{$marathon->discount_price}}, '{{$marathon->stripe_id}}')">
+                                        <button type="button" class="button" data-toggle="modal" data-target="#buy" onclick="sendMarathonInfo('{{$marathon->name}}', {{$marathon->discount_price}}, '{{$marathon->stripe_id}}', {{$marathon->menu_id}}, {{$marathon->training_id}})">
                                             хочу
                                         </button>
                                     </div>
@@ -888,10 +888,12 @@
         </div>
     </section>
     <script>
-        function sendMarathonInfo(name, price, stripe_id) {
+        function sendMarathonInfo(name, price, stripe_id, menu_id, training_id) {
             localStorage.setItem('name', name);
             localStorage.setItem('price', price);
             localStorage.setItem('stripe_id', stripe_id);
+            localStorage.setItem('menu_id', menu_id);
+            localStorage.setItem('training_id', training_id);
         }
     </script>
 @endsection
