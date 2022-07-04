@@ -67,7 +67,14 @@ export default {
    computed:{
       Physics(){
          console.log("this.phase_number:",this.phase_number);
-         return this.$store.getters.GetPhysicsParameters.find(element=>element.phase_number === parseInt(this.phase_number)&&element.training_id==parseInt(this.training_id));
+         let physics = this.$store.getters.GetPhysicsParameters.find(element=>element.phase_number === parseInt(this.phase_number)&&element.training_id==parseInt(this.training_id));
+         return physics ? physics : {
+             "current_weight" : 0,
+             "hips_cm" : 0,
+             "waist_cm" : 0,
+             "chest_cm" : 0,
+             "photoes" : []
+         }
       }
    },
    mounted(){

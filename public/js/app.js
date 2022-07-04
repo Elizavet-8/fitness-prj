@@ -3715,9 +3715,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       console.log("this.phase_number:", this.phase_number);
-      return this.$store.getters.GetPhysicsParameters.find(function (element) {
+      var physics = this.$store.getters.GetPhysicsParameters.find(function (element) {
         return element.phase_number === parseInt(_this.phase_number) && element.training_id == parseInt(_this.training_id);
       });
+      return physics ? physics : {
+        "current_weight": 0,
+        "hips_cm": 0,
+        "waist_cm": 0,
+        "chest_cm": 0,
+        "photoes": []
+      };
     }
   },
   mounted: function mounted() {

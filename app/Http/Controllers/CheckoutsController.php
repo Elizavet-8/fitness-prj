@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Core\AuthorizationMailer;
+use App\Models\AccessHistory;
+use App\Models\ActivityCalendar;
 use App\Models\PersonalAccount;
 use App\Models\TrainingUser;
 use App\Models\User;
 use App\Models\UserMenu;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -120,6 +123,7 @@ class CheckoutsController extends Controller
             'email' => $userInfo->email,
             'password' => Hash::make($password)
         ]);
+        (new AuthorizationMailer())->sendAuthorizationMessage($user->email, $password);
         $personalAccount = PersonalAccount::create([
             'user_id' => $user->id,
             'age' => $userInfo->age,
@@ -138,13 +142,24 @@ class CheckoutsController extends Controller
             'training_location_id' => $userInfo->training_location_id,
             'training_id' => $userInfo->training_id
         ]);
-        (new AuthorizationMailer())->sendAuthorizationMessage($user->email, $password);
+        $activityCalendar = ActivityCalendar::create([
+            'training_user_id' => $trainingUser->id,
+            'day' => 1,
+            'is_active' => 1
+        ]);
+        $accessHistory = AccessHistory::create([
+            'user_id' => $user->id,
+            'activation_date' => Carbon::now(),
+            'deactivation_date' => Carbon::now()->addDays(30)
+        ]);
         dd([
             'user' => $user,
             'pwd' => $password,
             'pa' => $personalAccount,
             'um' => $userMenu,
-            'tu' => $trainingUser
+            'tu' => $trainingUser,
+            'ac' => $activityCalendar,
+            'ah' => $accessHistory
         ]);
     }
 }
