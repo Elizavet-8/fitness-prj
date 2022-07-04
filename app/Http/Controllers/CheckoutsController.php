@@ -112,6 +112,7 @@ class CheckoutsController extends Controller
         if ($status != "CONFIRMED")
             abort(404);
         $userInfo = Session::get('user_info');
+        Session::remove('tinkoff_id');
         $this->createUserAccount($userInfo);
     }
 
@@ -152,6 +153,7 @@ class CheckoutsController extends Controller
             'activation_date' => Carbon::now(),
             'deactivation_date' => Carbon::now()->addDays(30)
         ]);
+        Session::remove('user_info');
         dd([
             'user' => $user,
             'pwd' => $password,
