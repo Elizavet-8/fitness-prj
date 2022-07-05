@@ -20,6 +20,7 @@ import trainingUsers from './modules/trainingUsers'
 import activityCalendars from './modules/activityCalendars'
 import accessHistory from './modules/accessHistory'
 import pricing from './modules/pricing'
+import serviceInfo from "./modules/serviceInfo";
 //#endregion
 
 Vue.use(Vuex)
@@ -43,6 +44,7 @@ export default new Vuex.Store({
         physicsParameters,
         topics,
         accessHistory,
-        pricing
+        pricing,
+        serviceInfo
     }
 })

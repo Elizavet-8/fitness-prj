@@ -2835,8 +2835,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_problemZones__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/problemZones */ "./resources/js/store/modules/problemZones.js");
 /* harmony import */ var _modules_lifeStyles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/lifeStyles */ "./resources/js/store/modules/lifeStyles.js");
 /* harmony import */ var _modules_trainingLocations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/trainingLocations */ "./resources/js/store/modules/trainingLocations.js");
@@ -2855,6 +2855,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_activityCalendars__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/activityCalendars */ "./resources/js/store/modules/activityCalendars.js");
 /* harmony import */ var _modules_accessHistory__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/accessHistory */ "./resources/js/store/modules/accessHistory.js");
 /* harmony import */ var _modules_pricing__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/pricing */ "./resources/js/store/modules/pricing.js");
+/* harmony import */ var _modules_serviceInfo__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modules/serviceInfo */ "./resources/js/store/modules/serviceInfo.js");
 
  //#region import modules
 
@@ -2875,10 +2876,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  //#endregion
 
-vue__WEBPACK_IMPORTED_MODULE_18__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_19__["default"]);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_19__["default"].Store({
+vue__WEBPACK_IMPORTED_MODULE_19__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_20__["default"]);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_20__["default"].Store({
   modules: {
     problemZones: _modules_problemZones__WEBPACK_IMPORTED_MODULE_0__["default"],
     lifeStyles: _modules_lifeStyles__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -2897,7 +2899,8 @@ vue__WEBPACK_IMPORTED_MODULE_18__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1
     physicsParameters: _modules_physicsParameters__WEBPACK_IMPORTED_MODULE_10__["default"],
     topics: _modules_topics__WEBPACK_IMPORTED_MODULE_7__["default"],
     accessHistory: _modules_accessHistory__WEBPACK_IMPORTED_MODULE_16__["default"],
-    pricing: _modules_pricing__WEBPACK_IMPORTED_MODULE_17__["default"]
+    pricing: _modules_pricing__WEBPACK_IMPORTED_MODULE_17__["default"],
+    serviceInfo: _modules_serviceInfo__WEBPACK_IMPORTED_MODULE_18__["default"]
   }
 }));
 
@@ -4618,6 +4621,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     GetQuestion: function GetQuestion(state) {
       return state.Question;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/serviceInfo.js":
+/*!***************************************************!*\
+  !*** ./resources/js/store/modules/serviceInfo.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: {
+    serviceInfo: {
+      'name': null,
+      'price': null,
+      'stripe_id': null,
+      'menu_id': null,
+      'training_id': null
+    }
+  },
+  getters: {
+    SERVICE_INFO: function SERVICE_INFO(state) {
+      return state.serviceInfo;
+    }
+  },
+  mutations: {
+    setServiceInfo: function setServiceInfo(state, payload) {
+      state.serviceInfo = payload;
+    }
+  },
+  actions: {
+    assignServiceInfo: function assignServiceInfo(context, payload) {
+      context.commit('setServiceInfo', payload);
     }
   }
 });
