@@ -611,7 +611,8 @@
                                             :price="{{$marathon->discount_price}}"
                                             :stripe_id="'{{$marathon->stripe_id}}'"
                                             :menu_id="{{$marathon->menu_id}}"
-                                            :training_id="{{$marathon->training_id}}">
+                                            :training_id="{{$marathon->training_id}}"
+                                            :is_marathon="{{(boolean)$marathon->is_marathon}}">
                                         </buy-modal-opener>
                                     </div>
                                 </div>

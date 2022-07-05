@@ -49,7 +49,7 @@ export default {
     },
     selectItem(item) {
       this.label = item.name;
-      this.value = item.id;
+      this.value = item;
       this.$emit("result", this.value, this.select.id);
     },
   },

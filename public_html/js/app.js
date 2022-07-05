@@ -3219,7 +3219,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectItem: function selectItem(item) {
       this.label = item.name;
-      this.value = item.id;
+      this.value = item;
       this.$emit("result", this.value, this.select.id);
     }
   }
@@ -3246,7 +3246,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "BuyModalOpenButton",
-  props: ["name", "price", "stripe_id", "menu_id", "training_id"],
+  props: ["name", "price", "stripe_id", "menu_id", "training_id", "is_marathon"],
   methods: {
     passData: function passData() {
       var serviceInfo = {
@@ -3254,7 +3254,9 @@ __webpack_require__.r(__webpack_exports__);
         'price': this.price,
         'stripe_id': this.stripe_id,
         'menu_id': this.menu_id,
-        'training_id': this.training_id
+        'training_id': this.training_id,
+        'is_marathon': this.is_marathon,
+        'old_price': this.price
       };
       console.log(serviceInfo);
       this.$store.dispatch('assignServiceInfo', serviceInfo);
@@ -3991,6 +3993,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       disabled: false,
+      oldPrice: null,
       errors: [],
       activeStep: 1,
       deletepackage: false,
@@ -4057,13 +4060,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetLifeStyles'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetMenuCalories'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetProblemZones'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetTrainingLocations'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['SERVICE_INFO'])),
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetLifeStyles'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetMenuCalories'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetProblemZones'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetTrainingLocations'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['SERVICE_INFO'])), {}, {
+    trainingLocations: function trainingLocations() {
+      if (!this.SERVICE_INFO.is_marathon) return this.GetTrainingLocations;
+      this.GetTrainingLocations[this.GetTrainingLocations.length - 1].name += " (+ 100р.)";
+      this.GetTrainingLocations[this.GetTrainingLocations.length - 1].extra = 100;
+      return this.GetTrainingLocations;
+    }
+  }),
   methods: {
     toggleDelete: function toggleDelete() {
       this.deletepackage = !this.deletepackage;
     },
     result: function result(item, id) {
-      this.additionValues[id] = item;
+      this.additionValues[id] = item.id;
+    },
+    resultForLocation: function resultForLocation(item, id) {
+      if (item.extra && this.SERVICE_INFO.price === this.SERVICE_INFO.old_price) this.SERVICE_INFO.price += item.extra;else if (!item.extra) this.SERVICE_INFO.price = this.SERVICE_INFO.old_price;
+      this.additionValues[id] = item.id;
     },
     prev: function prev() {
       this.activeStep--;
@@ -4083,20 +4097,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "menu_calories_id": this.additionValues.menu_calories_id,
         "problem_zone_id": this.additionValues.problem_zone_id,
         "life_style_id": this.additionValues.life_style_id,
-        "product_name": localStorage.getItem('name'),
-        "price": this.price,
-        "stripe_id": localStorage.getItem('stripe_id'),
-        "menu_id": localStorage.getItem('menu_id'),
-        "training_id": localStorage.getItem('training_id')
+        "product_name": this.SERVICE_INFO.name,
+        "price": this.SERVICE_INFO.price,
+        "stripe_id": this.SERVICE_INFO.stripe_id,
+        "menu_id": this.SERVICE_INFO.menu_id,
+        "training_id": this.SERVICE_INFO.training_id
       };
       var formData = new FormData();
       formData.append('user_info', JSON.stringify(user));
       axios.post('/initialize-checkout/stripe', formData).then(function () {
-        localStorage.removeItem('name');
-        localStorage.removeItem('price');
-        localStorage.removeItem('stripe_id');
-        localStorage.removeItem('menu_id');
-        localStorage.removeItem('training_id');
         window.location.href = '/open-checkout/stripe';
       })["catch"](function (error) {
         console.log(error.response);
@@ -8265,7 +8274,9 @@ __webpack_require__.r(__webpack_exports__);
       'price': null,
       'stripe_id': null,
       'menu_id': null,
-      'training_id': null
+      'training_id': null,
+      'old_price': null,
+      'is_marathon': false
     }
   },
   getters: {
@@ -50800,9 +50811,9 @@ var render = function () {
                         _c("Myselect", {
                           attrs: {
                             select: _vm.selects[2],
-                            list: _vm.GetTrainingLocations,
+                            list: _vm.trainingLocations,
                           },
-                          on: { result: _vm.result },
+                          on: { result: _vm.resultForLocation },
                         }),
                         _vm._v(" "),
                         _c("Myselect", {
