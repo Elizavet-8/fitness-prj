@@ -68,6 +68,23 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">Выберите тип услуги:</label>
+                                    <select id="inputState" class="form-control" name="is_marathon">
+                                        <option value="0"
+                                                @if(!$program->is_marathon)
+                                                    selected
+                                                @endif>
+                                            Программа
+                                        </option>
+                                        <option value="1"
+                                                @if($program->is_marathon)
+                                                    selected
+                                                @endif>
+                                            Марафон
+                                        </option>
+                                    </select>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Дополнительно о тренировках:</label>
                                     <div class="col-md-9">

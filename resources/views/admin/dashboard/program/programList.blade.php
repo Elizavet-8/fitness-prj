@@ -79,6 +79,10 @@
                                         <b>Id в Stripe:</b>
                                         {{$program->stripe_id}}
                                     </div>
+                                    <div class="program__group">
+                                        <b>Тип услуги:</b>
+                                        {{$program->is_marathon ? "Марафон" : "Программа"}}
+                                    </div>
                                     <ul class="program__list">
                                         <li class="program__item">
                                             <div class="program__icon">
