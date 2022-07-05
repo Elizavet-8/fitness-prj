@@ -229,10 +229,14 @@ export default {
         this.additionValues[id] = item.id;
     },
     resultForLocation(item, id) {
-        if (item.extra && this.SERVICE_INFO.price === this.SERVICE_INFO.old_price)
+        if (item.extra && this.SERVICE_INFO.price === this.SERVICE_INFO.old_price) {
             this.SERVICE_INFO.price += item.extra;
-        else if (!item.extra)
+            this.SERVICE_INFO.current_stripe_id = this.SERVICE_INFO.extended_stripe_id;
+        }
+        else if (!item.extra) {
             this.SERVICE_INFO.price = this.SERVICE_INFO.old_price;
+            this.SERVICE_INFO.current_stripe_id = this.SERVICE_INFO.stripe_id;
+        }
         this.additionValues[id] = item.id;
     },
     prev() {
@@ -255,7 +259,7 @@ export default {
             "life_style_id" : this.additionValues.life_style_id,
             "product_name" : this.SERVICE_INFO.name,
             "price" : this.SERVICE_INFO.price,
-            "stripe_id" : this.SERVICE_INFO.stripe_id,
+            "stripe_id" : this.SERVICE_INFO.current_stripe_id,
             "menu_id" : this.SERVICE_INFO.menu_id,
             "training_id" : this.SERVICE_INFO.training_id
         }
@@ -283,7 +287,7 @@ export default {
               "life_style_id" : this.additionValues.life_style_id,
               "product_name" : this.SERVICE_INFO.name,
               "price" : this.SERVICE_INFO.price,
-              "stripe_id" : this.SERVICE_INFO.stripe_id,
+              "stripe_id" : this.SERVICE_INFO.current_stripe_id,
               "menu_id" : this.SERVICE_INFO.menu_id,
               "training_id" : this.SERVICE_INFO.training_id
           }

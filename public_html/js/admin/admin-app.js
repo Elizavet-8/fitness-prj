@@ -4647,7 +4647,9 @@ __webpack_require__.r(__webpack_exports__);
       'menu_id': null,
       'training_id': null,
       'old_price': null,
-      'is_marathon': false
+      'is_marathon': false,
+      'extended_stripe_id': null,
+      'current_stripe_id': null
     }
   },
   getters: {
