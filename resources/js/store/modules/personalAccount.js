@@ -2,6 +2,7 @@ export default {
     actions:{
         async fetchPersonalAccount({ commit }) {
             axios.get('/api/personal-account/list').then(response => {
+                console.log(response.data);
                 commit('LoadUpdatePersonalAccount', response.data)
             }).catch((error)=>{
                 console.log("LoadUpdatePersonalAccount:",error.response);
