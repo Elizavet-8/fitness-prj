@@ -121,6 +121,12 @@
                                         <input class="form-control" name="stripe_id" type="text" value="{{$program->stripe_id}}">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Id расширенной версии услуги в Stripe:</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" name="extended_stripe_id" type="text" value="{{$program->extended_stripe_id}}">
+                                    </div>
+                                </div>
                                 <div class="card-footer card-footer-edit">
                                     <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>
                                     <a class="btn btn-sm btn-danger" href="/admin/program"> Назад</a>

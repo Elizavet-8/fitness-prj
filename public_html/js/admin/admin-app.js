@@ -4006,7 +4006,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref.commit;
                 axios.get('/api/personal-account/list').then(function (response) {
-                  console.log(response.data);
                   commit('LoadUpdatePersonalAccount', response.data);
                 })["catch"](function (error) {
                   console.log("LoadUpdatePersonalAccount:", error.response);

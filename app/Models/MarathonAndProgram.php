@@ -28,7 +28,8 @@ class MarathonAndProgram extends Model
         'about_support',
         'about_motivation',
         'stripe_id',
-        'is_marathon'
+        'is_marathon',
+        'extended_stripe_id'
     ];
 
     /**
