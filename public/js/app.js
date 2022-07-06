@@ -3981,6 +3981,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4762,6 +4764,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4838,6 +4854,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5244,6 +5270,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5307,6 +5343,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -24303,7 +24349,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.slide-fade-enter-active {\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\n/* .slide-fade-leave-active до версии 2.1.8 */ {\n  transform: translateX(10px);\n  opacity: 0;\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s ease;\n}\n.fade-enter-from,\n.fade-leave-to {\n  opacity: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.slide-fade-enter-active {\r\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\r\n  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\r\n/* .slide-fade-leave-active до версии 2.1.8 */ {\r\n  transform: translateX(10px);\r\n  opacity: 0;\n}\n.fade-enter-active,\r\n.fade-leave-active {\r\n  transition: opacity 0.5s ease;\n}\n.fade-enter-from,\r\n.fade-leave-to {\r\n  opacity: 0;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -50860,33 +50906,45 @@ var render = function () {
               : _vm._e(),
             _vm._v(" "),
             _vm.activeStep === 2
-              ? _c(
-                  "div",
-                  { staticClass: "buy-form__loading d-flex flex-column" },
-                  [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row d-flex w-100" }, [
-                      _c("div", { staticClass: "col-6" }, [
-                        _c(
-                          "button",
-                          { on: { click: _vm.initializeStripePayment } },
-                          [_vm._v("stripe")]
-                        ),
-                      ]),
+              ? _c("div", [
+                  _c(
+                    "div",
+                    { staticClass: "buy-form__loading d-flex flex-column" },
+                    [
+                      _vm._m(1),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-6" }, [
-                        _c(
-                          "button",
-                          { on: { click: _vm.initializeTinkoffPayment } },
-                          [_vm._v("tinkoff")]
-                        ),
+                      _c("div", { staticClass: "row d-flex w-100" }, [
+                        _c("div", { staticClass: "col-6" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button-green",
+                              on: { click: _vm.initializeStripePayment },
+                            },
+                            [_vm._v("stripe")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-6" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button-green",
+                              on: { click: _vm.initializeTinkoffPayment },
+                            },
+                            [_vm._v("tinkoff")]
+                          ),
+                        ]),
                       ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("button", { on: { click: _vm.prev } }, [_vm._v("back")]),
-                  ]
-                )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "button-back", on: { click: _vm.prev } },
+                    [_vm._v("Назад")]
+                  ),
+                ])
               : _vm._e(),
             _vm._v(" "),
             _vm._m(2),
@@ -50914,7 +50972,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row d-flex w-100" }, [
       _c("span", [
         _vm._v(
-          "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к\n        оплате..."
+          "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате..."
         ),
       ]),
     ])
@@ -52373,13 +52431,13 @@ var render = function () {
               _vm._v(" "),
               _c("h6", { staticClass: "plugin-modal-form__subtitle" }, [
                 _vm._v(
-                  "\r\n            Выберите новый план питания\r\n            "
+                  "\n                    Выберите новый план питания\n                "
                 ),
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "plugin-modal__txt" }, [
                 _vm._v(
-                  "\r\n            Каждый план идеально сбалансирован и прекрасно подходит для активной жизни\r\n            "
+                  "\n                    Каждый план идеально сбалансирован и прекрасно подходит для активной жизни\n                "
                 ),
               ]),
               _vm._v(" "),
@@ -52415,9 +52473,9 @@ var render = function () {
                       _vm._v(" "),
                       _c("div", { staticClass: "workout-checkbox" }, [
                         _vm._v(
-                          "\r\n                     " +
+                          "\n                            " +
                             _vm._s(caloric.title) +
-                            "\r\n                  "
+                            "\n                        "
                         ),
                       ]),
                     ]
@@ -52469,7 +52527,7 @@ var render = function () {
                                   _c("sub", [_vm._v("№")]),
                                   _vm._v(
                                     _vm._s(index + 1) +
-                                      "\r\n                        "
+                                      "\n                                "
                                   ),
                                 ]
                               ),
@@ -52482,15 +52540,15 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\r\n                           " +
+                                    "\n                                    " +
                                       _vm._s(diet.menu) +
-                                      "\r\n                           "
+                                      "\n                                    "
                                   ),
                                   _c("b", [
                                     _vm._v(
-                                      "\r\n                              " +
+                                      "\n                                        " +
                                         _vm._s(diet.price) +
-                                        "\r\n                           "
+                                        "\n                                    "
                                     ),
                                   ]),
                                 ]
@@ -52515,7 +52573,7 @@ var render = function () {
                               },
                             },
                           },
-                          [_vm._v("оплатить")]
+                          [_vm._v("оплатить\n                    ")]
                         )
                       : _c(
                           "button",
@@ -52528,18 +52586,44 @@ var render = function () {
                     _vm._v(" "),
                     _c("p", { staticClass: "plugin-modal__txt-small center" }, [
                       _vm._v(
-                        "\r\n                  Нажимая “Оплатить”, я принимаю условия Политики обработки персональных данный и условия\r\n                  Оферты\r\n               "
+                        "\n                        Нажимая “Оплатить”, я принимаю условия Политики обработки персональных данный и условия\n                        Оферты\n                    "
                       ),
                     ]),
                   ])
                 : _vm._e(),
               _vm._v(" "),
               _vm.activeStep === 2
-                ? _c("div", { staticClass: "plugin-modal-action__block" }, [
-                    _vm._v(
-                      "\r\n               Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...\r\n            "
-                    ),
-                  ])
+                ? _c(
+                    "div",
+                    { staticClass: "buy-form__loading d-flex flex-column" },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row d-flex w-100" }, [
+                        _c("div", { staticClass: "col-6" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button-green",
+                              on: { click: _vm.initializeStripePayment },
+                            },
+                            [_vm._v("stripe")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-6" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button-green",
+                              on: { click: _vm.initializeTinkoffPayment },
+                            },
+                            [_vm._v("tinkoff")]
+                          ),
+                        ]),
+                      ]),
+                    ]
+                  )
                 : _vm._e(),
             ]),
           ]
@@ -52548,7 +52632,20 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex w-100" }, [
+      _c("span", [
+        _vm._v(
+          "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате..."
+        ),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -52768,11 +52865,37 @@ var render = function () {
               : _vm._e(),
             _vm._v(" "),
             _vm.activeStep === 2
-              ? _c("div", { staticClass: "plugin-modal-action__block" }, [
-                  _vm._v(
-                    "\n           Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...\n        "
-                  ),
-                ])
+              ? _c(
+                  "div",
+                  { staticClass: "buy-form__loading d-flex flex-column" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row d-flex w-100" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button-green",
+                            on: { click: _vm.initializeStripePayment },
+                          },
+                          [_vm._v("stripe")]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button-green",
+                            on: { click: _vm.initializeTinkoffPayment },
+                          },
+                          [_vm._v("tinkoff")]
+                        ),
+                      ]),
+                    ]),
+                  ]
+                )
               : _vm._e(),
           ]),
         ]
@@ -52807,6 +52930,18 @@ var staticRenderFns = [
         ]),
       ]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex w-100" }, [
+      _c("span", [
+        _vm._v(
+          "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате..."
+        ),
+      ]),
+    ])
   },
 ]
 render._withStripped = true
@@ -53492,11 +53627,37 @@ var render = function () {
               : _vm._e(),
             _vm._v(" "),
             _vm.activeStep === 2
-              ? _c("div", { staticClass: "plugin-modal-action__block" }, [
-                  _vm._v(
-                    "\n            Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...\n         "
-                  ),
-                ])
+              ? _c(
+                  "div",
+                  { staticClass: "buy-form__loading d-flex flex-column" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row d-flex w-100" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button-green",
+                            on: { click: _vm.initializeStripePayment },
+                          },
+                          [_vm._v("stripe")]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button-green",
+                            on: { click: _vm.initializeTinkoffPayment },
+                          },
+                          [_vm._v("tinkoff")]
+                        ),
+                      ]),
+                    ]),
+                  ]
+                )
               : _vm._e(),
           ]),
         ]
@@ -53504,7 +53665,20 @@ var render = function () {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex w-100" }, [
+      _c("span", [
+        _vm._v(
+          "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате..."
+        ),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -53770,11 +53944,37 @@ var render = function () {
               : _vm._e(),
             _vm._v(" "),
             _vm.activeStep === 2
-              ? _c("div", { staticClass: "plugin-modal-action__block" }, [
-                  _vm._v(
-                    "\n            Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...\n         "
-                  ),
-                ])
+              ? _c(
+                  "div",
+                  { staticClass: "buy-form__loading d-flex flex-column" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row d-flex w-100" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button-green",
+                            on: { click: _vm.initializeStripePayment },
+                          },
+                          [_vm._v("stripe")]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button-green",
+                            on: { click: _vm.initializeTinkoffPayment },
+                          },
+                          [_vm._v("tinkoff")]
+                        ),
+                      ]),
+                    ]),
+                  ]
+                )
               : _vm._e(),
           ]),
         ]
@@ -53791,6 +53991,18 @@ var staticRenderFns = [
       _c("h4", { staticClass: "plugin-modal__title" }, [
         _vm._v(
           "\n               Новые тренировочные планы для зала и дома\n            "
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex w-100" }, [
+      _c("span", [
+        _vm._v(
+          "Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате..."
         ),
       ]),
     ])
