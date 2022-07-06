@@ -17,10 +17,10 @@ class Training extends Model
     protected $fillable = [
         'name',
         'description',
-        'training_days',
         'level',
         'training_price',
-        'problem_zone_id'
+        'problem_zone_id',
+        'stripe_id'
     ];
 
     /**

@@ -69,21 +69,20 @@ class TrainingController extends Controller
         return view('admin.dashboard.workout.workoutEditForm')->with(compact('training', 'problem_zones'));
     }
 
-    function adminEditTraining(Request $request, $id)
+    public function adminEditTraining(Request $request, $id)
     {
         if(is_null(Auth::guard('admin')->user()))
             abort(401);
-        $name = $request->name;
-        $training_price = $request->training_price;
-        $problemZone = $request->problemZone;
-
-        if ($name != null && $training_price != null && $problemZone != null) {
-            Training::whereId($id)->update([
-                'name' => $name,
-                'training_price' => $training_price,
-                'problemZone' => $problemZone
-            ]);
-        }
+        $training = Training::find($id);
+        $input = $request->validate([
+            'name' => 'required|string',
+            'training_price' => 'required',
+            'problem_zone_id' => 'required|integer',
+            'stripe_id' => 'nullable',
+            'description' => 'required|string',
+            'level' => 'required|integer'
+        ]);
+        $training->update($input);
         return redirect()->route('training');
     }
 
@@ -96,21 +95,19 @@ class TrainingController extends Controller
         return view('admin.dashboard.workout.workoutAddForm')->with(compact('locations', 'problem_zones'));
     }
 
-    function adminAddTraining(Request $request)
+    public function adminAddTraining(Request $request)
     {
         if(is_null(Auth::guard('admin')->user()))
             abort(401);
-        $name = $request->name;
-        $training_price = $request->training_price;;
-        $problemZone = $request->problem_zone_id;
-
-        if ($name != null && $training_price != null && $problemZone != null) {
-            Training::create([
-                'name' => $name,
-                'training_price' => $training_price,
-                'problemZone' => $problemZone
-            ]);
-        }
+        $input = $request->validate([
+            'name' => 'required|string',
+            'training_price' => 'required',
+            'problem_zone_id' => 'required|integer',
+            'stripe_id' => 'nullable',
+            'description' => 'required|string',
+            'level' => 'required|integer'
+        ]);
+        Training::create($input);
         return redirect()->route('training');
     }
 

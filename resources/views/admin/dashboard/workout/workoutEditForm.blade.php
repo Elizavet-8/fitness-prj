@@ -29,6 +29,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Описание</label>
+                                    <div class="col-md-9">
+                                        <input value="{{ $training->description }}" name="description" class="form-control" placeholder="Описание " type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Уровень</label>
+                                    <div class="col-md-9">
+                                        <input value="{{ $training->level }}" required name="level" class="form-control" placeholder="Уровень " type="number">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Цена</label>
                                     <div class="col-md-9">
                                         <input value="{{ $training->training_price }}" name="training_price" class="form-control" placeholder="Цена" type="text">
@@ -37,25 +49,25 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Тренировка для</label>
                                     <div class="col-md-9">
-                                        <select name="trainingLocation" class="form-control">
+                                        <select name="problem_zone_id" class="form-control">
                                             <option value="{{$training->problemZone}}">{{$training->problemZone->name}}</option>
                                             @foreach($problem_zones as $problem_zone)
-                                                <option value="{{$problem_zone->id}}">{{$problem_zone->name}}</option>
+                                                <option value="{{$problem_zone->id}}"
+                                                    @if($training->problem_zone_id === $problem_zone->id)
+                                                        selected
+                                                    @endif>
+                                                    {{$problem_zone->name}}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-{{--                                <div class="form-group row">--}}
-{{--                                    <label class="col-md-3 col-form-label">Место:</label>--}}
-{{--                                    <div class="col-md-9">--}}
-{{--                                        <select name="trainingLocation" class="form-control">--}}
-{{--                                           <option value="{{$training->trainingLocation}}">{{$training->trainingLocation->name}}</option>--}}
-{{--                                            @foreach($locations as $location)--}}
-{{--                                                <option value="{{$location->id}}">{{$location->name}}</option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Id в Stripe</label>
+                                    <div class="col-md-9">
+                                        <input value="{{ $training->stripe_id }}" required name="stripe_id" class="form-control" placeholder="Id в Stripe " type="text">
+                                    </div>
+                                </div>
                                 <div class="card-footer card-footer-edit">
                                     <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>
                                     <a class="btn btn-sm btn-danger" href="/admin/workout"> Назад</a>
