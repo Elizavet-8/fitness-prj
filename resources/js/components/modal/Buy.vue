@@ -90,25 +90,27 @@
                         ОПЛАТИТЬ И ЗАРЕГИСТРИРОВАТЬСЯ
                     </button>
                 </form>
-                <div class="buy-form__loading d-flex flex-column" v-if="activeStep === 2">
-                    <div class="row d-flex w-100">
-                        <span>Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к
-            оплате...</span>
-                    </div>
-                    <div class="row d-flex w-100">
-                        <div class="col-6">
-                            <button @click="initializeStripePayment">stripe</button>
+                <div  v-if="activeStep === 2">
+                    <div class="buy-form__loading d-flex flex-column">
+                        <div class="row d-flex w-100">
+                        <span>Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...</span>
                         </div>
-                        <div class="col-6">
-                            <button @click="initializeTinkoffPayment">tinkoff</button>
+                        <div class="row d-flex w-100">
+                            <div class="col-6">
+                                <button class="button-green" @click="initializeStripePayment">stripe</button>
+                            </div>
+                            <div class="col-6">
+                                <button class="button-green" @click="initializeTinkoffPayment">tinkoff</button>
+                            </div>
                         </div>
                     </div>
-                    <button @click="prev">back</button>
+                    <button class="button-back" @click="prev">Назад</button>
                 </div>
                 <div class="buy-form__prg">
                     Нажимая “Оплатить и зарегестрироваться”, я принимаю условия
                     <span>Политики обработки персональных данный и условия Оферты </span>
                 </div>
+
             </div>
         </div>
     </div>

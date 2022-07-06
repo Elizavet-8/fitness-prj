@@ -29,7 +29,7 @@
          </h6>
          <p class="plugin-modal__txt">
            Чем выше уровень, тем сложнее тренировочный план
-         </p> 
+         </p>
          <form class="plugin-modal-form" v-if="activeStep === 1">
             <div class="plugin-checkboxes">
                <label class="plugin-checkbox__label" v-for="(workout, index) in workouts" :key="index">
@@ -57,9 +57,19 @@
                Оферты
             </p>
          </form>
-         <div class="plugin-modal-action__block" v-if="activeStep === 2">
-            Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...
-         </div>
+          <div class="buy-form__loading d-flex flex-column" v-if="activeStep === 2">
+              <div class="row d-flex w-100">
+                  <span>Спасибо! Заказ оформлен. Пожалуйста, подождите. Идет переход к оплате...</span>
+              </div>
+              <div class="row d-flex w-100">
+                  <div class="col-6">
+                      <button class="button-green" @click="initializeStripePayment">stripe</button>
+                  </div>
+                  <div class="col-6">
+                      <button class="button-green" @click="initializeTinkoffPayment">tinkoff</button>
+                  </div>
+              </div>
+          </div>
       </div>
    </div>
 </div>

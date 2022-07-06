@@ -1,638 +1,718 @@
 .modal-custom {
-   ::-moz-placeholder {
-      font-weight: normal;
-      font-size: 17px;
-      line-height: 21px;
-      color: rgba(145, 128, 255, 0.75);
-   }
-   :-moz-placeholder {
-      font-weight: normal;
-      font-size: 17px;
-      line-height: 21px;
-      color: rgba(145, 128, 255, 0.75);
-   }
-   :-ms-input-placeholder {
-      font-weight: normal;
-      font-size: 17px;
-      line-height: 21px;
-      color: rgba(145, 128, 255, 0.75);
-   }
-   ::-webkit-input-placeholder {
-      font-weight: normal;
-      font-size: 17px;
-      line-height: 21px;
-      color: rgba(145, 128, 255, 0.75);
-   }
+    ::-moz-placeholder {
+        font-weight: normal;
+        font-size: 17px;
+        line-height: 21px;
+        color: rgba(145, 128, 255, 0.75);
+    }
+
+    :-moz-placeholder {
+        font-weight: normal;
+        font-size: 17px;
+        line-height: 21px;
+        color: rgba(145, 128, 255, 0.75);
+    }
+
+    :-ms-input-placeholder {
+        font-weight: normal;
+        font-size: 17px;
+        line-height: 21px;
+        color: rgba(145, 128, 255, 0.75);
+    }
+
+    ::-webkit-input-placeholder {
+        font-weight: normal;
+        font-size: 17px;
+        line-height: 21px;
+        color: rgba(145, 128, 255, 0.75);
+    }
 }
+
 .modal-custom__content {
-   background: #ffffff;
-   box-shadow: 0px 14px 24px rgba(0, 0, 0, 0.25);
-   border-radius: 28px;
-   position: relative;
+    background: #ffffff;
+    box-shadow: 0px 14px 24px rgba(0, 0, 0, 0.25);
+    border-radius: 28px;
+    position: relative;
 }
+
 .modal__close {
-   border: none;
-   background: none;
-   position: absolute;
-   right: 50px;
-   top: 50px;
+    border: none;
+    background: none;
+    position: absolute;
+    right: 50px;
+    top: 50px;
 }
+
 .modal-entrance__content {
-   padding: 114px 47px 64px 54px;
-   width: 100%;
-   max-width: 481px;
-   .modal__title {
-      margin-bottom: 25px;
-   }
+    padding: 114px 47px 64px 54px;
+    width: 100%;
+    max-width: 481px;
+
+    .modal__title {
+        margin-bottom: 25px;
+    }
 }
+
 .modal__title {
-   font-weight: bold;
-   font-size: 22px;
-   line-height: 27px;
-   color: #9180ff;
-   text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 27px;
+    color: #9180ff;
+    text-align: center;
 }
+
 .modal-input__group {
-   position: relative;
-   width: 100%;
+    position: relative;
+    width: 100%;
 }
+
 .modal-input {
-   border: none;
-   background: none;
-   padding: 26px 20px 20px 45px;
-   border-bottom: 1px solid rgba(145, 128, 255, 0.25);
-   font-weight: normal;
-   font-size: 17px;
-   line-height: 21px;
-   color: rgba(145, 128, 255, 0.75);
-   width: 100%;
+    border: none;
+    background: none;
+    padding: 26px 20px 20px 45px;
+    border-bottom: 1px solid rgba(145, 128, 255, 0.25);
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 21px;
+    color: rgba(145, 128, 255, 0.75);
+    width: 100%;
+
     &.invalid {
         border-color: #ff8080;
     }
 }
-.modal-input__svg {
-   position: absolute;
-   bottom: 18px;
-   left: 0;
-}
-.modal__btn-lose {
-   border: none;
-   background: none;
-   margin-top: 19px;
-   font-size: 14px;
-   line-height: 17px;
-   text-align: right;
-   color: #9180ff;
-   display: flex;
-   margin-left: auto;
-}
-.modal__btn {
-   margin-top: 40px;
-   width: 208px;
-   height: 50px;
-   font-size: 18px;
-}
-.error__mrg {
-   font-style: italic;
-   font-size: 14px;
-   line-height: 17px;
-   text-align: center;
-   color: #ff8080;
-   margin-top: -15px;
-}
-.modal__caption {
-   font-weight: normal;
-   font-size: 14px;
-   line-height: 17px;
-   color: rgba(145, 128, 255, 0.75);
-   margin: 20px 0 0;
-}
-.modal__caption.center {
-   text-align: center;
-}
-.modal-lose .modal-dialog {
-   max-width: 600px;
-   padding-top: 77px;
-}
-.modal-lose__content {
-   max-width: 600px;
-   padding: 86px 92px 64px 89px;
-   .modal__btn {
-      margin-top: 76px;
-   }
-}
-.modal-input__group-lose {
-   .modal-input {
-      padding-right: 155px;
-   }
-   .modal__caption {
-      margin: 20px 0;
-   }
-}
-.modal__btn-code {
-   font-weight: 500;
-   font-size: 14px;
-   line-height: 17px;
-   text-align: center;
-   color: #9180ff;
-   border: 1px solid #9180ff;
-   box-sizing: border-box;
-   background: transparent;
-   box-shadow: 0px 10px 32px -3px rgba(0, 0, 0, 0.26);
-   border-radius: 28px;
-   width: 145px;
-   height: 36px;
-   position: absolute;
-   text-transform: initial;
-   bottom: 12px;
-   right: -20px;
-   box-shadow: none;
-   &:hover,
-   &:active,
-   &:focus {
-      color: #fff;
-   }
-}
-.modal-lose__btn {
-   position: absolute;
-   left: 0;
-   top: -77px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   width: 148px;
-   height: 46px;
-   svg {
-      margin-right: 10px;
-   }
-}
-.none-btn {
-   border: none;
-   background: none;
-}
-.buy-form {
-   ::-moz-placeholder {
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 15px;
-      color: rgba(145, 128, 255, 0.75);
-   }
-   :-moz-placeholder {
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 15px;
-      color: rgba(145, 128, 255, 0.75);
-   }
-   :-ms-input-placeholder {
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 15px;
-      color: rgba(145, 128, 255, 0.75);
-   }
-   ::-webkit-input-placeholder {
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 15px;
-      color: rgba(145, 128, 255, 0.75);
-   }
-}
-.buy-head {
-   margin: 50px 0;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   height: 71px;
-   border-top: 1px solid rgba(145, 128, 255, 0.25);
-   border-bottom: 1px solid rgba(145, 128, 255, 0.25);
-   .remove {
-      background: #9180ff;
-      width: 27.25px;
-      height: 27.25px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-left: 20px;
-      svg {
-         width: 9.76px;
-         height: 9.75px;
-      }
-   }
-}
-.buy-head__prg-small {
-   font-size: 14px;
-   line-height: 17px;
-   color: #9180ff;
-   margin: 0;
-}
-.buy-head__prg {
-   font-size: 17px;
-   line-height: 21px;
-   color: #9180ff;
-   margin: 0;
-   display: flex;
-   align-items: center;
-   b {
-      // margin-top: 77px;
-      margin-top: 30px;
-   }
-}
-.buy-head__prg-bold {
-   font-weight: 700;
-}
-.modal-buy {
-   .modal-custom__content,
-   .modal-dialog {
-      max-width: 771.68px;
-   }
-   .modal-custom__content {
-      // padding: 110px 57px 110px 66px;
-      padding: 57px 57px 110px 66px;
-   }
-}
-.buy__label {
-   font-size: 12px;
-   line-height: 15px;
-   color: #9180ff;
-   margin: 0;
-}
-.buy-head__txt-small {
-   // margin: 25px 0 50px;
-   margin: 25px 0 15px;
-}
-.buy-form__row {
-   display: grid;
-   grid-template-columns: repeat(2, 1fr);
-   &:first-child {
-      margin-top: 0;
-   }
-}
-.buy-form__row-three {
-   grid-template-columns: repeat(3, 1fr);
-   gap: 12px;
-}
-.buy__group {
-   margin-top: 26px;
-}
-.buy__input {
-   margin-top: 12px;
-   border: 1px solid #9180ff;
-   box-sizing: border-box;
-   border-radius: 8px;
-   height: 50px;
-   padding: 19px 12px 12px;
-   font-weight: 600;
-   font-size: 12px;
-   line-height: 15px;
-   color: #9180ff;
-   width: 100%;
-}
-.buy__selector {
-   margin-top: 38px;
-   margin-left: 26px;
-   &:nth-child(2n + 1) {
-      margin-right: 26px;
-      margin-left: 0;
-   }
-   .buy__input {
-      position: relative;
-      .arrow {
-         position: absolute;
-         position: absolute;
-         right: 15px;
-         top: 14px;
-         transform: rotate(-90deg);
-      }
-      .label {
-         display: block;
-      }
-   }
-   ul {
-      width: 100%;
-      left: 0;
-      top: 59px;
-      position: absolute;
-      z-index: 1;
-      padding: 10px 0;
-      background: #ffffff;
-      border: 1px solid #9180ff;
-      box-sizing: border-box;
-      border-radius: 8px;
-   }
-   li {
-      padding: 10px 12px;
-      height: 36px;
-      width: 100%;
-      &:hover {
-         background: rgba(145, 128, 255, 0.4);
-      }
-   }
-   .hidden {
-      visibility: hidden;
-   }
-   .visible {
-      visibility: visible;
-   }
-}
-.buy-form__btn {
-   max-width: 587.76px;
-   height: 64.21px;
-   background: #9180ff;
-   box-shadow: 0px 10px 32px -3px rgba(0, 0, 0, 0.26);
-   border-radius: 28px;
-   margin-top: 77px;
-   margin-bottom: 25px;
-   width: 100%;
-}
-.buy-form__prg {
-   font-size: 12px;
-   line-height: 15px;
-   text-align: center;
-   color: #9180ff;
-   span {
-      text-decoration: underline;
-   }
-}
-.buy-form__loading {
-   font-weight: bold;
-   font-size: 18px;
-   line-height: 164.4%;
-   text-align: center;
-   color: #ffffff;
-   height: 133px;
-   background: #a2f3b4;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border-radius: 8px;
-   margin-top: -10px;
-   margin-bottom: 30px;
-   span {
-      max-width: 535px;
-      margin: 0 auto;
-   }
-}
-.modal-dialog-centered {
-   justify-content: center;
-}
-.buy__price {
-   font-weight: bold;
-   font-size: 17px;
-   line-height: 21px;
-   text-align: right;
-   color: #9180ff;
-   margin-top: 20px;
-}
-@media only screen and (max-width: 778px) {
-   .modal-entrance__content {
-      padding: 102px 45px 63px;
-   }
-   .modal-lose__content {
-      padding: 78px 67px 41px;
-   }
-   .modal-buy .modal-custom__content {
-      padding: 87px 45px 86px 52px;
-      .modal__title {
-         text-align: left;
-      }
-   }
-   .buy-head {
-      margin-top: 40px;
-      margin-bottom: 40;
-   }
-   .buy__selector {
-      margin-left: 20px;
-      &:nth-child(2n + 1) {
-         margin-right: 20px;
-      }
-   }
-}
-@media only screen and (max-width: 556px) {
-   .modal-custom {
-      ::-moz-placeholder {
-         font-size: 13px;
-         line-height: 16px;
-      }
-      :-moz-placeholder {
-         font-size: 13px;
-         line-height: 16px;
-      }
-      :-ms-input-placeholder {
-         font-size: 13px;
-         line-height: 16px;
-      }
-      ::-webkit-input-placeholder {
-         font-size: 13px;
-         line-height: 16px;
-      }
-   }
-   .modal-entrance__content {
-      padding: 30px 30px 45px;
-      margin: 0 30px;
-   }
-   .modal-input__svg {
-      width: 17px;
-      height: 17px;
-      bottom: 8px;
-   }
-   .modal-input {
-      padding-bottom: 8px;
-      padding-top: 23px;
-      padding-left: 30px;
-      padding-right: 0;
-      font-size: 13px;
-      line-height: 16px;
-   }
-   .modal__btn {
-      width: 132.84px;
-      height: 31.93px;
-      font-size: 16px;
-      line-height: 164.4%;
-      margin-top: 21px;
-   }
-   .modal-lose__content {
-      padding: 36px 29px 23px 40px;
-      margin: 0 30px;
-      .modal__btn {
-         width: 111.63px;
-         margin-top: 24px;
-         font-size: 10px;
-         line-height: 164.4%;
-      }
-   }
-   .modal__caption {
-      font-size: 10px;
-      line-height: 12px;
-      margin-top: 10px;
-   }
-   .modal__btn-code {
-      width: 77.82px;
-      height: 19.28px;
-      font-weight: 500;
-      font-size: 8px;
-      line-height: 10px;
-      bottom: 8px;
-      right: 0;
-      box-shadow: 0px 10px 32px -3px rgba(0, 0, 0, 0.26);
-   }
-   .modal-input__group {
-      .modal-input {
-         padding-right: 80px;
-      }
-   }
-   .modal-lose__btn {
-      padding-left: 3px;
-      padding-right: 3px;
-      box-shadow: 0px 14px 24px rgba(0, 0, 0, 0.25);
-      width: 79.43px;
-      height: 24.64px;
-      border-radius: 10px;
-      font-size: 10px;
-      line-height: 164.4%;
-      top: -36px;
-      svg {
-         width: 12px;
-         height: 12px;
-         margin-right: 5px;
-      }
-   }
 
-   .modal-buy {
-      .modal-custom__content {
-         padding: 48px 26px 36px;
-         margin: auto 25px;
-      }
-   }
-   .modal__title {
-      font-size: 16px;
-      line-height: 20px;
-   }
-   .buy-head {
-      height: 31px;
-      margin-top: 23px;
-      margin-bottom: 22px;
-   }
-   .buy-head__prg b {
-      margin-top: 22px;
-   }
-   .buy-head__prg-small {
-      font-size: 12px;
-      line-height: 15px;
-      font-weight: bold;
-   }
-   .buy-head__prg-small,
-   .buy__price,
-   .buy-head__prg b {
-      font-size: 12px;
-      line-height: 15px;
-   }
-   .buy-head__txt-small {
-      margin-top: 10px;
-      margin-bottom: 20px;
-   }
-   .buy__label {
-      font-size: 8px;
-      line-height: 10px;
-   }
-   .buy__group {
-      margin-top: 15px;
-      &:nth-child(1),
-      &:nth-child(2) {
-         margin-top: 0;
-      }
-   }
-   .buy__group {
-      margin-left: 6px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      &:nth-child(2n + 1) {
-         margin-left: 0;
-         margin-right: 6px;
-      }
-   }
-   .buy__input {
-      height: 22px;
-      border: 1px solid #9180ff;
-      box-sizing: border-box;
-      border-radius: 8px;
-      padding: 8px 5px 6px 5px;
-      margin-top: 6px;
-      font-size: 8px;
-      line-height: 10px;
-   }
-   .buy-form {
-      ::-moz-placeholder {
-         font-size: 8px;
-         line-height: 10px;
-      }
-      :-moz-placeholder {
-         font-size: 8px;
-         line-height: 10px;
-      }
-      :-ms-input-placeholder {
-         font-size: 8px;
-         line-height: 10px;
-      }
-      ::-webkit-input-placeholder {
-         font-size: 8px;
-         line-height: 10px;
-      }
-   }
-   .buy-form__row {
-      grid-template-columns: 1fr;
-   }
-   .buy-form__row-three {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0;
-      margin-bottom: 22px;
-   }
-   .buy__selector:nth-child(2n + 1),
-   .buy__selector {
-      margin: 0 0 15px;
-   }
-   .buy-form__btn {
-      margin-top: 15px;
-      margin-bottom: 15px;
-      width: 246.17px;
-      height: 28.08px;
-      font-size: 10px;
-      line-height: 164.4%;
-   }
-   .buy-form__prg {
-      font-size: 8px;
-      line-height: 10px;
-   }
-   .buy__selector {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-   }
-   .buy__selector .buy__input {
-      padding-top: 5px;
-   }
-   .buy__selector .buy__input .arrow {
-      right: 8px;
-      top: 5px;
-      svg {
-         width: 12px;
-         height: 12px;
-      }
-   }
-   .buy__selector ul {
-      top: 25px;
-      padding: 5px 0;
-   }
-   .buy__selector li {
-      height: 19px;
-      padding: 5px 10px;
-   }
-   .modal__close {
-      right: 20px;
-      top: 18px;
-      svg {
-         width: 10px;
-         height: 10px;
-      }
-   }
+.modal-input__svg {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+}
+
+.modal__btn-lose {
+    border: none;
+    background: none;
+    margin-top: 19px;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: right;
+    color: #9180ff;
+    display: flex;
+    margin-left: auto;
+}
+
+.modal__btn {
+    margin-top: 40px;
+    width: 208px;
+    height: 50px;
+    font-size: 18px;
+}
+
+.error__mrg {
+    font-style: italic;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #ff8080;
+    margin-top: -15px;
+}
+
+.modal__caption {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(145, 128, 255, 0.75);
+    margin: 20px 0 0;
+}
+
+.modal__caption.center {
+    text-align: center;
+}
+
+.modal-lose .modal-dialog {
+    max-width: 600px;
+    padding-top: 77px;
+}
+
+.modal-lose__content {
+    max-width: 600px;
+    padding: 86px 92px 64px 89px;
+
+    .modal__btn {
+        margin-top: 76px;
+    }
+}
+
+.modal-input__group-lose {
+    .modal-input {
+        padding-right: 155px;
+    }
+
+    .modal__caption {
+        margin: 20px 0;
+    }
+}
+
+.modal__btn-code {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #9180ff;
+    border: 1px solid #9180ff;
+    box-sizing: border-box;
+    background: transparent;
+    box-shadow: 0px 10px 32px -3px rgba(0, 0, 0, 0.26);
+    border-radius: 28px;
+    width: 145px;
+    height: 36px;
+    position: absolute;
+    text-transform: initial;
+    bottom: 12px;
+    right: -20px;
+    box-shadow: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+    }
+}
+
+.modal-lose__btn {
+    position: absolute;
+    left: 0;
+    top: -77px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 148px;
+    height: 46px;
+
+    svg {
+        margin-right: 10px;
+    }
+}
+
+.none-btn {
+    border: none;
+    background: none;
+}
+
+.buy-form {
+    ::-moz-placeholder {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        color: rgba(145, 128, 255, 0.75);
+    }
+
+    :-moz-placeholder {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        color: rgba(145, 128, 255, 0.75);
+    }
+
+    :-ms-input-placeholder {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        color: rgba(145, 128, 255, 0.75);
+    }
+
+    ::-webkit-input-placeholder {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        color: rgba(145, 128, 255, 0.75);
+    }
+}
+
+.buy-head {
+    margin: 50px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 71px;
+    border-top: 1px solid rgba(145, 128, 255, 0.25);
+    border-bottom: 1px solid rgba(145, 128, 255, 0.25);
+
+    .remove {
+        background: #9180ff;
+        width: 27.25px;
+        height: 27.25px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 20px;
+
+        svg {
+            width: 9.76px;
+            height: 9.75px;
+        }
+    }
+}
+
+.buy-head__prg-small {
+    font-size: 14px;
+    line-height: 17px;
+    color: #9180ff;
+    margin: 0;
+}
+
+.buy-head__prg {
+    font-size: 17px;
+    line-height: 21px;
+    color: #9180ff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+
+    b {
+        // margin-top: 77px;
+        margin-top: 30px;
+    }
+}
+
+.buy-head__prg-bold {
+    font-weight: 700;
+}
+
+.modal-buy {
+    .modal-custom__content,
+    .modal-dialog {
+        max-width: 771.68px;
+    }
+
+    .modal-custom__content {
+        // padding: 110px 57px 110px 66px;
+        padding: 57px 57px 110px 66px;
+    }
+}
+
+.buy__label {
+    font-size: 12px;
+    line-height: 15px;
+    color: #9180ff;
+    margin: 0;
+}
+
+.buy-head__txt-small {
+    // margin: 25px 0 50px;
+    margin: 25px 0 15px;
+}
+
+.buy-form__row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.buy-form__row-three {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.buy__group {
+    margin-top: 26px;
+}
+
+.buy__input {
+    margin-top: 12px;
+    border: 1px solid #9180ff;
+    box-sizing: border-box;
+    border-radius: 8px;
+    height: 50px;
+    padding: 19px 12px 12px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: #9180ff;
+    width: 100%;
+}
+
+.buy__selector {
+    margin-top: 38px;
+    margin-left: 26px;
+
+    &:nth-child(2n + 1) {
+        margin-right: 26px;
+        margin-left: 0;
+    }
+
+    .buy__input {
+        position: relative;
+
+        .arrow {
+            position: absolute;
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            transform: rotate(-90deg);
+        }
+
+        .label {
+            display: block;
+        }
+    }
+
+    ul {
+        width: 100%;
+        left: 0;
+        top: 59px;
+        position: absolute;
+        z-index: 1;
+        padding: 10px 0;
+        background: #ffffff;
+        border: 1px solid #9180ff;
+        box-sizing: border-box;
+        border-radius: 8px;
+    }
+
+    li {
+        padding: 10px 12px;
+        height: 36px;
+        width: 100%;
+
+        &:hover {
+            background: rgba(145, 128, 255, 0.4);
+        }
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+
+    .visible {
+        visibility: visible;
+    }
+}
+
+.buy-form__btn {
+    max-width: 587.76px;
+    height: 64.21px;
+    background: #9180ff;
+    box-shadow: 0px 10px 32px -3px rgba(0, 0, 0, 0.26);
+    border-radius: 28px;
+    margin-top: 77px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.buy-form__prg {
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #9180ff;
+
+    span {
+        text-decoration: underline;
+    }
+}
+
+.buy-form__loading {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 164.4%;
+    text-align: center;
+    color: #ffffff;
+    min-height: 133px;
+    margin: 20px 0 30px;
+    padding: 30px 20px;
+    background: #a2f3b4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+
+    span {
+        max-width: 535px;
+        margin: 0 auto;
+    }
+}
+
+.modal-dialog-centered {
+    justify-content: center;
+}
+
+.buy__price {
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 21px;
+    text-align: right;
+    color: #9180ff;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 778px) {
+    .modal-entrance__content {
+        padding: 102px 45px 63px;
+    }
+    .modal-lose__content {
+        padding: 78px 67px 41px;
+    }
+    .modal-buy .modal-custom__content {
+        padding: 87px 45px 86px 52px;
+
+        .modal__title {
+            text-align: left;
+        }
+    }
+    .buy-head {
+        margin-top: 40px;
+        margin-bottom: 40;
+    }
+    .buy__selector {
+        margin-left: 20px;
+
+        &:nth-child(2n + 1) {
+            margin-right: 20px;
+        }
+    }
+}
+
+@media only screen and (max-width: 556px) {
+    .modal-custom {
+        ::-moz-placeholder {
+            font-size: 13px;
+            line-height: 16px;
+        }
+
+        :-moz-placeholder {
+            font-size: 13px;
+            line-height: 16px;
+        }
+
+        :-ms-input-placeholder {
+            font-size: 13px;
+            line-height: 16px;
+        }
+
+        ::-webkit-input-placeholder {
+            font-size: 13px;
+            line-height: 16px;
+        }
+    }
+    .modal-entrance__content {
+        padding: 30px 30px 45px;
+        margin: 0 30px;
+    }
+    .modal-input__svg {
+        width: 17px;
+        height: 17px;
+        bottom: 8px;
+    }
+    .modal-input {
+        padding-bottom: 8px;
+        padding-top: 23px;
+        padding-left: 30px;
+        padding-right: 0;
+        font-size: 13px;
+        line-height: 16px;
+    }
+    .modal__btn {
+        width: 132.84px;
+        height: 31.93px;
+        font-size: 16px;
+        line-height: 164.4%;
+        margin-top: 21px;
+    }
+    .modal-lose__content {
+        padding: 36px 29px 23px 40px;
+        margin: 0 30px;
+
+        .modal__btn {
+            width: 111.63px;
+            margin-top: 24px;
+            font-size: 10px;
+            line-height: 164.4%;
+        }
+    }
+    .modal__caption {
+        font-size: 10px;
+        line-height: 12px;
+        margin-top: 10px;
+    }
+    .modal__btn-code {
+        width: 77.82px;
+        height: 19.28px;
+        font-weight: 500;
+        font-size: 8px;
+        line-height: 10px;
+        bottom: 8px;
+        right: 0;
+        box-shadow: 0px 10px 32px -3px rgba(0, 0, 0, 0.26);
+    }
+    .modal-input__group {
+        .modal-input {
+            padding-right: 80px;
+        }
+    }
+    .modal-lose__btn {
+        padding-left: 3px;
+        padding-right: 3px;
+        box-shadow: 0px 14px 24px rgba(0, 0, 0, 0.25);
+        width: 79.43px;
+        height: 24.64px;
+        border-radius: 10px;
+        font-size: 10px;
+        line-height: 164.4%;
+        top: -36px;
+
+        svg {
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+        }
+    }
+
+    .modal-buy {
+        .modal-custom__content {
+            padding: 48px 26px 36px;
+            margin: auto 25px;
+        }
+    }
+    .modal__title {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .buy-head {
+        height: 31px;
+        margin-top: 23px;
+        margin-bottom: 22px;
+    }
+    .buy-head__prg b {
+        margin-top: 22px;
+    }
+    .buy-head__prg-small {
+        font-size: 12px;
+        line-height: 15px;
+        font-weight: bold;
+    }
+    .buy-head__prg-small,
+    .buy__price,
+    .buy-head__prg b {
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .buy-head__txt-small {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+    .buy__label {
+        font-size: 8px;
+        line-height: 10px;
+    }
+    .buy__group {
+        margin-top: 15px;
+
+        &:nth-child(1),
+        &:nth-child(2) {
+            margin-top: 0;
+        }
+    }
+    .buy__group {
+        margin-left: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        &:nth-child(2n + 1) {
+            margin-left: 0;
+            margin-right: 6px;
+        }
+    }
+    .buy__input {
+        height: 22px;
+        border: 1px solid #9180ff;
+        box-sizing: border-box;
+        border-radius: 8px;
+        padding: 8px 5px 6px 5px;
+        margin-top: 6px;
+        font-size: 8px;
+        line-height: 10px;
+    }
+    .buy-form {
+        ::-moz-placeholder {
+            font-size: 8px;
+            line-height: 10px;
+        }
+
+        :-moz-placeholder {
+            font-size: 8px;
+            line-height: 10px;
+        }
+
+        :-ms-input-placeholder {
+            font-size: 8px;
+            line-height: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            font-size: 8px;
+            line-height: 10px;
+        }
+    }
+    .buy-form__row {
+        grid-template-columns: 1fr;
+    }
+    .buy-form__row-three {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0;
+        margin-bottom: 22px;
+    }
+    .buy__selector:nth-child(2n + 1),
+    .buy__selector {
+        margin: 0 0 15px;
+    }
+    .buy-form__btn {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        width: 246.17px;
+        height: 28.08px;
+        font-size: 10px;
+        line-height: 164.4%;
+    }
+    .buy-form__prg {
+        font-size: 8px;
+        line-height: 10px;
+    }
+    .buy__selector {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .buy__selector .buy__input {
+        padding-top: 5px;
+    }
+    .buy__selector .buy__input .arrow {
+        right: 8px;
+        top: 5px;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+    }
+    .buy__selector ul {
+        top: 25px;
+        padding: 5px 0;
+    }
+    .buy__selector li {
+        height: 19px;
+        padding: 5px 10px;
+    }
+    .modal__close {
+        right: 20px;
+        top: 18px;
+
+        svg {
+            width: 10px;
+            height: 10px;
+        }
+    }
 }

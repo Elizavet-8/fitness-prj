@@ -1,38 +1,28 @@
 <!doctype html>
 <html lang="ru">
-@section('head')
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>{{ config('app.name', 'GoodDiets') }}</title>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css"/>
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
-        <link rel="stylesheet" href="{{mix('/css/app.css')}}">
-        <link rel="icon" href="images/logo.svg" type="image/x-icon">
-    </head>
-@show
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GoodDiets</title>
+    <link rel="stylesheet" href="{{mix('/css/app.css')}}">
+    <link rel="icon" href="images/logo.svg" type="image/x-icon">
+</head>
 <body>
 <div class="wrapper">
-    <main class="main">
-        @section('content')
-
-        @show
+    <main class="main thanks">
+        <section class="thanks__section" id="thanks">
+            <h2 class="thanks__title title">
+                спасибо за вашу заявку!
+            </h2>
+            <div class="thanks__caption title__caption">
+                Доступы к личному кабинету высланы на указанную Вами почту :)
+            </div>
+        </section>
     </main>
-
-    @section('footer')
-        <footer class="footer">
+    <footer class="footer">
             <div class="container">
-                <ul id="footer-nav" class="footer__nav">
-                    <li><a href="#questions">Вопрос-ответ</a></li>
-                    <li><a href="#program">Программы</a></li>
-                    <li><a href="#office">Личный кабинет</a></li>
-                    <li><a href="#program">Марафон</a></li>
-                </ul>
                 <div class="footer__social">
                     <a href="https://vk.com/goodiets">
                         <svg width="31" height="28" viewBox="0 0 31 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,30 +87,7 @@
                 </div>
             </div>
         </footer>
-    @show
 
 </div>
-
-{{--<!-- Modal  -->--}}
-
-<div id="app">
-    <formstep></formstep>
-    <buy></buy>
-    <login></login>
-    <Register></Register>
-</div>
-{{--<!-- Modal-end -->--}}
-
-@section('footerScript')
-    <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
-            crossorigin="anonymous"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-@show
 </body>
 </html>
