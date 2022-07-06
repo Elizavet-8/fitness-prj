@@ -3141,9 +3141,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (access_history && notifications) {
         if (this.wasNotificationsRead()) return [];
-        var date1 = new Date(access_history.activation_date);
-        var date2 = new Date();
-        var day_number = Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24)) + 1;
+        var date1 = new Date(access_history.activation_date).getTime();
+        var date2 = new Date().getTime();
+        var day_number = Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
         return notifications.filter(function (element) {
           return element.day === day_number;
         });
