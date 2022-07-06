@@ -30,6 +30,8 @@
                                     <th>Количесво дней</th>
                                     <th>Тренировка для</th>
                                     <th>Цена руб.</th>
+                                    <th>Id в Stripe</th>
+                                    <th>Уровень</th>
                                     <th>Настройки</th>
                                 </tr>
                                 </thead>
@@ -54,6 +56,8 @@
                                                 {{$training->problemZone->name}}
                                             </td>
                                             <td>{{ $training->training_price }}</td>
+                                            <td>{{ $training->stripe_id }}</td>
+                                            <td>{{ $training->level }}</td>
                                             <td class="btns-edit">
                                                 <a href="/admin/workout/days/{{$training->id}}"
                                                    class="users-btn btn btn-block btn-success">

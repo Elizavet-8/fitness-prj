@@ -81,7 +81,8 @@ class MenuController extends Controller
             'menu_price' => 'required',
             'proteins' => 'required',
             'fat' => 'required',
-            'carbs' => 'required'
+            'carbs' => 'required',
+            'stripe_id' => 'nullable'
         ]);
         $menu->update($input);
         return redirect()->route('menu');
@@ -112,7 +113,8 @@ class MenuController extends Controller
             'menu_price' => 'required',
             'proteins' => 'required',
             'fat' => 'required',
-            'carbs' => 'required'
+            'carbs' => 'required',
+            'stripe_id' => 'nullable'
         ]);
         Menu::create($input);
         return redirect()->route('menu');

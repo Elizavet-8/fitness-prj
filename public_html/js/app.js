@@ -2395,6 +2395,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.activateSwiper();
       if (this.slider.length > 0) this.$loading(false);
+      console.log(this.slider);
       return this.slider;
     },
     AvailableTypes: function AvailableTypes() {
@@ -3141,9 +3142,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (access_history && notifications) {
         if (this.wasNotificationsRead()) return [];
-        var date1 = new Date(access_history.activation_date);
-        var date2 = new Date();
-        var day_number = Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24)) + 1;
+        var date1 = new Date(access_history.activation_date).getTime();
+        var date2 = new Date().getTime();
+        var day_number = Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
         return notifications.filter(function (element) {
           return element.day === day_number;
         });
@@ -3219,8 +3220,49 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectItem: function selectItem(item) {
       this.label = item.name;
-      this.value = item.id;
+      this.value = item;
       this.$emit("result", this.value, this.select.id);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/home/BuyModalOpenButton.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/home/BuyModalOpenButton.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "BuyModalOpenButton",
+  props: ["name", "price", "stripe_id", "menu_id", "training_id", "is_marathon", "extended_stripe_id"],
+  methods: {
+    passData: function passData() {
+      var serviceInfo = {
+        'name': this.name,
+        'price': this.price,
+        'stripe_id': this.stripe_id,
+        'menu_id': this.menu_id,
+        'training_id': this.training_id,
+        'is_marathon': this.is_marathon,
+        'old_price': this.price,
+        'extended_stripe_id': this.extended_stripe_id,
+        'current_stripe_id': this.stripe_id
+      };
+      console.log(serviceInfo);
+      this.$store.dispatch('assignServiceInfo', serviceInfo);
     }
   }
 });
@@ -3956,6 +3998,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       disabled: false,
+      oldPrice: null,
       errors: [],
       activeStep: 1,
       deletepackage: false,
@@ -4022,13 +4065,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetLifeStyles'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetMenuCalories'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetProblemZones'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetTrainingLocations'])),
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetLifeStyles'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetMenuCalories'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetProblemZones'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['GetTrainingLocations'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['SERVICE_INFO'])), {}, {
+    trainingLocations: function trainingLocations() {
+      if (!this.SERVICE_INFO.is_marathon) return this.GetTrainingLocations;
+      this.GetTrainingLocations[this.GetTrainingLocations.length - 1].name += " (+ 100р.)";
+      this.GetTrainingLocations[this.GetTrainingLocations.length - 1].extra = 100;
+      return this.GetTrainingLocations;
+    }
+  }),
   methods: {
     toggleDelete: function toggleDelete() {
       this.deletepackage = !this.deletepackage;
     },
     result: function result(item, id) {
-      this.additionValues[id] = item;
+      this.additionValues[id] = item.id;
+    },
+    resultForLocation: function resultForLocation(item, id) {
+      if (item.extra && this.SERVICE_INFO.price === this.SERVICE_INFO.old_price) {
+        this.SERVICE_INFO.price += item.extra;
+        this.SERVICE_INFO.current_stripe_id = this.SERVICE_INFO.extended_stripe_id;
+      } else if (!item.extra) {
+        this.SERVICE_INFO.price = this.SERVICE_INFO.old_price;
+        this.SERVICE_INFO.current_stripe_id = this.SERVICE_INFO.stripe_id;
+      }
+
+      this.additionValues[id] = item.id;
     },
     prev: function prev() {
       this.activeStep--;
@@ -4048,20 +4109,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "menu_calories_id": this.additionValues.menu_calories_id,
         "problem_zone_id": this.additionValues.problem_zone_id,
         "life_style_id": this.additionValues.life_style_id,
-        "product_name": localStorage.getItem('name'),
-        "price": localStorage.getItem('price'),
-        "stripe_id": localStorage.getItem('stripe_id'),
-        "menu_id": localStorage.getItem('menu_id'),
-        "training_id": localStorage.getItem('training_id')
+        "product_name": this.SERVICE_INFO.name,
+        "price": this.SERVICE_INFO.price,
+        "stripe_id": this.SERVICE_INFO.current_stripe_id,
+        "menu_id": this.SERVICE_INFO.menu_id,
+        "training_id": this.SERVICE_INFO.training_id
       };
       var formData = new FormData();
       formData.append('user_info', JSON.stringify(user));
       axios.post('/initialize-checkout/stripe', formData).then(function () {
-        localStorage.removeItem('name');
-        localStorage.removeItem('price');
-        localStorage.removeItem('stripe_id');
-        localStorage.removeItem('menu_id');
-        localStorage.removeItem('training_id');
         window.location.href = '/open-checkout/stripe';
       })["catch"](function (error) {
         console.log(error.response);
@@ -4079,20 +4135,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "menu_calories_id": this.additionValues.menu_calories_id,
         "problem_zone_id": this.additionValues.problem_zone_id,
         "life_style_id": this.additionValues.life_style_id,
-        "product_name": localStorage.getItem('name'),
-        "price": localStorage.getItem('price'),
-        "stripe_id": localStorage.getItem('stripe_id'),
-        "menu_id": localStorage.getItem('menu_id'),
-        "training_id": localStorage.getItem('training_id')
+        "product_name": this.SERVICE_INFO.name,
+        "price": this.SERVICE_INFO.price,
+        "stripe_id": this.SERVICE_INFO.current_stripe_id,
+        "menu_id": this.SERVICE_INFO.menu_id,
+        "training_id": this.SERVICE_INFO.training_id
       };
       var formData = new FormData();
       formData.append('user_info', JSON.stringify(user));
       axios.post('/initialize-checkout/tinkoff', formData).then(function (response) {
-        localStorage.removeItem('name');
-        localStorage.removeItem('price');
-        localStorage.removeItem('stripe_id');
-        localStorage.removeItem('menu_id');
-        localStorage.removeItem('training_id');
         window.location.href = response.data.paymentUrl;
       })["catch"](function (error) {
         console.log(error.response);
@@ -6204,6 +6255,7 @@ Vue.component('Formstep', (__webpack_require__(/*! ./components/modal/Formstep.v
 Vue.component('Buy', (__webpack_require__(/*! ./components/modal/Buy.vue */ "./resources/js/components/modal/Buy.vue")["default"]));
 Vue.component('Login', (__webpack_require__(/*! ./components/modal/Login.vue */ "./resources/js/components/modal/Login.vue")["default"]));
 Vue.component('Register', (__webpack_require__(/*! ./components/modal/Register.vue */ "./resources/js/components/modal/Register.vue")["default"]));
+Vue.component('buy-modal-opener', (__webpack_require__(/*! ./components/home/BuyModalOpenButton.vue */ "./resources/js/components/home/BuyModalOpenButton.vue")["default"]));
 Vue.component('Workout', (__webpack_require__(/*! ./components/workout/Workout.vue */ "./resources/js/components/workout/Workout.vue")["default"]));
 Vue.component('Home', (__webpack_require__(/*! ./components/home/Home.vue */ "./resources/js/components/home/Home.vue")["default"]));
 Vue.component('Diet', (__webpack_require__(/*! ./components/diet/Diet.vue */ "./resources/js/components/diet/Diet.vue")["default"]));
@@ -6468,8 +6520,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_problemZones__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/problemZones */ "./resources/js/store/modules/problemZones.js");
 /* harmony import */ var _modules_lifeStyles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/lifeStyles */ "./resources/js/store/modules/lifeStyles.js");
 /* harmony import */ var _modules_trainingLocations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/trainingLocations */ "./resources/js/store/modules/trainingLocations.js");
@@ -6488,6 +6540,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_activityCalendars__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/activityCalendars */ "./resources/js/store/modules/activityCalendars.js");
 /* harmony import */ var _modules_accessHistory__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/accessHistory */ "./resources/js/store/modules/accessHistory.js");
 /* harmony import */ var _modules_pricing__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/pricing */ "./resources/js/store/modules/pricing.js");
+/* harmony import */ var _modules_serviceInfo__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modules/serviceInfo */ "./resources/js/store/modules/serviceInfo.js");
 
  //#region import modules
 
@@ -6508,10 +6561,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  //#endregion
 
-vue__WEBPACK_IMPORTED_MODULE_18__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_19__["default"]);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_19__["default"].Store({
+vue__WEBPACK_IMPORTED_MODULE_19__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_20__["default"]);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_20__["default"].Store({
   modules: {
     problemZones: _modules_problemZones__WEBPACK_IMPORTED_MODULE_0__["default"],
     lifeStyles: _modules_lifeStyles__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -6530,7 +6584,8 @@ vue__WEBPACK_IMPORTED_MODULE_18__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1
     physicsParameters: _modules_physicsParameters__WEBPACK_IMPORTED_MODULE_10__["default"],
     topics: _modules_topics__WEBPACK_IMPORTED_MODULE_7__["default"],
     accessHistory: _modules_accessHistory__WEBPACK_IMPORTED_MODULE_16__["default"],
-    pricing: _modules_pricing__WEBPACK_IMPORTED_MODULE_17__["default"]
+    pricing: _modules_pricing__WEBPACK_IMPORTED_MODULE_17__["default"],
+    serviceInfo: _modules_serviceInfo__WEBPACK_IMPORTED_MODULE_18__["default"]
   }
 }));
 
@@ -8251,6 +8306,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     GetQuestion: function GetQuestion(state) {
       return state.Question;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/serviceInfo.js":
+/*!***************************************************!*\
+  !*** ./resources/js/store/modules/serviceInfo.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: {
+    serviceInfo: {
+      'name': null,
+      'price': null,
+      'stripe_id': null,
+      'menu_id': null,
+      'training_id': null,
+      'old_price': null,
+      'is_marathon': false,
+      'extended_stripe_id': null,
+      'current_stripe_id': null
+    }
+  },
+  getters: {
+    SERVICE_INFO: function SERVICE_INFO(state) {
+      return state.serviceInfo;
+    }
+  },
+  mutations: {
+    setServiceInfo: function setServiceInfo(state, payload) {
+      state.serviceInfo = payload;
+    }
+  },
+  actions: {
+    assignServiceInfo: function assignServiceInfo(context, payload) {
+      context.commit('setServiceInfo', payload);
     }
   }
 });
@@ -46058,6 +46157,45 @@ component.options.__file = "resources/js/components/general/Select.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/home/BuyModalOpenButton.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/home/BuyModalOpenButton.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _BuyModalOpenButton_vue_vue_type_template_id_1161d2d0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BuyModalOpenButton.vue?vue&type=template&id=1161d2d0&scoped=true& */ "./resources/js/components/home/BuyModalOpenButton.vue?vue&type=template&id=1161d2d0&scoped=true&");
+/* harmony import */ var _BuyModalOpenButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BuyModalOpenButton.vue?vue&type=script&lang=js& */ "./resources/js/components/home/BuyModalOpenButton.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BuyModalOpenButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BuyModalOpenButton_vue_vue_type_template_id_1161d2d0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _BuyModalOpenButton_vue_vue_type_template_id_1161d2d0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "1161d2d0",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/home/BuyModalOpenButton.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/home/Home.vue":
 /*!***********************************************!*\
   !*** ./resources/js/components/home/Home.vue ***!
@@ -46816,6 +46954,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/home/BuyModalOpenButton.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/home/BuyModalOpenButton.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuyModalOpenButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./BuyModalOpenButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/home/BuyModalOpenButton.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuyModalOpenButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/home/Home.vue?vue&type=script&lang=js&":
 /*!************************************************************************!*\
   !*** ./resources/js/components/home/Home.vue?vue&type=script&lang=js& ***!
@@ -47302,6 +47456,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Select_vue_vue_type_template_id_bf70eca4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Select_vue_vue_type_template_id_bf70eca4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Select.vue?vue&type=template&id=bf70eca4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/general/Select.vue?vue&type=template&id=bf70eca4&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/home/BuyModalOpenButton.vue?vue&type=template&id=1161d2d0&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/home/BuyModalOpenButton.vue?vue&type=template&id=1161d2d0&scoped=true& ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BuyModalOpenButton_vue_vue_type_template_id_1161d2d0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BuyModalOpenButton_vue_vue_type_template_id_1161d2d0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BuyModalOpenButton_vue_vue_type_template_id_1161d2d0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./BuyModalOpenButton.vue?vue&type=template&id=1161d2d0&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/home/BuyModalOpenButton.vue?vue&type=template&id=1161d2d0&scoped=true&");
 
 
 /***/ }),
@@ -49498,6 +49669,39 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/home/BuyModalOpenButton.vue?vue&type=template&id=1161d2d0&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/home/BuyModalOpenButton.vue?vue&type=template&id=1161d2d0&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "button",
+      attrs: { type: "button", "data-toggle": "modal", "data-target": "#buy" },
+      on: { click: _vm.passData },
+    },
+    [_vm._v("\n    хочу\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/home/Home.vue?vue&type=template&id=1f26c2f4&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/home/Home.vue?vue&type=template&id=1f26c2f4& ***!
@@ -50665,9 +50869,9 @@ var render = function () {
                         _c("Myselect", {
                           attrs: {
                             select: _vm.selects[2],
-                            list: _vm.GetTrainingLocations,
+                            list: _vm.trainingLocations,
                           },
-                          on: { result: _vm.result },
+                          on: { result: _vm.resultForLocation },
                         }),
                         _vm._v(" "),
                         _c("Myselect", {
@@ -50682,7 +50886,7 @@ var render = function () {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "buy__price" }, [
-                      _vm._v("Сумма: 5 000р."),
+                      _vm._v("Сумма: " + _vm._s(_vm.SERVICE_INFO.price) + "р."),
                     ]),
                     _vm._v(" "),
                     _c(

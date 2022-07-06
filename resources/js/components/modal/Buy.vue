@@ -76,8 +76,8 @@
                         ></Myselect>
                         <Myselect
                             :select="selects[2]"
-                            :list="GetTrainingLocations"
-                            v-on:result="result"
+                            :list="trainingLocations"
+                            v-on:result="resultForLocation"
                         ></Myselect>
                         <Myselect
                             :select="selects[3]"
@@ -85,7 +85,7 @@
                             v-on:result="result"
                         ></Myselect>
                     </div>
-                    <div class="buy__price">Сумма: 5 000р.</div>
+                    <div class="buy__price">Сумма: {{SERVICE_INFO.price}}р.</div>
                     <button type="submit" class="button buy-form__btn">
                         ОПЛАТИТЬ И ЗАРЕГИСТРИРОВАТЬСЯ
                     </button>
@@ -131,6 +131,7 @@ export default {
     },
     data: () => ({
     disabled: false,
+    oldPrice : null,
     errors:[],
     activeStep: 1,
     deletepackage: false,
@@ -212,14 +213,33 @@ export default {
         ...mapGetters(['GetLifeStyles']),
         ...mapGetters(['GetMenuCalories']),
         ...mapGetters(['GetProblemZones']),
-        ...mapGetters(['GetTrainingLocations'])
+        ...mapGetters(['GetTrainingLocations']),
+        ...mapGetters(['SERVICE_INFO']),
+        trainingLocations() {
+            if (!this.SERVICE_INFO.is_marathon)
+                return this.GetTrainingLocations;
+            this.GetTrainingLocations[this.GetTrainingLocations.length - 1].name += " (+ 100р.)";
+            this.GetTrainingLocations[this.GetTrainingLocations.length - 1].extra = 100;
+            return this.GetTrainingLocations;
+        }
     },
   methods: {
     toggleDelete() {
       this.deletepackage = !this.deletepackage;
     },
     result(item, id) {
-        this.additionValues[id] = item;
+        this.additionValues[id] = item.id;
+    },
+    resultForLocation(item, id) {
+        if (item.extra && this.SERVICE_INFO.price === this.SERVICE_INFO.old_price) {
+            this.SERVICE_INFO.price += item.extra;
+            this.SERVICE_INFO.current_stripe_id = this.SERVICE_INFO.extended_stripe_id;
+        }
+        else if (!item.extra) {
+            this.SERVICE_INFO.price = this.SERVICE_INFO.old_price;
+            this.SERVICE_INFO.current_stripe_id = this.SERVICE_INFO.stripe_id;
+        }
+        this.additionValues[id] = item.id;
     },
     prev() {
       this.activeStep--;
@@ -239,21 +259,16 @@ export default {
             "menu_calories_id" : this.additionValues.menu_calories_id,
             "problem_zone_id" : this.additionValues.problem_zone_id,
             "life_style_id" : this.additionValues.life_style_id,
-            "product_name" : localStorage.getItem('name'),
-            "price" : localStorage.getItem('price'),
-            "stripe_id" : localStorage.getItem('stripe_id'),
-            "menu_id" : localStorage.getItem('menu_id'),
-            "training_id" : localStorage.getItem('training_id')
+            "product_name" : this.SERVICE_INFO.name,
+            "price" : this.SERVICE_INFO.price,
+            "stripe_id" : this.SERVICE_INFO.current_stripe_id,
+            "menu_id" : this.SERVICE_INFO.menu_id,
+            "training_id" : this.SERVICE_INFO.training_id
         }
         let formData = new FormData();
         formData.append('user_info', JSON.stringify(user));
         axios.post('/initialize-checkout/stripe', formData)
           .then(() => {
-              localStorage.removeItem('name');
-              localStorage.removeItem('price');
-              localStorage.removeItem('stripe_id');
-              localStorage.removeItem('menu_id');
-              localStorage.removeItem('training_id');
               window.location.href = '/open-checkout/stripe';
           })
           .catch((error) => {
@@ -272,21 +287,16 @@ export default {
               "menu_calories_id" : this.additionValues.menu_calories_id,
               "problem_zone_id" : this.additionValues.problem_zone_id,
               "life_style_id" : this.additionValues.life_style_id,
-              "product_name" : localStorage.getItem('name'),
-              "price" : localStorage.getItem('price'),
-              "stripe_id" : localStorage.getItem('stripe_id'),
-              "menu_id" : localStorage.getItem('menu_id'),
-              "training_id" : localStorage.getItem('training_id')
+              "product_name" : this.SERVICE_INFO.name,
+              "price" : this.SERVICE_INFO.price,
+              "stripe_id" : this.SERVICE_INFO.current_stripe_id,
+              "menu_id" : this.SERVICE_INFO.menu_id,
+              "training_id" : this.SERVICE_INFO.training_id
           }
           let formData = new FormData();
           formData.append('user_info', JSON.stringify(user));
           axios.post('/initialize-checkout/tinkoff', formData)
               .then((response) => {
-                  localStorage.removeItem('name');
-                  localStorage.removeItem('price');
-                  localStorage.removeItem('stripe_id');
-                  localStorage.removeItem('menu_id');
-                  localStorage.removeItem('training_id');
                   window.location.href = response.data.paymentUrl;
               })
               .catch((error) => {

@@ -33,7 +33,7 @@ class ProgramsController extends Controller
         if(is_null(Auth::guard('admin')->user()))
             abort(401);
         $program = MarathonAndProgram::find($id);
-        $program->update($request->validate([
+        $input = $request->validate([
             'finish_date' => 'required',
             'price' => 'required',
             'discount_price' => 'required',
@@ -45,8 +45,10 @@ class ProgramsController extends Controller
             'about_support' => 'nullable',
             'about_motivation' => 'nullable',
             'stripe_id' => 'nullable',
-            'is_marathon' => 'required'
-        ]));
+            'is_marathon' => 'required',
+            'extended_stripe_id' => 'nullable'
+        ]);
+        $program->update($input);
         return redirect()->route('openProgramsPage');
     }
 
@@ -77,7 +79,8 @@ class ProgramsController extends Controller
             'about_support' => 'nullable',
             'about_motivation' => 'nullable',
             'stripe_id' => 'nullable',
-            'is_marathon' => 'required'
+            'is_marathon' => 'required',
+            'extended_stripe_id' => 'nullable'
         ]);
         MarathonAndProgram::create($input);
         return redirect()->route('openProgramsPage');

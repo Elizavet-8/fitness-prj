@@ -426,26 +426,22 @@
             </h2>
             <div class="program__slider">
                 <div class="swiper-wrapper">
-                    <script>
+                    <script type="application/javascript">
                         function processMarathon(marathon) {
                             var countDownDate = new Date(marathon.finish_date * 1000).getTime();
                             let f = setInterval(() => {
                                 // Get today's date and time
                                 var now = new Date().getTime();
-
                                 // Find the distance between now and the count down date
                                 var distance = countDownDate - now;
-
                                 // Time calculations for days, hours, minutes and seconds
                                 var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
                                 // Output the result in an element with id="demo"
                                 document.getElementById(marathon.id + "promo_time").innerHTML = days + ":" + hours.toString().padStart(2, '0') + ":"
                                     + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
-
                                 // If the count down is over, write some text
                                 if (distance < 0) {
                                     clearInterval(f);
@@ -483,7 +479,7 @@
                                         </div>
                                         <div id="{{$marathon->id . 'promo_time'}}"
                                              class="program__promo-time"></div>
-                                        <script>
+                                        <script type="application/javascript">
                                             processMarathon({!! json_encode($marathon) !!});
                                         </script>
                                     </div>
@@ -610,9 +606,15 @@
                                         <div class="program__start">
                                             <span>СТАРТ</span> в понедельник!
                                         </div>
-                                        <button type="button" class="button" data-toggle="modal" data-target="#buy" onclick="sendMarathonInfo('{{$marathon->name}}', {{$marathon->discount_price}}, '{{$marathon->stripe_id}}', {{$marathon->menu_id}}, {{$marathon->training_id}})">
-                                            хочу
-                                        </button>
+                                        <buy-modal-opener
+                                            :name="'{{$marathon->name}}'"
+                                            :price="{{$marathon->discount_price}}"
+                                            :stripe_id="'{{$marathon->stripe_id}}'"
+                                            :menu_id="{{$marathon->menu_id}}"
+                                            :training_id="{{$marathon->training_id}}"
+                                            :is_marathon="{{(boolean)$marathon->is_marathon}}"
+                                            :extended_stripe_id="'{{$marathon->extended_stripe_id}}'">
+                                        </buy-modal-opener>
                                     </div>
                                 </div>
                             </div>
@@ -787,7 +789,6 @@
                                 .st0 {
                                     fill: url(#SVGID_1_);
                                 }
-
                                 .st1 {
                                     opacity: 0.13;
                                     fill: #FFFFFF;
@@ -834,7 +835,6 @@
                                 .st0 {
                                     fill: url(#SVGID_1_);
                                 }
-
                                 .st1 {
                                     opacity: 0.13;
                                     fill: #FFFFFF;
@@ -887,13 +887,4 @@
             </form>
         </div>
     </section>
-    <script>
-        function sendMarathonInfo(name, price, stripe_id, menu_id, training_id) {
-            localStorage.setItem('name', name);
-            localStorage.setItem('price', price);
-            localStorage.setItem('stripe_id', stripe_id);
-            localStorage.setItem('menu_id', menu_id);
-            localStorage.setItem('training_id', training_id);
-        }
-    </script>
 @endsection

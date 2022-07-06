@@ -29,6 +29,18 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Описание</label>
+                                <div class="col-md-9">
+                                    <input name="description" class="form-control" placeholder="Описание " type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Уровень</label>
+                                    <div class="col-md-9">
+                                        <input required name="level" class="form-control" placeholder="Уровень " type="number">
+                                    </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-3 col-form-label">Цена</label>
                                 <div class="col-md-9">
                                     <input name="training_price" class="form-control" placeholder="Цена" type="text">
@@ -45,13 +57,9 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label">Место:</label>
+                                <label class="col-md-3 col-form-label">Id в Stripe</label>
                                 <div class="col-md-9">
-                                    <select name="trainingLocation" class="form-control">
-                                        @foreach($locations as $location)
-                                            <option value="{{$location->id}}">{{$location->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <input required name="stripe_id" class="form-control" placeholder="Id в Stripe " type="text">
                                 </div>
                             </div>
                             <div class="card-footer card-footer-edit">

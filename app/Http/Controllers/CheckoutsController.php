@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\AuthorizationMailer;
 use App\Models\AccessHistory;
 use App\Models\ActivityCalendar;
+use App\Models\FoodCalendar;
 use App\Models\PersonalAccount;
 use App\Models\TrainingUser;
 use App\Models\User;
@@ -153,6 +154,11 @@ class CheckoutsController extends Controller
             'activation_date' => Carbon::now(),
             'deactivation_date' => Carbon::now()->addDays(30)
         ]);
+        $foodCalendar = FoodCalendar::create([
+            'users_menus_id' => $userMenu->id,
+            'day' => 1,
+            'is_active' => true
+        ]);
         Session::remove('user_info');
         dd([
             'user' => $user,
@@ -161,7 +167,8 @@ class CheckoutsController extends Controller
             'um' => $userMenu,
             'tu' => $trainingUser,
             'ac' => $activityCalendar,
-            'ah' => $accessHistory
+            'ah' => $accessHistory,
+            'fc' => $foodCalendar
         ]);
     }
 }

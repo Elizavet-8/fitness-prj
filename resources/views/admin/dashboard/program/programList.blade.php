@@ -79,6 +79,12 @@
                                         <b>Id в Stripe:</b>
                                         {{$program->stripe_id}}
                                     </div>
+                                    @if($program->is_marathon)
+                                        <div class="program__group">
+                                            <b>Id расширенной версии в Stripe:</b>
+                                            {{$program->extended_stripe_id}}
+                                        </div>
+                                    @endif
                                     <div class="program__group">
                                         <b>Тип услуги:</b>
                                         {{$program->is_marathon ? "Марафон" : "Программа"}}

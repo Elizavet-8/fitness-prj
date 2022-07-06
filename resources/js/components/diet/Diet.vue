@@ -306,6 +306,7 @@ export default {
                 this.activateSwiper();
                 if(this.slider.length>0)
                     this.$loading(false);
+            console.log(this.slider);
                 return this.slider;
         },
         AvailableTypes() {

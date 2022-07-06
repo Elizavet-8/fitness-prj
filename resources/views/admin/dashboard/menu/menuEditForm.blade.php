@@ -65,6 +65,12 @@
                                         <input required value="{{ $menu->carbs }}" name="carbs" class="form-control" placeholder="Углеводы " type="text">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Id в Stripe</label>
+                                    <div class="col-md-9">
+                                        <input required value="{{$menu->stripe_id}}" name="stripe_id" class="form-control" placeholder="Id в Stripe " type="text">
+                                    </div>
+                                </div>
                                 <div class="card-footer card-footer-edit">
                                     <button class="btn btn-sm btn-primary" type="submit"> Сохранить</button>
                                     <a class="btn btn-sm btn-danger" href="/admin/menu"> Назад</a>

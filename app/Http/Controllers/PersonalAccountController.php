@@ -24,8 +24,7 @@ class PersonalAccountController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user()->id;
-        $personalAccount = PersonalAccount::where('user_id','=',$user)->first();
-        $personalAccount=$personalAccount::with('user')->first();
+        $personalAccount = PersonalAccount::with('user')->where('user_id','=',$user)->first();
         return response()->json($personalAccount);
     }
 
