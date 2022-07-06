@@ -21,6 +21,7 @@
                                     <th>Белки</th>
                                     <th>Жиры</th>
                                     <th>Углеводы</th>
+                                    <th>Id в Stripe</th>
                                     <th>Настройки</th>
                                 </tr>
                                 </thead>
@@ -44,6 +45,7 @@
                                             <td>{{ $menu->proteins}} гр</td>
                                             <td>{{ $menu->fat}} гр</td>
                                             <td>{{ $menu->carbs}} гр</td>
+                                            <td>{{ $menu->stripe_id}}</td>
                                             <td class="btns-edit">
                                                 <a href="/admin/menu/days/{{$menu->id}}" class="users-btn btn btn-block btn-success">
                                                     <svg xmlns="http://www.w3.org/2000/svg"

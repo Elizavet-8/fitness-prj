@@ -22,6 +22,7 @@ class Menu extends Model
         'fat',
         'carbs',
         'info',
+        'stripe_id'
     ];
 
     /**
