@@ -6,6 +6,7 @@ use App\Core\AuthorizationMailer;
 use App\Models\AccessHistory;
 use App\Models\ActivityCalendar;
 use App\Models\FoodCalendar;
+use App\Models\Menu;
 use App\Models\PersonalAccount;
 use App\Models\TrainingUser;
 use App\Models\User;
@@ -48,6 +49,11 @@ class CheckoutsController extends Controller
             'checkout' => $checkout,
             'userInfo' => $userInfo
         ]);
+    }
+
+    public function generateStripeCheckoutPageForDiet()
+    {
+
     }
 
     public function prepareTinkoffCheckout(Request $request)
@@ -134,10 +140,11 @@ class CheckoutsController extends Controller
             'training_location_id' => $userInfo->training_location_id,
             'menu_calories_id' => $userInfo->menu_calories_id
         ]);
+        $menu = Menu::find($userInfo->menu_id);
         $userMenu = UserMenu::create([
             'user_id' => $user->id,
             'menu_id' => $userInfo->menu_id,
-            'menu_type_id' => 1
+            'menu_type_id' => $menu->menu_type_id
         ]);
         $trainingUser = TrainingUser::create([
             'user_id' => $user->id,

@@ -4769,15 +4769,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4786,7 +4777,6 @@ __webpack_require__.r(__webpack_exports__);
       diets_list: [],
       activeStep: 1,
       formSteps: [],
-      selected_calory: null,
       selected_diet: null
     };
   },
@@ -4819,7 +4809,8 @@ __webpack_require__.r(__webpack_exports__);
         var tmp = {
           value: false,
           menu: element.menu_content,
-          price: element.menu_price + ' р.'
+          price: element.menu_price,
+          stripe_id: element.stripe_id
         };
         if (!_this2.diets_list.some(function (e) {
           return e.menu == tmp.menu && e.price == tmp.price;
@@ -4836,7 +4827,13 @@ __webpack_require__.r(__webpack_exports__);
       this.activeStep++;
     },
     disableBtn: function disableBtn() {
-      return this.selected_calory != null && this.selected_diet != null;
+      return this.selected_diet != null;
+    },
+    initializeStripeCheckout: function initializeStripeCheckout() {
+      console.log(this.selected_diet);
+    },
+    initializeTinkoffCheckout: function initializeTinkoffCheckout() {
+      console.log(this.selected_diet);
     }
   }
 });
@@ -24349,7 +24346,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.slide-fade-enter-active {\r\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\r\n  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\r\n/* .slide-fade-leave-active до версии 2.1.8 */ {\r\n  transform: translateX(10px);\r\n  opacity: 0;\n}\n.fade-enter-active,\r\n.fade-leave-active {\r\n  transition: opacity 0.5s ease;\n}\n.fade-enter-from,\r\n.fade-leave-to {\r\n  opacity: 0;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.slide-fade-enter-active {\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\n/* .slide-fade-leave-active до версии 2.1.8 */ {\n  transform: translateX(10px);\n  opacity: 0;\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s ease;\n}\n.fade-enter-from,\n.fade-leave-to {\n  opacity: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -52441,49 +52438,6 @@ var render = function () {
                 ),
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "diet-checkboxes workout-checkboxes" },
-                _vm._l(_vm.calorics, function (caloric, index) {
-                  return _c(
-                    "label",
-                    { key: index, staticClass: "workout-checkbox__label" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selected_calory,
-                            expression: "selected_calory",
-                          },
-                        ],
-                        staticClass: "check__input",
-                        attrs: { type: "radio", id: caloric.title },
-                        domProps: {
-                          value: caloric.title,
-                          checked: _vm._q(_vm.selected_calory, caloric.title),
-                        },
-                        on: {
-                          change: function ($event) {
-                            _vm.selected_calory = caloric.title
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "workout-checkbox" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(caloric.title) +
-                            "\n                        "
-                        ),
-                      ]),
-                    ]
-                  )
-                }),
-                0
-              ),
-              _vm._v(" "),
               _vm.activeStep === 1
                 ? _c("form", { staticClass: "plugin-modal-form" }, [
                     _c(
@@ -52509,12 +52463,12 @@ var render = function () {
                               staticClass: "check__input",
                               attrs: { type: "radio", id: diet.menu },
                               domProps: {
-                                value: diet.menu,
-                                checked: _vm._q(_vm.selected_diet, diet.menu),
+                                value: diet,
+                                checked: _vm._q(_vm.selected_diet, diet),
                               },
                               on: {
                                 change: function ($event) {
-                                  _vm.selected_diet = diet.menu
+                                  _vm.selected_diet = diet
                                 },
                               },
                             }),
@@ -52548,7 +52502,7 @@ var render = function () {
                                     _vm._v(
                                       "\n                                        " +
                                         _vm._s(diet.price) +
-                                        "\n                                    "
+                                        " р.\n                                    "
                                     ),
                                   ]),
                                 ]
@@ -52605,7 +52559,7 @@ var render = function () {
                             "button",
                             {
                               staticClass: "button-green",
-                              on: { click: _vm.initializeStripePayment },
+                              on: { click: _vm.initializeStripeCheckout },
                             },
                             [_vm._v("stripe")]
                           ),
@@ -52616,7 +52570,7 @@ var render = function () {
                             "button",
                             {
                               staticClass: "button-green",
-                              on: { click: _vm.initializeTinkoffPayment },
+                              on: { click: _vm.initializeTinkoffCheckout },
                             },
                             [_vm._v("tinkoff")]
                           ),

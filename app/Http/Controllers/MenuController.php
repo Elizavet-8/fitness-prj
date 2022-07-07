@@ -61,13 +61,14 @@ class MenuController extends Controller
 
         return view('admin.dashboard.menu.menuList')->with(compact('menus'));
     }
-    function adminShowMenu(Request $request, $id)
+    public function adminShowMenu(Request $request, $id)
     {
         if(is_null(Auth::guard('admin')->user()))
             abort(401);
         $menu = Menu::find($id);
         $calories = MenuCalory::all();
-        return view('admin.dashboard.menu.menuEditForm')->with(compact('menu', 'calories'));
+        $types = MenuType::all();
+        return view('admin.dashboard.menu.menuEditForm')->with(compact('menu', 'calories', 'types'));
     }
 
     public function adminEditMenu(Request $request, $id)
@@ -82,7 +83,8 @@ class MenuController extends Controller
             'proteins' => 'required',
             'fat' => 'required',
             'carbs' => 'required',
-            'stripe_id' => 'nullable'
+            'stripe_id' => 'nullable',
+            'menu_type_id' => 'required|integer'
         ]);
         $menu->update($input);
         return redirect()->route('menu');
@@ -100,7 +102,8 @@ class MenuController extends Controller
         if(is_null(Auth::guard('admin')->user()))
             abort(401);
         $calories = MenuCalory::all();
-        return view('admin.dashboard.menu.menuAddForm')->with(compact('calories'));
+        $types = MenuType::all();
+        return view('admin.dashboard.menu.menuAddForm')->with(compact('calories', 'types'));
     }
 
     public function adminAddMenu(Request $request)
@@ -114,7 +117,8 @@ class MenuController extends Controller
             'proteins' => 'required',
             'fat' => 'required',
             'carbs' => 'required',
-            'stripe_id' => 'nullable'
+            'stripe_id' => 'nullable',
+            'menu_type_id' => 'required|integer'
         ]);
         Menu::create($input);
         return redirect()->route('menu');

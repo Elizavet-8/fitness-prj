@@ -35,6 +35,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Тип</label>
+                                    <div class="col-md-9">
+                                        <select name="menu_type_id" class="form-control">
+                                            @foreach($types as $type)
+                                                <option value="{{$type->id}}"
+                                                        @if($menu->menu_type_id === $type->id)
+                                                        selected
+                                                    @endif>{{$type->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Калории</label>
                                     <div class="col-md-9">
                                         <select name="menu_calories_id" class="form-control">

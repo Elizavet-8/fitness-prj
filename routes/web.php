@@ -174,6 +174,7 @@ Route::prefix('/initialize-checkout')->group(function () {
 
 Route::prefix('/open-checkout')->group(function () {
     Route::get('/stripe', [CheckoutsController::class, "generateStripeCheckoutPage"]);
+    Route::get('/stripe-for-diet', [CheckoutsController::class, "generateStripeCheckoutPageForDiet"]);
 });
 
 Route::get('/finish-checkout', [CheckoutsController::class, "finishStripeCheckout"])->name('checkout-finish');

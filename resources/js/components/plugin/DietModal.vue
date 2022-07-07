@@ -18,19 +18,10 @@
                     <p class="plugin-modal__txt">
                         Каждый план идеально сбалансирован и прекрасно подходит для активной жизни
                     </p>
-                    <div class="diet-checkboxes workout-checkboxes">
-                        <label class="workout-checkbox__label" v-for="(caloric, index) in calorics" :key="index">
-                            <input class="check__input" type="radio" :id="caloric.title" :value="caloric.title"
-                                   v-model="selected_calory">
-                            <div class="workout-checkbox">
-                                {{ caloric.title }}
-                            </div>
-                        </label>
-                    </div>
                     <form class="plugin-modal-form" v-if="activeStep === 1">
                         <div class="plugin-checkboxes">
                             <label class="plugin-checkbox__label" v-for="(diet, index) in diets" :key="diet.index">
-                                <input class="check__input" type="radio" :id="diet.menu" :value="diet.menu"
+                                <input class="check__input" type="radio" :id="diet.menu" :value="diet"
                                        v-model="selected_diet">
                                 <div class="plugin-checkbox">
                                     <div class="plugin-checkbox__number">
@@ -39,7 +30,7 @@
                                     <div class="plugin-checkbox__txt plugin-modal__txt">
                                         {{ diet.menu }}
                                         <b>
-                                            {{ diet.price }}
+                                            {{ diet.price }} р.
                                         </b>
                                     </div>
                                 </div>
@@ -60,10 +51,10 @@
                         </div>
                         <div class="row d-flex w-100">
                             <div class="col-6">
-                                <button class="button-green" @click="initializeStripePayment">stripe</button>
+                                <button class="button-green" @click="initializeStripeCheckout">stripe</button>
                             </div>
                             <div class="col-6">
-                                <button class="button-green" @click="initializeTinkoffPayment">tinkoff</button>
+                                <button class="button-green" @click="initializeTinkoffCheckout">tinkoff</button>
                             </div>
                         </div>
                     </div>
@@ -80,7 +71,6 @@ export default {
         diets_list: [],
         activeStep: 1,
         formSteps: [],
-        selected_calory: null,
         selected_diet: null,
     }),
     mounted() {
@@ -112,7 +102,8 @@ export default {
                 let tmp = {
                     value: false,
                     menu: element.menu_content,
-                    price: element.menu_price + ' р.',
+                    price: element.menu_price,
+                    stripe_id : element.stripe_id
                 }
                 if (!this.diets_list.some(e => e.menu == tmp.menu && e.price == tmp.price))
                     this.diets_list.push(tmp);
@@ -128,7 +119,14 @@ export default {
             this.activeStep++;
         },
         disableBtn() {
-            return this.selected_calory != null && this.selected_diet != null;
+            return this.selected_diet != null;
+        },
+        initializeStripeCheckout() {
+
+            console.log(this.selected_diet);
+        },
+        initializeTinkoffCheckout() {
+            console.log(this.selected_diet);
         }
     },
 };
