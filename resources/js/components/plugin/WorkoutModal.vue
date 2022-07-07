@@ -18,7 +18,7 @@
          </div>
          <div class="workout-checkboxes">
             <label class="workout-checkbox__label" v-for="(locations, index) in locations" :key="index">
-               <input class="check__input" type="radio" :id="locations.title" :value="locations.title" v-model="selected_location">
+               <input class="check__input" type="radio" :id="locations.title" :value="locations" v-model="selected_location">
                <div class="workout-checkbox">
                    {{ locations.title  }}
                </div>
@@ -33,7 +33,7 @@
          <form class="plugin-modal-form" v-if="activeStep === 1">
             <div class="plugin-checkboxes">
                <label class="plugin-checkbox__label" v-for="(workout, index) in workouts" :key="index">
-                  <input class="check__input" type="radio" :id="workout.level" :value="workout.level" v-model="selected_workout">
+                  <input class="check__input" type="radio" :id="workout.level" :value="workout" v-model="selected_workout">
                   <div class="plugin-checkbox">
                      <div class="plugin-checkbox__number">
                         {{ workout.level  }}
@@ -99,7 +99,8 @@
                this.locations_list.push(
                   {
                      value: false,
-                     title: element.name
+                     title: element.name,
+                     id : element.id
                   }
                )
             });
@@ -116,6 +117,7 @@
                      value: false,
                      level: element.level,
                      price: element.training_price,
+                     id : element.id
                   }
                )
             });
@@ -129,6 +131,30 @@
          next() {
             this.activeStep++;
          },
+          initializeStripePayment() {
+              let formData = new FormData();
+              formData.append('training_location_id', this.selected_location.id);
+              formData.append('training_id', this.selected_workout.id);
+              axios.post('/initialize-checkout/stripe-for-training', formData)
+                .then(() => {
+                    window.location.href = '/open-checkout/stripe-for-training';
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                })
+          },
+          initializeTinkoffPayment() {
+              let formData = new FormData();
+              formData.append('training_location_id', this.selected_location.id);
+              formData.append('training_id', this.selected_workout.id);
+              axios.post('/initialize-checkout/tinkoff-for-training', formData)
+                  .then((response) => {
+                      window.location.href = response.data.paymentUrl;
+                  })
+                  .catch((error) => {
+                      console.log(error.response);
+                  })
+          }
       },
    };
 </script>

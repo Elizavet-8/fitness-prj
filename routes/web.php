@@ -170,13 +170,16 @@ Route::prefix('api/access-history')->group(function(){
 Route::prefix('/initialize-checkout')->group(function () {
     Route::post('/stripe', [CheckoutsController::class, "prepareStripeCheckoutPage"]);
     Route::post('/stripe-for-diet', [CheckoutsController::class, "prepareStripeCheckoutPageForDiet"]);
+    Route::post('/stripe-for-training', [CheckoutsController::class, "prepareStripeCheckoutPageForTraining"]);
     Route::post('/tinkoff', [CheckoutsController::class, "prepareTinkoffCheckout"]);
     Route::post('/tinkoff-for-diet', [CheckoutsController::class, "prepareTinkoffCheckoutForDiet"]);
+    Route::post('/tinkoff-for-training', [CheckoutsController::class, "prepareTinkoffCheckoutForTraining"]);
 });
 
 Route::prefix('/open-checkout')->group(function () {
     Route::get('/stripe', [CheckoutsController::class, "generateStripeCheckoutPage"]);
     Route::get('/stripe-for-diet', [CheckoutsController::class, "generateStripeCheckoutPageForDiet"]);
+    Route::get('/stripe-for-training', [CheckoutsController::class, "generateStripeCheckoutPageForTraining"]);
 });
 
 Route::get('/finish-checkout', [CheckoutsController::class, "finishStripeCheckout"])->name('checkout-finish');
@@ -184,3 +187,5 @@ Route::get('/cancel-checkout', [CheckoutsController::class, "cancelCheckout"])->
 Route::get('/finish-tinkoff-checkout', [CheckoutsController::class, "finishTinkoffCheckout"]);
 Route::get('/finish-stripe-checkout-for-diet', [CheckoutsController::class, "finishStripeCheckoutForDiet"])->name('finishStripeCheckoutForDiet');
 Route::get('/finish-tinkoff-checkout-diet', [CheckoutsController::class, "finishTinkoffCheckoutForDiet"])->name('finishTinkoffCheckoutForDiet');
+Route::get('/finish-stripe-checkout-for-training', [CheckoutsController::class, "finishStripeCheckoutForTraining"])->name('finishStripeCheckoutForTraining');
+Route::get('/finish-tinkoff-checkout-training', [CheckoutsController::class, "finishTinkoffCheckoutForTraining"])->name('finishTinkoffCheckoutForTraining');

@@ -5459,7 +5459,8 @@ __webpack_require__.r(__webpack_exports__);
       locs.forEach(function (element) {
         _this.locations_list.push({
           value: false,
-          title: element.name
+          title: element.name,
+          id: element.id
         });
       });
       return this.locations_list;
@@ -5474,7 +5475,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.workouts_list.push({
           value: false,
           level: element.level,
-          price: element.training_price
+          price: element.training_price,
+          id: element.id
         });
       });
       return this.workouts_list;
@@ -5486,6 +5488,26 @@ __webpack_require__.r(__webpack_exports__);
     },
     next: function next() {
       this.activeStep++;
+    },
+    initializeStripePayment: function initializeStripePayment() {
+      var formData = new FormData();
+      formData.append('training_location_id', this.selected_location.id);
+      formData.append('training_id', this.selected_workout.id);
+      axios.post('/initialize-checkout/stripe-for-training', formData).then(function () {
+        window.location.href = '/open-checkout/stripe-for-training';
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    initializeTinkoffPayment: function initializeTinkoffPayment() {
+      var formData = new FormData();
+      formData.append('training_location_id', this.selected_location.id);
+      formData.append('training_id', this.selected_workout.id);
+      axios.post('/initialize-checkout/tinkoff-for-training', formData).then(function (response) {
+        window.location.href = response.data.paymentUrl;
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
     }
   }
 });
@@ -53765,12 +53787,12 @@ var render = function () {
                       staticClass: "check__input",
                       attrs: { type: "radio", id: locations.title },
                       domProps: {
-                        value: locations.title,
-                        checked: _vm._q(_vm.selected_location, locations.title),
+                        value: locations,
+                        checked: _vm._q(_vm.selected_location, locations),
                       },
                       on: {
                         change: function ($event) {
-                          _vm.selected_location = locations.title
+                          _vm.selected_location = locations
                         },
                       },
                     }),
@@ -53822,15 +53844,12 @@ var render = function () {
                             staticClass: "check__input",
                             attrs: { type: "radio", id: workout.level },
                             domProps: {
-                              value: workout.level,
-                              checked: _vm._q(
-                                _vm.selected_workout,
-                                workout.level
-                              ),
+                              value: workout,
+                              checked: _vm._q(_vm.selected_workout, workout),
                             },
                             on: {
                               change: function ($event) {
-                                _vm.selected_workout = workout.level
+                                _vm.selected_workout = workout
                               },
                             },
                           }),
