@@ -405,15 +405,6 @@ class CheckoutsController extends Controller
             'is_active' => true
         ]);
         Session::remove('user_info');
-        dd([
-            'user' => $user,
-            'pwd' => $password,
-            'pa' => $personalAccount,
-            'um' => $userMenu,
-            'tu' => $trainingUser,
-            'ac' => $activityCalendar,
-            'ah' => $accessHistory,
-            'fc' => $foodCalendar
-        ]);
+        return view('thanks');
     }
 }
