@@ -101,9 +101,11 @@ export default {
             diets.forEach(element => {
                 let tmp = {
                     value: false,
+                    menu_id : element.id,
                     menu: element.menu_content,
                     price: element.menu_price,
-                    stripe_id : element.stripe_id
+                    stripe_id : element.stripe_id,
+                    menu_type_id : element.menu_type_id
                 }
                 if (!this.diets_list.some(e => e.menu == tmp.menu && e.price == tmp.price))
                     this.diets_list.push(tmp);
@@ -122,11 +124,28 @@ export default {
             return this.selected_diet != null;
         },
         initializeStripeCheckout() {
-
-            console.log(this.selected_diet);
+            let formData = new FormData();
+            formData.append('menu_id', this.selected_diet.menu_id);
+            formData.append('menu_type_id', this.selected_diet.menu_type_id);
+            axios.post('/initialize-checkout/stripe-for-diet', formData)
+                .then(() => {
+                    window.location.href = '/open-checkout/stripe-for-diet';
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                })
         },
         initializeTinkoffCheckout() {
-            console.log(this.selected_diet);
+            let formData = new FormData();
+            formData.append('menu_id', this.selected_diet.menu_id);
+            formData.append('menu_type_id', this.selected_diet.menu_type_id);
+            axios.post('/initialize-checkout/tinkoff-for-diet', formData)
+                .then((response) => {
+                    window.location.href = response.data.paymentUrl;
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                })
         }
     },
 };

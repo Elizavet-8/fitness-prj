@@ -2358,6 +2358,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.$store.getters.GetFoodCalendars.length > 0) this.selectedMenuId = this.UserFoodCallendar;else this.selectedMenuId = null;
       if (this.selectedMenuId != null && this.selectedMenuId.day != null) this.selectedTab = this.selectedMenuId.day.toString();else this.selectedTab = "1";
       this.slider = [];
+      console.log(this.selectedMenuId);
       if (this.selectedMenuId != null) tmp.forEach(function (index) {
         var days = []; //console.log("this.current_type:",this.current_type);
 
@@ -2384,7 +2385,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (calories) if (index.menu_type_id == _this4.selectedMenuId.users_menus.menu_type_id) _this4.slider.push({
           users_menus_id: index.id,
-          menutitle: index.menu.menu_content + " на " + calories.name,
+          menutitle: index.menu.menu_content,
           days: days,
           type: index.menu_type.name,
           is_active: active
@@ -4808,9 +4809,11 @@ __webpack_require__.r(__webpack_exports__);
       diets.forEach(function (element) {
         var tmp = {
           value: false,
+          menu_id: element.id,
           menu: element.menu_content,
           price: element.menu_price,
-          stripe_id: element.stripe_id
+          stripe_id: element.stripe_id,
+          menu_type_id: element.menu_type_id
         };
         if (!_this2.diets_list.some(function (e) {
           return e.menu == tmp.menu && e.price == tmp.price;
@@ -4830,10 +4833,24 @@ __webpack_require__.r(__webpack_exports__);
       return this.selected_diet != null;
     },
     initializeStripeCheckout: function initializeStripeCheckout() {
-      console.log(this.selected_diet);
+      var formData = new FormData();
+      formData.append('menu_id', this.selected_diet.menu_id);
+      formData.append('menu_type_id', this.selected_diet.menu_type_id);
+      axios.post('/initialize-checkout/stripe-for-diet', formData).then(function () {
+        window.location.href = '/open-checkout/stripe-for-diet';
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
     },
     initializeTinkoffCheckout: function initializeTinkoffCheckout() {
-      console.log(this.selected_diet);
+      var formData = new FormData();
+      formData.append('menu_id', this.selected_diet.menu_id);
+      formData.append('menu_type_id', this.selected_diet.menu_type_id);
+      axios.post('/initialize-checkout/tinkoff-for-diet', formData).then(function (response) {
+        window.location.href = response.data.paymentUrl;
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
     }
   }
 });

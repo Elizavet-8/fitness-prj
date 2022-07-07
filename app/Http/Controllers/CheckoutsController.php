@@ -21,6 +21,8 @@ use Kenvel\Tinkoff;
 
 class CheckoutsController extends Controller
 {
+    private const ADDITIONAL_DAYS = 30;
+
     public function prepareStripeCheckoutPage(Request $request)
     {
         $userInfo = json_decode($request->user_info);
@@ -51,9 +53,36 @@ class CheckoutsController extends Controller
         ]);
     }
 
+    public function prepareStripeCheckoutPageForDiet(Request $request)
+    {
+        $dietInfo = [
+            'menu_id' => $request->menu_id,
+            'menu_type_id' => $request->menu_type_id,
+        ];
+        Session::put('dietInfo', $dietInfo);
+    }
+
     public function generateStripeCheckoutPageForDiet()
     {
-
+        $dietInfo = (object)Session::get('dietInfo');
+        $user = User::find(Auth::user()->id);
+        if (is_null($dietInfo) || is_null($user))
+            abort(404);
+        $menu = Menu::find($dietInfo->menu_id);
+        $checkout = $user->checkout($menu->stripe_id, [
+            'success_url' => route('finishStripeCheckoutForDiet'),
+            'cancel_url' => route('cancel-checkout')
+        ]);
+        $userInfo = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'product_name' => $menu->menu_content,
+            'price' => $menu->menu_price
+        ];
+        return view('checkouts.stripe_page', [
+            'checkout' => $checkout,
+            'userInfo' => (object)$userInfo
+        ]);
     }
 
     public function prepareTinkoffCheckout(Request $request)
@@ -92,6 +121,49 @@ class CheckoutsController extends Controller
         ]);
     }
 
+    public function prepareTinkoffCheckoutForDiet(Request $request)
+    {
+        $user = Auth::user();
+        if (is_null($user))
+            abort(404);
+        $dietInfo = [
+            'menu_id' => $request->menu_id,
+            'menu_type_id' => $request->menu_type_id,
+        ];
+        Session::put('dietInfo', $dietInfo);
+        $tinkoff = new Tinkoff(
+            config('app.tinkoff_api_url'),
+            config('app.tinkoff_terminal'),
+            config('app.tinkoff_secret')
+        );
+        $menu = Menu::find($dietInfo['menu_id']);
+        $payment = [
+            'OrderId' => random_int(1, 1000000),
+            'SuccessURL' => config('app.tinkoff_success_url_for_diet'),
+            'Amount' => $menu->menu_price,
+            'Language' => 'ru',
+            'Description' => $menu->menu_content,
+            'Email' => $user->email,
+            'Phone' => '1234567890',
+            'Name' => $user->name,
+            'Taxation' => 'usn_income'
+        ];
+        $item[] = [
+            'Name' => $menu->menu_content,
+            'Price' => $menu->menu_price,
+            'NDS' => 'vat20',
+            'Quantity' => 1
+        ];
+        $paymentUrl = $tinkoff->paymentURL($payment, $item);
+        if (!$paymentUrl)
+            dd($tinkoff->error);
+        $paymentId = $tinkoff->payment_id;
+        Session::put('tinkoff_id_diet', $paymentId);
+        return response()->json([
+            'paymentUrl' => $paymentUrl
+        ]);
+    }
+
     public function cancelCheckout()
     {
         dd("cancel");
@@ -105,6 +177,13 @@ class CheckoutsController extends Controller
         $user = User::where('email', $userInfo->email)->first();
         $user->delete();
         $this->createUserAccount($userInfo);
+    }
+
+    public function finishStripeCheckoutForDiet()
+    {
+        $dietInfo = (object)Session::get('dietInfo');
+        $this->addDietToUser($dietInfo);
+        return redirect()->route('home');
     }
 
     public function finishTinkoffCheckout()
@@ -123,6 +202,43 @@ class CheckoutsController extends Controller
         $this->createUserAccount($userInfo);
     }
 
+    public function finishTinkoffCheckoutForDiet()
+    {
+        $paymentId = Session::get('tinkoff_id_diet');
+        $tinkoff = new Tinkoff(
+            config('app.tinkoff_api_url'),
+            config('app.tinkoff_terminal'),
+            config('app.tinkoff_secret')
+        );
+        $status = $tinkoff->getState($paymentId);
+        if ($status != "CONFIRMED")
+            abort(404);
+        $dietInfo = (object)Session::get('dietInfo');
+        Session::remove('tinkoff_id_diet');
+        $this->addDietToUser($dietInfo);
+        return redirect()->route('home');
+    }
+
+    public function addDietToUser($dietInfo)
+    {
+        $user = User::find(Auth::user()->id);
+        if (is_null($dietInfo) || is_null($user))
+            abort(404);
+        $userMenu = UserMenu::create([
+            'user_id' => $user->id,
+            'menu_id' => $dietInfo->menu_id,
+            'menu_type_id' => $dietInfo->menu_type_id
+        ]);
+        FoodCalendar::create([
+            'users_menus_id' => $userMenu->id,
+            'day' => 1,
+            'is_active' => 0
+        ]);
+        $accessHistory = AccessHistory::where('user_id', $user->id)->first();
+        $accessHistory->deactivation_date = $accessHistory->deactivation_date->addDays(self::ADDITIONAL_DAYS);
+        $accessHistory->save();
+        Session::remove('dietInfo');
+    }
     public function createUserAccount($userInfo)
     {
         $password = Str::random(12);
@@ -159,7 +275,7 @@ class CheckoutsController extends Controller
         $accessHistory = AccessHistory::create([
             'user_id' => $user->id,
             'activation_date' => Carbon::now(),
-            'deactivation_date' => Carbon::now()->addDays(30)
+            'deactivation_date' => Carbon::now()->addDays(self::ADDITIONAL_DAYS)
         ]);
         $foodCalendar = FoodCalendar::create([
             'users_menus_id' => $userMenu->id,

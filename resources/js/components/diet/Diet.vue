@@ -272,6 +272,7 @@ export default {
             else
                 this.selectedTab = "1";
             this.slider = [];
+            console.log(this.selectedMenuId);
             if (this.selectedMenuId != null)
                 tmp.forEach(index => {
                     let days = [];
@@ -294,7 +295,7 @@ export default {
                         if(index.menu_type_id == this.selectedMenuId.users_menus.menu_type_id)
                             this.slider.push({
                                 users_menus_id: index.id,
-                                menutitle: index.menu.menu_content + " на " + calories.name,
+                                menutitle: index.menu.menu_content,
                                 days: days,
                                 type: index.menu_type.name,
                                 is_active: active

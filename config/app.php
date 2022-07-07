@@ -31,6 +31,7 @@ return [
     'tinkoff_terminal' => env('TINKOFF_TERMINAL'),
     'tinkoff_secret' => env('TINKOFF_SECRET'),
     'tinkoff_success_url' => env('TINKOFF_SUCCESS_URL'),
+    'tinkoff_success_url_for_diet' => env('TINKOFF_SUCCESS_URL_FOR_DIET'),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

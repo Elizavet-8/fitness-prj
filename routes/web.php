@@ -169,7 +169,9 @@ Route::prefix('api/access-history')->group(function(){
 
 Route::prefix('/initialize-checkout')->group(function () {
     Route::post('/stripe', [CheckoutsController::class, "prepareStripeCheckoutPage"]);
+    Route::post('/stripe-for-diet', [CheckoutsController::class, "prepareStripeCheckoutPageForDiet"]);
     Route::post('/tinkoff', [CheckoutsController::class, "prepareTinkoffCheckout"]);
+    Route::post('/tinkoff-for-diet', [CheckoutsController::class, "prepareTinkoffCheckoutForDiet"]);
 });
 
 Route::prefix('/open-checkout')->group(function () {
@@ -180,3 +182,5 @@ Route::prefix('/open-checkout')->group(function () {
 Route::get('/finish-checkout', [CheckoutsController::class, "finishStripeCheckout"])->name('checkout-finish');
 Route::get('/cancel-checkout', [CheckoutsController::class, "cancelCheckout"])->name('cancel-checkout');
 Route::get('/finish-tinkoff-checkout', [CheckoutsController::class, "finishTinkoffCheckout"]);
+Route::get('/finish-stripe-checkout-for-diet', [CheckoutsController::class, "finishStripeCheckoutForDiet"])->name('finishStripeCheckoutForDiet');
+Route::get('/finish-tinkoff-checkout-diet', [CheckoutsController::class, "finishTinkoffCheckoutForDiet"])->name('finishTinkoffCheckoutForDiet');
