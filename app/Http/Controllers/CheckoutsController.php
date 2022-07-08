@@ -272,14 +272,7 @@ class CheckoutsController extends Controller
     public function finishTinkoffCheckout()
     {
         $paymentId = Session::get('tinkoff_id');
-        $tinkoff = new Tinkoff(
-            config('app.tinkoff_api_url'),
-            config('app.tinkoff_terminal'),
-            config('app.tinkoff_secret')
-        );
-        $status = $tinkoff->getState($paymentId);
-        if ($status != "CONFIRMED")
-            abort(404);
+        $this->checkPaymentState($paymentId);
         $userInfo = Session::get('user_info');
         Session::remove('tinkoff_id');
         $this->createUserAccount($userInfo);
@@ -288,14 +281,7 @@ class CheckoutsController extends Controller
     public function finishTinkoffCheckoutForDiet()
     {
         $paymentId = Session::get('tinkoff_id_diet');
-        $tinkoff = new Tinkoff(
-            config('app.tinkoff_api_url'),
-            config('app.tinkoff_terminal'),
-            config('app.tinkoff_secret')
-        );
-        $status = $tinkoff->getState($paymentId);
-        if ($status != "CONFIRMED")
-            abort(404);
+        $this->checkPaymentState($paymentId);
         $dietInfo = (object)Session::get('dietInfo');
         Session::remove('tinkoff_id_diet');
         $this->addDietToUser($dietInfo);
@@ -305,14 +291,7 @@ class CheckoutsController extends Controller
     public function finishTinkoffCheckoutForTraining()
     {
         $paymentId = Session::get('tinkoff_id_training');
-        $tinkoff = new Tinkoff(
-            config('app.tinkoff_api_url'),
-            config('app.tinkoff_terminal'),
-            config('app.tinkoff_secret')
-        );
-        $status = $tinkoff->getState($paymentId);
-        if ($status != "CONFIRMED")
-            abort(404);
+        $this->checkPaymentState($paymentId);
         $trainingInfo = (object)Session::get('trainingInfo');
         Session::remove('tinkoff_id_training');
         $this->addTrainingToUser($trainingInfo);
@@ -334,9 +313,7 @@ class CheckoutsController extends Controller
             'day' => 1,
             'is_active' => 0
         ]);
-        $accessHistory = AccessHistory::where('user_id', $user->id)->first();
-        $accessHistory->deactivation_date = $accessHistory->deactivation_date->addDays(self::ADDITIONAL_DAYS);
-        $accessHistory->save();
+        $this->addAccessDaysToUser($user);
         Session::remove('dietInfo');
     }
 
@@ -355,9 +332,7 @@ class CheckoutsController extends Controller
             'day' => 1,
             'is_active' => 0
         ]);
-        $accessHistory = AccessHistory::where('user_id', $user->id)->first();
-        $accessHistory->deactivation_date = $accessHistory->deactivation_date->addDays(self::ADDITIONAL_DAYS);
-        $accessHistory->save();
+        $this->addAccessDaysToUser($user);
         Session::remove('trainingInfo');
     }
 
@@ -406,5 +381,24 @@ class CheckoutsController extends Controller
         ]);
         Session::remove('user_info');
         return view('thanks');
+    }
+
+    private function checkPaymentState($paymentId)
+    {
+        $tinkoff = new Tinkoff(
+            config('app.tinkoff_api_url'),
+            config('app.tinkoff_terminal'),
+            config('app.tinkoff_secret')
+        );
+        $status = $tinkoff->getState($paymentId);
+        if ($status != "CONFIRMED")
+            abort(404);
+    }
+
+    private function addAccessDaysToUser($user)
+    {
+        $accessHistory = AccessHistory::where('user_id', $user->id)->first();
+        $accessHistory->deactivation_date = $accessHistory->deactivation_date->addDays(self::ADDITIONAL_DAYS);
+        $accessHistory->save();
     }
 }
